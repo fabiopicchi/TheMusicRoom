@@ -47,25 +47,22 @@ package
 			super.update();
 			
 			_room = parent.name;
-			
-			if (!isInactive())
+		
+			if (Game.keyPressed(Action.LEFT) && !((_status & INACTIVE) == INACTIVE))
 			{
-				if (Game.keyPressed(Action.LEFT))
+				this.x -= (1024) * Game.dt / 1000;
+			}
+			
+			if (Game.keyPressed(Action.RIGHT) && !((_status & INACTIVE) == INACTIVE))
+			{
+				this.x += (1024) * Game.dt / 1000;
+			}
+			
+			if (Game.keyJustPressed(Action.INTERACT))
+			{
+				if (_gameObject)
 				{
-					this.x -= (1024) * Game.dt / 1000;
-				}
-				
-				if (Game.keyPressed(Action.RIGHT))
-				{
-					this.x += (1024) * Game.dt / 1000;
-				}
-				
-				if (Game.keyJustPressed(Action.INTERACT))
-				{
-					if (_gameObject)
-					{
-						_gameObject.interact();
-					}
+					_gameObject.interact();
 				}
 			}
 		}
