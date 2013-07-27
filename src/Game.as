@@ -3,6 +3,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	/**
 	 * ...
@@ -19,6 +21,8 @@ package
 		
 		private var et : Entity;
 		private var _room : Room;
+		
+		private static var _textField : TextField;
 		
 		public function Game():void 
 		{
@@ -38,6 +42,9 @@ package
 			
 			_room = new SampleRoom();
 			addChild(_room);
+			
+			_textField = new TextField();
+			addChild(_textField);
 		}
 		
 		private function run(e:Event):void 
@@ -113,6 +120,23 @@ package
 		public static function get dt():Number 
 		{
 			return _dt;
+		}
+		
+		public static function displayText(text:String) : void
+		{
+			_textField.text = text;
+			_textField.width = 824;
+			_textField.height = 200;
+			_textField.x = 100;
+			_textField.y = 468;
+			_textField.multiline = true;
+			
+			var myFormat : TextFormat;
+			myFormat.font = "Verdana";
+			myFormat.color = 0xFFFFFF;
+			myFormat.size = 10;
+			
+			_textField.defaultTextFormat = myFormat;
 		}
 	}
 }
