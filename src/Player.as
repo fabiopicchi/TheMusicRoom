@@ -11,11 +11,12 @@ package
 	{
 		private var _gameObject : GameObject;
 		private var _keyPoints : Array = [];
-		private var _status : int = 0;
 		
 		public static const NONE : int = 0;
 		public static const HIDDEN : int = 1 << 0;
 		public static const INACTIVE : int = 1 << 1;
+		
+		private var _room : String;
 		
 		public function Player() 
 		{
@@ -44,6 +45,8 @@ package
 		override public function update():void 
 		{
 			super.update();
+			
+			_room = parent.name;
 			
 			if (Game.keyPressed(Action.LEFT))
 			{
@@ -76,16 +79,6 @@ package
 			return true;
 		}
 		
-		public function setFlag (flag : int) : void
-		{
-			_status |= flag;
-		}
-		
-		public function resetFlag (flag : int) : void
-		{
-			_status &= ~flag;
-		}
-		
 		public function isHidden () : Boolean
 		{
 			return ((_status & HIDDEN) == HIDDEN);
@@ -104,6 +97,11 @@ package
 		public function get status():int 
 		{
 			return _status;
+		}
+		
+		public function get room():String 
+		{
+			return _room;
 		}
 	}
 

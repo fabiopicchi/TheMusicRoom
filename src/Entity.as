@@ -9,6 +9,10 @@ package
 	 */
 	public class Entity extends MovieClip
 	{
+		public static const LEFT : int = 0;
+		public static const RIGHT : int = 1;
+		
+		protected var _status : int = 0;
 		
 		public function Entity() 
 		{
@@ -55,6 +59,18 @@ package
 		{
 			return new Point (x + width / 2, y + height / 2);
 		}
+		
+		
+		public function setFlag (flag : int) : void
+		{
+			_status |= flag;
+		}
+		
+		public function resetFlag (flag : int) : void
+		{
+			_status &= ~flag;
+		}
+		
 	}
 
 }
