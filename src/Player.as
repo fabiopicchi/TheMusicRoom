@@ -8,6 +8,7 @@ package
 	 */
 	public class Player extends Entity 
 	{
+		private var _gameObject : GameObject;
 		
 		public function Player() 
 		{
@@ -41,6 +42,19 @@ package
 			{
 				this.x += (1024) * Game.dt / 1000;
 			}
+			
+			if (Game.keyJustPressed(Action.INTERACT))
+			{
+				if (_gameObject)
+				{
+					_gameObject.interact();
+				}
+			}
+		}
+		
+		public function set gameObject(value:GameObject):void 
+		{
+			_gameObject = value;
 		}
 	}
 
