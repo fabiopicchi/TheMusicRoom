@@ -1,10 +1,13 @@
 package 
 {
+	import com.greensock.TweenLite;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import flash.utils.Dictionary;
 	
 	/**
 	 * ...
@@ -32,6 +35,16 @@ package
 		private var _textTime : Number = 0;
 		private var _textCounter : Number = 0;
 		private const _LETTER_INTERVAL : Number = 100;
+		private static var _textField : TextField;
+		
+		private static var _nextRoom:String = "";
+		private var _rootRoom : String = "smpl1";
+		private var _roomMap : Object = {
+			smpl1 : new SampleRoom,
+			smpl2 : new SampleRoom2
+		};
+		private var _shade : Shape = new Shape();
+		private var _changingRooms : Boolean = false;
 		
 		public function Game():void 
 		{
@@ -42,6 +55,10 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
+			_shade.graphics.beginFill(0x000000);
+			_shade.graphics.drawRect(0, 0, 1024, 768);
+			_shade.graphics.endFill();
+			
 			_time = (new Date()).getTime();
 			
 			stage.frameRate = 30;
@@ -49,7 +66,7 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
-			_room = new SampleRoom();
+			_room = _roomMap[_rootRoom];
 			addChild(_room);
 			
 			_textBox = new TextField();
@@ -74,12 +91,34 @@ package
 		
 		private function update():void 
 		{
-			for (var i : int = 0; i < numChildren; i++)
+			if (!_changingRooms && _nextRoom != "")
 			{
-				var e : Entity;
-				if ((e = (getChildAt(i) as Entity)))
+				_changingRooms = true;
+				_shade.alpha = 0;
+				addChild(_shade);
+				TweenLite.to(_shade, 0.5, { alpha : 1, onComplete : function () : void
 				{
-					e.update();
+					removeChild(_room);
+					_room = _roomMap[_nextRoom];
+					addChild(_room);
+					_nextRoom = "";
+					TweenLite.to(_shade, 0.5, { alpha : 0, onComplete : function () : void
+					{
+						_changingRooms = false;
+						removeChild(_shade);
+					}});
+				}});
+			}
+			
+			if (!_changingRooms)
+			{
+				for (var i : int = 0; i < numChildren; i++)
+				{
+					var e : Entity;
+					if ((e = (getChildAt(i) as Entity)))
+					{
+						e.update();
+					}
 				}
 				
 				if ((_status & TYPING_TEXT) == TYPING_TEXT)
@@ -190,6 +229,11 @@ package
 		public static function scrollText() : void
 		{
 			_textBox.scrollV++;
+		}
+		
+		public static function setNextRoom (room : String) : void
+		{
+			_nextRoom = room;
 		}
 	}
 }
