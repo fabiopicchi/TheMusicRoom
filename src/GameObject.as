@@ -9,6 +9,7 @@ package
 	public class GameObject extends Entity 
 	{
 		protected var _interactive : Boolean = true;
+		protected var _id : String = "";
 		
 		public function GameObject() 
 		{
@@ -17,6 +18,7 @@ package
 		
 		override protected function init(e:Event):void 
 		{
+			_id = name.split("_")[1];
 			stop();
 			out();
 			super.init(e);
@@ -61,6 +63,11 @@ package
 		public function get interactive():Boolean 
 		{
 			return _interactive;
+		}
+		
+		public function get id():String 
+		{
+			return _id;
 		}
 	}
 
