@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Shape;
 	import flash.events.Event;
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author arthur e fabio
@@ -9,6 +10,11 @@ package
 	public class Player extends Entity 
 	{
 		private var _gameObject : GameObject;
+		private var _keyPoints : Array = [];
+		private var _status : int = 0;
+		
+		public static const NONE : int = 0;
+		public static const HIDDEN : int = 1 << 0;
 		
 		public function Player() 
 		{
@@ -27,6 +33,11 @@ package
 			this.y = 500;
 			
 			addChild(s);
+			
+			_keyPoints.push(new Point (0, 0));
+			_keyPoints.push(new Point (width, 0));
+			_keyPoints.push(new Point (width, height));
+			_keyPoints.push(new Point (0, height));
 		}
 		
 		override public function update():void 
@@ -52,9 +63,41 @@ package
 			}
 		}
 		
+		public function isOverlappedBy (s : Shadow) : Boolean
+		{
+			for (var i : int = 0; i < _keyPoints.length; i++)
+			{
+				if (!s.hitTestPoint(x + _keyPoints[i].x, y + _keyPoints[i].y, true))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		public function setFlag (flag : int) : void
+		{
+			_status |= flag;
+		}
+		
+		public function resetFlag (flag : int) : void
+		{
+			_status &= ~flag;
+		}
+		
+		public function isHidden () : Boolean
+		{
+			return ((_status & HIDDEN) == HIDDEN);
+		}
+		
 		public function set gameObject(value:GameObject):void 
 		{
 			_gameObject = value;
+		}
+		
+		public function get status():int 
+		{
+			return _status;
 		}
 	}
 

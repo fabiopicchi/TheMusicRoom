@@ -9,6 +9,7 @@ package
 	public class GameObject extends Entity 
 	{
 		protected var _interactive : Boolean = true;
+		protected var _hidden : Boolean = false;
 		protected var _id : String = "";
 		
 		public function GameObject() 
@@ -68,6 +69,21 @@ package
 		public function get id():String 
 		{
 			return _id;
+		}
+		
+		public function set interactive(value:Boolean):void 
+		{
+			_interactive = value;
+		}
+		
+		public function get hidden():Boolean 
+		{
+			return _hidden;
+		}
+		
+		public function set hidden(value:Boolean):void 
+		{
+			_hidden = value;
 		}
 	}
 
