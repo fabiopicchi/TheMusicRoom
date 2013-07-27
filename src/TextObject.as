@@ -16,7 +16,9 @@ package
 		{
 			super.interact();
 			
+			var text : String = new String("Qwerty uiop asd fghjkl çzxcvbnm qwerty ui opas dfg hjklçzx cvbnm.");
 			
+			Game.displayText(text);
 		}
 	}
 

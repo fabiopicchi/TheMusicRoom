@@ -22,7 +22,7 @@ package
 		private var et : Entity;
 		private var _room : Room;
 		
-		private static var _textField : TextField;
+		private static var _textBox : TextField;
 		
 		public function Game():void 
 		{
@@ -43,8 +43,8 @@ package
 			_room = new SampleRoom();
 			addChild(_room);
 			
-			_textField = new TextField();
-			addChild(_textField);
+			_textBox = new TextField();
+			addChild(_textBox);
 		}
 		
 		private function run(e:Event):void 
@@ -124,19 +124,23 @@ package
 		
 		public static function displayText(text:String) : void
 		{
-			_textField.text = text;
-			_textField.width = 824;
-			_textField.height = 200;
-			_textField.x = 100;
-			_textField.y = 468;
-			_textField.multiline = true;
+			_textBox.text = text;
+			_textBox.width = 424;
+			_textBox.height = 100;
+			_textBox.x = 300;
+			_textBox.y = 568;
+			_textBox.selectable = false;
+			_textBox.multiline = true;
+			_textBox.wordWrap = true;
+			_textBox.mouseEnabled = false;
+			_textBox.border = true;
+			_textBox.borderColor = 0xFFFFFF;
 			
-			var myFormat : TextFormat;
-			myFormat.font = "Verdana";
-			myFormat.color = 0xFFFFFF;
-			myFormat.size = 10;
+			var myFormat : TextFormat = new TextFormat("Verdana", 30, 0xCCCCCC);
 			
-			_textField.defaultTextFormat = myFormat;
+			_textBox.setTextFormat(myFormat);
+			//_textBox.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+			
 		}
 	}
 }
