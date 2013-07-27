@@ -32,6 +32,11 @@ package
 		{
 			super.destroy(e);
 		}
+		
+		public function interact():void
+		{
+			
+		}
 	}
 
 }
