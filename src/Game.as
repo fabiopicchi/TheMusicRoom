@@ -32,10 +32,9 @@ package
 		
 		private static var _text : String;
 		private static var _textBox : TextField;
-		private var _textTime : Number = 0;
-		private var _textCounter : Number = 0;
+		private static var _textTime : Number = 0;
+		private static var _textCounter : Number = 0;
 		private const _LETTER_INTERVAL : Number = 100;
-		private static var _textField : TextField;
 		
 		private static var _nextRoom:String = "";
 		private var _rootRoom : String = "smpl1";
@@ -73,7 +72,7 @@ package
 			addChild(_textBox);
 			
 			var myFormat : TextFormat = new TextFormat("Verdana", 30, 0xFFFFFF);
-			_textBox.setTextFormat(myFormat);
+			_textBox.defaultTextFormat = myFormat;
 		}
 		
 		private function run(e:Event):void 
@@ -190,6 +189,7 @@ package
 		
 		public static function displayText(text:String) : void
 		{
+			_textBox.visible = true;
 			_textBox.width = 424;
 			_textBox.height = 100;
 			_textBox.x = 300;
@@ -213,7 +213,7 @@ package
 			{
 				_textTime = 0;
 				_textBox.text = _text.slice(0, _textCounter);
-				if (_textCounter == _text.length - 1)
+				if (_textCounter == _text.length)
 				{
 					_textCounter = 0;
 					_textTime = 0;
@@ -226,9 +226,28 @@ package
 			}
 		}
 		
-		public static function scrollText() : void
+		public static function completedText() : Boolean
 		{
-			_textBox.scrollV++;
+			_textCounter = 0;
+			_textTime = 0;
+			
+			if (_textBox.text.length == _text.length)
+			{
+				return true;
+			}
+			else
+			{
+				_textBox.text = _text;
+				resetFlag(TYPING_TEXT);
+				return false;
+			}
+		}
+		
+		public static function closeText() : void
+		{
+			_textBox.text = "";
+			_textBox.visible = false;
+			resetFlag(TYPING_TEXT);
 		}
 		
 		public static function setNextRoom (room : String) : void

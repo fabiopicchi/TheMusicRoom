@@ -45,12 +45,12 @@ package
 		{
 			super.update();
 			
-			if (Game.keyPressed(Action.LEFT))
+			if (Game.keyPressed(Action.LEFT) && !((_status & INACTIVE) == INACTIVE))
 			{
 				this.x -= (1024) * Game.dt / 1000;
 			}
 			
-			if (Game.keyPressed(Action.RIGHT))
+			if (Game.keyPressed(Action.RIGHT) && !((_status & INACTIVE) == INACTIVE))
 			{
 				this.x += (1024) * Game.dt / 1000;
 			}
