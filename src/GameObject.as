@@ -14,14 +14,13 @@ package
 		
 		public function GameObject() 
 		{
-			
+			gotoAndStop("A");
+			out();
 		}
 		
 		override protected function init(e:Event):void 
 		{
 			_id = name.split("_")[1];
-			stop();
-			out();
 			super.init(e);
 		}
 		
@@ -44,7 +43,8 @@ package
 		{
 			if (_interactive)
 			{
-				(getChildAt(0) as MovieClip).gotoAndStop("over");
+				if ((getChildAt(0) as MovieClip))
+					(getChildAt(0) as MovieClip).gotoAndStop("over");
 			}
 		}
 		
@@ -52,7 +52,8 @@ package
 		{
 			if (_interactive)
 			{
-				(getChildAt(0) as MovieClip).gotoAndStop("normal");
+				if ((getChildAt(0) as MovieClip))
+					(getChildAt(0) as MovieClip).gotoAndStop("normal");
 			}
 		}
 		
