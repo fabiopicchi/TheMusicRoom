@@ -2,6 +2,7 @@ package
 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author arthur e fabio
@@ -48,6 +49,11 @@ package
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, destroy);
 			
+		}
+		
+		public function getMidPoint () : Point
+		{
+			return new Point (x + width / 2, y + height / 2);
 		}
 	}
 

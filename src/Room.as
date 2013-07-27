@@ -1,6 +1,7 @@
 package  
 {
 	import flash.events.Event;
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author arthur e fabio
@@ -32,14 +33,31 @@ package
 		{
 			super.update();
 			
+			_player.resetFlag(Player.HIDDEN);
 			var objectSet : Boolean = false;
 			for (var i : int = 0; i < numChildren; i++)
 			{
 				var o : GameObject;
+				var oMidPoint : Point;
 				var h : Hitbox;
+				var s : Shadow;
 				if ((o = (getChildAt(i) as GameObject)))
 				{
-					if (o.interactive)
+					o.hidden = false;
+					oMidPoint = o.getMidPoint();
+					for (var j : int = 0; j < numChildren; j++)
+					{
+						if ((s = getChildAt(j) as Shadow))
+						{
+							if (s.visible && s.hitTestPoint(oMidPoint.x, oMidPoint.y, true))
+							{
+								o.hidden = true;
+								break;
+							}
+						}
+					}
+					
+					if (o.interactive && !o.hidden)
 					{
 						if ((h = (getChildByName("hitbox_" + o.id) as Hitbox)))
 						{
@@ -66,6 +84,18 @@ package
 							{
 								o.out();
 							}
+						}
+					}
+				}
+				
+				if ((s = getChildAt(i) as Shadow))
+				{
+					if (s.visible)
+					{
+						if (_player.isOverlappedBy(s))
+						{
+							_player.setFlag(Player.HIDDEN);
+							break;
 						}
 					}
 				}
