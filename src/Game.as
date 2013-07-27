@@ -16,13 +16,22 @@ package
 		private static var keyState : int = 0;
 		private static var pKeyState : int = 0;
 		
+		private static var _status : int = 0;
+		
+		private static const NONE : int = 0;
+		private static const TYPING_TEXT : int = 1 << 0;
+		
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
 		
 		private var et : Entity;
 		private var _room : Room;
 		
+		private static var _text : String;
 		private static var _textBox : TextField;
+		private var _textTime : Number = 0;
+		private var _textCounter : Number = 0;
+		private const _LETTER_INTERVAL : Number = 100;
 		
 		public function Game():void 
 		{
@@ -45,6 +54,9 @@ package
 			
 			_textBox = new TextField();
 			addChild(_textBox);
+			
+			var myFormat : TextFormat = new TextFormat("Verdana", 30, 0xFFFFFF);
+			_textBox.setTextFormat(myFormat);
 		}
 		
 		private function run(e:Event):void 
@@ -68,6 +80,11 @@ package
 				if ((e = (getChildAt(i) as Entity)))
 				{
 					e.update();
+				}
+				
+				if ((_status & TYPING_TEXT) == TYPING_TEXT)
+				{
+					typeText();
 				}
 			}
 		}
@@ -122,9 +139,18 @@ package
 			return _dt;
 		}
 		
+		public static function setFlag (flag : int) : void
+		{
+			_status |= flag;
+		}
+		
+		public static function resetFlag (flag : int) : void
+		{
+			_status &= ~flag;
+		}
+		
 		public static function displayText(text:String) : void
 		{
-			_textBox.text = text;
 			_textBox.width = 424;
 			_textBox.height = 100;
 			_textBox.x = 300;
@@ -136,11 +162,34 @@ package
 			_textBox.border = true;
 			_textBox.borderColor = 0xFFFFFF;
 			
-			var myFormat : TextFormat = new TextFormat("Verdana", 30, 0xCCCCCC);
+			_text = text;
+			setFlag(TYPING_TEXT);
+		}
+		
+		private function typeText() : void
+		{
+			_textTime += _dt
 			
-			_textBox.setTextFormat(myFormat);
-			//_textBox.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-			
+			if (_textTime >= _LETTER_INTERVAL)
+			{
+				_textTime = 0;
+				_textBox.text = _text.slice(0, _textCounter);
+				if (_textCounter == _text.length - 1)
+				{
+					_textCounter = 0;
+					_textTime = 0;
+					resetFlag(TYPING_TEXT);
+				}
+				else
+				{
+					_textCounter++
+				}
+			}
+		}
+		
+		public static function scrollText() : void
+		{
+			_textBox.scrollV++;
 		}
 	}
 }

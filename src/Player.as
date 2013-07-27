@@ -15,6 +15,7 @@ package
 		
 		public static const NONE : int = 0;
 		public static const HIDDEN : int = 1 << 0;
+		public static const INACTIVE : int = 1 << 1;
 		
 		public function Player() 
 		{
@@ -88,6 +89,11 @@ package
 		public function isHidden () : Boolean
 		{
 			return ((_status & HIDDEN) == HIDDEN);
+		}
+		
+		public function isInactive () : Boolean
+		{
+			return ((_status & INACTIVE) == INACTIVE);
 		}
 		
 		public function set gameObject(value:GameObject):void 
