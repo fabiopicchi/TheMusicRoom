@@ -18,6 +18,7 @@ package
 		private static var _time : Number = 0;
 		
 		private var et : Entity;
+		private var _room : Room;
 		
 		public function Game():void 
 		{
@@ -35,7 +36,8 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
-			addChild(new Player());
+			_room = new SampleRoom();
+			addChild(_room);
 		}
 		
 		private function run(e:Event):void 

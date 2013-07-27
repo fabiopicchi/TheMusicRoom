@@ -19,7 +19,7 @@ package
 			super.init(e);
 			
 			var s : Shape = new Shape();
-			s.graphics.beginFill(0x000000);
+			s.graphics.beginFill(0xFFFFFF);
 			s.graphics.drawRect(0, 0, 30, 100);
 			s.graphics.endFill();
 			

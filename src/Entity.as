@@ -22,12 +22,26 @@ package
 		
 		public function update () : void
 		{
-			
+			for (var i : int = 0; i < numChildren; i++)
+			{
+				var e : Entity;
+				if ((e = (getChildAt(i) as Entity)))
+				{
+					e.update();
+				}
+			}
 		}
 		
 		public function draw () : void
 		{
-			
+			for (var i : int = 0; i < numChildren; i++)
+			{
+				var e : Entity;
+				if ((e = (getChildAt(i) as Entity)))
+				{
+					e.draw();
+				}
+			}
 		}
 		
 		protected function destroy(e:Event):void 
