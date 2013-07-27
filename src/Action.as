@@ -10,6 +10,7 @@ package
 		public static const LEFT:int = 1 << 0;
 		public static const RIGHT:int = 1 << 1;
 		public static const INTERACT:int = 1 << 2;
+		public static const INVENTORY:int = 1 << 3;
 		
 		public function Action() 
 		{
@@ -30,6 +31,9 @@ package
 				
 				case 32:
 					return INTERACT;
+					
+				case 27:
+					return INVENTORY;
 				
 				default:
 					return NONE;

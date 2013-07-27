@@ -24,6 +24,8 @@ package
 		
 		private static const NONE : int = 0;
 		private static const TYPING_TEXT : int = 1 << 0;
+		private static const PLAYING_CUTSCENE : int = 1 << 1;
+		private static const INVENTORY_OPEN : int = 1 << 2;
 		
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
@@ -38,13 +40,15 @@ package
 		private static var _textField : TextField;
 		
 		private static var _nextRoom:String = "";
-		private var _room : String = "smpl1";
+		private var _room : String = "porch";
 		private var _roomMap : Object = {
 			smpl1 : new SampleRoom,
-			smpl2 : new SampleRoom2
+			smpl2 : new SampleRoom2,
+			porch : new Porch
 		};
 		private var _shade : Shape = new Shape();
 		private var _changingRooms : Boolean = false;
+		private static var _inventory : Inventory = new Inventory ();
 		
 		public function Game():void 
 		{
@@ -77,6 +81,10 @@ package
 			
 			_textBox = new TextField();
 			addChild(_textBox);
+			
+			addChild(_inventory);
+			_inventory.x = 0;
+			_inventory.y = 768;
 			
 			var myFormat : TextFormat = new TextFormat("Verdana", 30, 0xFFFFFF);
 			_textBox.setTextFormat(myFormat);
@@ -123,6 +131,21 @@ package
 			
 			if (!_changingRooms)
 			{
+				if (keyJustPressed(Action.INVENTORY))
+				{
+					if ((_status & INVENTORY_OPEN) != INVENTORY_OPEN)
+					{
+						showInventory();
+						_status |= INVENTORY_OPEN;
+						_playerInstance.setFlag(Player.INACTIVE);
+					}
+					else
+					{
+						_status &= ~INVENTORY_OPEN;
+						_playerInstance.resetFlag(Player.INACTIVE);
+					}
+				}
+				
 				for (var i : int = 0; i < numChildren; i++)
 				{
 					var e : Entity;
@@ -137,11 +160,28 @@ package
 					_roomMap[k].update();
 				}
 				
+				if ((_status & INVENTORY_OPEN) == INVENTORY_OPEN)
+				{
+					if (keyJustPressed(Action.LEFT))
+					{
+						_inventory.nextLeft();
+					}
+					else if (keyJustPressed(Action.RIGHT))
+					{
+						_inventory.nextRight();
+					}
+				}
+				
 				if ((_status & TYPING_TEXT) == TYPING_TEXT)
 				{
 					typeText();
 				}
 			}
+		}
+		
+		private function showInventory():void 
+		{
+			TweenLite.to(_inventory, 0.5, { y : 668 } );
 		}
 		
 		private function draw():void 

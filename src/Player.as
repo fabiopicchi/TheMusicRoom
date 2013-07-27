@@ -48,21 +48,24 @@ package
 			
 			_room = parent.name;
 			
-			if (Game.keyPressed(Action.LEFT))
+			if (!isInactive())
 			{
-				this.x -= (1024) * Game.dt / 1000;
-			}
-			
-			if (Game.keyPressed(Action.RIGHT))
-			{
-				this.x += (1024) * Game.dt / 1000;
-			}
-			
-			if (Game.keyJustPressed(Action.INTERACT))
-			{
-				if (_gameObject)
+				if (Game.keyPressed(Action.LEFT))
 				{
-					_gameObject.interact();
+					this.x -= (1024) * Game.dt / 1000;
+				}
+				
+				if (Game.keyPressed(Action.RIGHT))
+				{
+					this.x += (1024) * Game.dt / 1000;
+				}
+				
+				if (Game.keyJustPressed(Action.INTERACT))
+				{
+					if (_gameObject)
+					{
+						_gameObject.interact();
+					}
 				}
 			}
 		}
