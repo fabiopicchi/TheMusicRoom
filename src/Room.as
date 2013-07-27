@@ -41,7 +41,7 @@ package
 				{
 					if (o.interactive)
 					{
-						if ((h = (getChildByName("hitbox_" + o.name.split("_")[1]) as Hitbox)))
+						if ((h = (getChildByName("hitbox_" + o.id) as Hitbox)))
 						{
 							if (_player.x <= h.x + h.width && (_player.x + _player.width) >= h.x)
 							{
