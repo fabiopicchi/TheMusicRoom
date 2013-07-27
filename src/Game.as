@@ -1,5 +1,6 @@
 package 
 {
+	import com.greensock.easing.Quad;
 	import com.greensock.TweenLite;
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -27,8 +28,7 @@ package
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
 		
-		private var et : Entity;
-		private var _room : Room;
+		private static var _playerInstance: Player = new Player();
 		
 		private static var _text : String;
 		private static var _textBox : TextField;
@@ -37,7 +37,7 @@ package
 		private const _LETTER_INTERVAL : Number = 100;
 		
 		private static var _nextRoom:String = "";
-		private var _rootRoom : String = "smpl1";
+		private var _room : String = "smpl1";
 		private var _roomMap : Object = {
 			smpl1 : new SampleRoom,
 			smpl2 : new SampleRoom2
@@ -48,6 +48,11 @@ package
 		public function Game():void 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
+			
+			for (var k : String in _roomMap)
+			{
+				_roomMap[k].name = k;
+			}
 		}
 		
 		private function init(e:Event):void 
@@ -65,8 +70,9 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
-			_room = _roomMap[_rootRoom];
-			addChild(_room);
+			_roomMap[_room].addChild(new Enemy());
+			_roomMap[_room].addPlayer();
+			addChild(_roomMap[_room]);
 			
 			_textBox = new TextField();
 			addChild(_textBox);
@@ -97,13 +103,18 @@ package
 				addChild(_shade);
 				TweenLite.to(_shade, 0.5, { alpha : 1, onComplete : function () : void
 				{
-					removeChild(_room);
-					_room = _roomMap[_nextRoom];
-					addChild(_room);
+					_changingRooms = false;
+					_roomMap[_room].removePlayer();
+					removeChild(_roomMap[_room]);
+					
+					_playerInstance.x = (_roomMap[_nextRoom] as Room).getChildByName("object_" + _room).x + ((_roomMap[_nextRoom] as Room).getChildByName("object_" + _room).width - _playerInstance.width) / 2;
+					_room = _nextRoom;
 					_nextRoom = "";
-					TweenLite.to(_shade, 0.5, { alpha : 0, onComplete : function () : void
+					_roomMap[_room].addPlayer();
+					addChild(_roomMap[_room]);
+					
+					TweenLite.to(_shade, 0.5, { alpha : 0, ease:Quad.easeIn, onComplete : function () : void
 					{
-						_changingRooms = false;
 						removeChild(_shade);
 					}});
 				}});
@@ -114,10 +125,15 @@ package
 				for (var i : int = 0; i < numChildren; i++)
 				{
 					var e : Entity;
-					if ((e = (getChildAt(i) as Entity)))
+					if ((e = (getChildAt(i) as Entity)) && !(e is Room))
 					{
 						e.update();
 					}
+				}
+				
+				for (var k : String in _roomMap)
+				{
+					_roomMap[k].update();
 				}
 				
 				if ((_status & TYPING_TEXT) == TYPING_TEXT)
@@ -132,7 +148,7 @@ package
 			for (var i : int = 0; i < numChildren; i++)
 			{
 				var e : Entity;
-				if ((e = (getChildAt(i) as Entity)))
+				if ((e = (getChildAt(i) as Entity)) && !(e is Room))
 				{
 					e.draw();
 				}
@@ -175,6 +191,11 @@ package
 		public static function get dt():Number 
 		{
 			return _dt;
+		}
+		
+		public static function get playerInstance():Player 
+		{
+			return _playerInstance;
 		}
 		
 		public static function setFlag (flag : int) : void

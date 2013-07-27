@@ -15,9 +15,20 @@ package
 			
 		}
 		
+		public function addPlayer () : void
+		{
+			_player = Game.playerInstance;
+			addChild(Game.playerInstance);
+		}
+		
+		public function removePlayer () : void
+		{
+			_player = null;
+			removeChild(Game.playerInstance);
+		}
+		
 		override protected function init(e:Event):void 
 		{
-			addChild(_player = new Player ());
 			for (var i : int = 0; i < numChildren; i++)
 			{
 				var h : Hitbox;
@@ -33,77 +44,80 @@ package
 		{
 			super.update();
 			
-			_player.resetFlag(Player.HIDDEN);
-			var objectSet : Boolean = false;
-			for (var i : int = 0; i < numChildren; i++)
+			if (_player)
 			{
-				var o : GameObject;
-				var oMidPoint : Point;
-				var h : Hitbox;
-				var s : Shadow;
-				if ((o = (getChildAt(i) as GameObject)))
+				_player.resetFlag(Player.HIDDEN);
+				var objectSet : Boolean = false;
+				for (var i : int = 0; i < numChildren; i++)
 				{
-					o.hidden = false;
-					oMidPoint = o.getMidPoint();
-					for (var j : int = 0; j < numChildren; j++)
+					var o : GameObject;
+					var oMidPoint : Point;
+					var h : Hitbox;
+					var s : Shadow;
+					if ((o = (getChildAt(i) as GameObject)))
 					{
-						if ((s = getChildAt(j) as Shadow))
+						o.hidden = false;
+						oMidPoint = o.getMidPoint();
+						for (var j : int = 0; j < numChildren; j++)
 						{
-							if (s.visible && s.hitTestPoint(oMidPoint.x, oMidPoint.y, true))
+							if ((s = getChildAt(j) as Shadow))
 							{
-								o.hidden = true;
-								break;
+								if (s.visible && s.hitTestPoint(oMidPoint.x, oMidPoint.y, true))
+								{
+									o.hidden = true;
+									break;
+								}
+							}
+						}
+						
+						if (o.interactive && !o.hidden)
+						{
+							if ((h = (getChildByName("hitbox_" + o.id) as Hitbox)))
+							{
+								if (_player.x <= h.x + h.width && (_player.x + _player.width) >= h.x)
+								{
+									o.over();
+									_player.gameObject = o;
+									objectSet = true;
+								}
+								else
+								{
+									o.out();
+								}
+							}
+							else 
+							{
+								if (_player.x <= o.x + o.width && (_player.x + _player.width) >= o.x)
+								{
+									objectSet = true;
+									_player.gameObject = o;
+									o.over();
+								}
+								else
+								{
+									o.out();
+								}
 							}
 						}
 					}
 					
-					if (o.interactive && !o.hidden)
+					if ((s = getChildAt(i) as Shadow))
 					{
-						if ((h = (getChildByName("hitbox_" + o.id) as Hitbox)))
+						if (s.visible)
 						{
-							if (_player.x <= h.x + h.width && (_player.x + _player.width) >= h.x)
+							if (_player.isOverlappedBy(s))
 							{
-								o.over();
-								_player.gameObject = o;
-								objectSet = true;
-							}
-							else
-							{
-								o.out();
-							}
-						}
-						else 
-						{
-							if (_player.x <= o.x + o.width && (_player.x + _player.width) >= o.x)
-							{
-								objectSet = true;
-								_player.gameObject = o;
-								o.over();
-							}
-							else
-							{
-								o.out();
+								_player.setFlag(Player.HIDDEN);
+								break;
 							}
 						}
 					}
 				}
 				
-				if ((s = getChildAt(i) as Shadow))
+				if (!objectSet)
 				{
-					if (s.visible)
-					{
-						if (_player.isOverlappedBy(s))
-						{
-							_player.setFlag(Player.HIDDEN);
-							break;
-						}
-					}
+					_player.gameObject = null;
 				}
-			}
-			
-			if (!objectSet)
-			{
-				_player.gameObject = null;
 			}
 		}
 		
