@@ -9,6 +9,7 @@ package
 		public static const NONE:int = 0;
 		public static const LEFT:int = 1 << 0;
 		public static const RIGHT:int = 1 << 1;
+		public static const INTERACT:int = 1 << 2;
 		
 		public function Action() 
 		{
@@ -26,7 +27,10 @@ package
 				case 68:
 				case 39:
 					return RIGHT;
-					
+				
+				case 32:
+					return INTERACT;
+				
 				default:
 					return NONE;
 			}
