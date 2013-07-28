@@ -37,7 +37,7 @@ package
 				case 32:
 					return INTERACT;
 					
-				case 27:
+				case 73:
 					return INVENTORY;
 				
 				default:
