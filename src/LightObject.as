@@ -28,7 +28,7 @@ package
 			var s : Shadow;
 			for (var i : int = 0; i < shadows.length; i++)
 			{	
-				if ((s = (parent as Room).getChildByName("shadow_" + shadows[i]) as Shadow))
+				if ((s = (parent as Room).getChildByName("shadow_" + parent.name + "_" + shadows[i]) as Shadow))
 				{
 					s.visible = !s.visible;
 				}

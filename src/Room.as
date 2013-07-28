@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Point;
 	/**
@@ -9,6 +10,7 @@ package
 	public class Room extends Entity 
 	{
 		private var _player:Player;
+		private var _frontScrollFactor : Number;
 		
 		public function Room() 
 		{
@@ -21,6 +23,13 @@ package
 			addChild(Game.playerInstance);
 		}
 		
+		override public function addChild(child:DisplayObject):DisplayObject 
+		{
+			super.addChild(child);
+			setChildIndex(child, getChildIndex(getChildByName("shadow_" + name + "_0")) - 1);
+			return child;
+		}
+		
 		public function removePlayer () : void
 		{
 			_player = null;
@@ -29,12 +38,17 @@ package
 		
 		override protected function init(e:Event):void 
 		{
+			_frontScrollFactor = (getChildByName("front").width - 1024) / (getChildByName("back").width - 1024);
 			for (var i : int = 0; i < numChildren; i++)
 			{
 				var h : Hitbox;
 				if ((h = (getChildAt(i) as Hitbox)))
 				{
 					h.visible = false;
+				}
+				if (getChildAt(i).name == name + "_area")
+				{
+					getChildAt(i).visible = false;
 				}
 			}
 			super.init(e);
@@ -46,6 +60,15 @@ package
 			
 			if (_player)
 			{
+				if (_player.x < getChildByName(name + "_area").x)
+				{
+					_player.x = getChildByName(name + "_area").x;
+				}
+				else if (_player.x + _player.width > getChildByName(name + "_area").x + getChildByName(name + "_area").width)
+				{
+					_player.x = getChildByName(name + "_area").x + getChildByName(name + "_area").width - _player.width;
+				}
+				
 				_player.resetFlag(Player.HIDDEN);
 				var objectSet : Boolean = false;
 				for (var i : int = 0; i < numChildren; i++)
@@ -117,6 +140,54 @@ package
 				if (!objectSet)
 				{
 					_player.gameObject = null;
+				}
+				
+				//scrollX
+				var scrollX : Number = 0;
+				if (_player.x >= 924 && Game.keyPressed(Action.RIGHT) && (getChildByName("back").x + getChildByName("back").width) > 1024)
+				{
+					if ((getChildByName("back").x + getChildByName("back").width - (1024) * Game.dt / 1000) < 1024)
+					{
+						scrollX = (getChildByName("back").x + getChildByName("back").width) - 1024;
+					}
+					else
+					{
+						scrollX = (1024) * Game.dt / 1000;
+					}
+					for (i = 0; i < numChildren; i++)
+					{
+						if (getChildAt(i).name != "front")
+						{
+							getChildAt(i).x -= scrollX;
+						}
+						else
+						{
+							getChildAt(i).x -= scrollX * _frontScrollFactor;
+						}
+					}
+				}
+				
+				if (_player.x <= 100 && Game.keyPressed(Action.LEFT) && getChildByName("back").x < 0)
+				{
+					if ((getChildByName("back").x + (1024) * Game.dt / 1000) > 0)
+					{
+						scrollX = - getChildByName("back").x;
+					}
+					else
+					{
+						scrollX = (1024) * Game.dt / 1000;
+					}
+					for (i = 0; i < numChildren; i++)
+					{
+						if (getChildAt(i).name != "front")
+						{
+							getChildAt(i).x += scrollX;
+						}
+						else
+						{
+							getChildAt(i).x += scrollX * _frontScrollFactor;
+						}
+					}
 				}
 			}
 		}
