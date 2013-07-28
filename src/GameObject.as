@@ -12,10 +12,13 @@ package
 		protected var _hidden : Boolean = false;
 		protected var _id : String = "";
 		
+		protected var _time:String = "day";
+		protected var _asset:String = "A";
+		protected var _mode:String = "normal";
+		
 		public function GameObject() 
 		{
-			gotoAndStop("A");
-			out();
+			updateAsset();
 		}
 		
 		override protected function init(e:Event):void 
@@ -43,8 +46,8 @@ package
 		{
 			if (_interactive)
 			{
-				if ((getChildAt(0) as MovieClip))
-					(getChildAt(0) as MovieClip).gotoAndStop("over");
+				_mode = "over";
+				updateAsset();
 			}
 		}
 		
@@ -52,8 +55,8 @@ package
 		{
 			if (_interactive)
 			{
-				if ((getChildAt(0) as MovieClip))
-					(getChildAt(0) as MovieClip).gotoAndStop("normal");
+				_mode = "normal";
+				updateAsset();
 			}
 		}
 		
@@ -85,6 +88,16 @@ package
 		public function set hidden(value:Boolean):void 
 		{
 			_hidden = value;
+		}
+		
+		public function set time(value:String):void 
+		{
+			_time = value;
+		}
+		
+		public function updateAsset () : void
+		{
+			gotoAndStop(_mode + "_" + _time + "_" + _asset);
 		}
 	}
 

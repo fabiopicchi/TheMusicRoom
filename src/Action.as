@@ -11,6 +11,7 @@ package
 		public static const RIGHT:int = 1 << 1;
 		public static const INTERACT:int = 1 << 2;
 		public static const INVENTORY:int = 1 << 3;
+		public static const CROUCH:int = 1 << 4;
 		
 		public function Action() 
 		{
@@ -29,6 +30,10 @@ package
 				case 39:
 					return RIGHT;
 				
+				case 83:
+				case 40:
+					return CROUCH;
+					
 				case 32:
 					return INTERACT;
 					

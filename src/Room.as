@@ -1,6 +1,7 @@
 package  
 {
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
 	/**
@@ -11,10 +12,12 @@ package
 	{
 		private var _player:Player;
 		private var _frontScrollFactor : Number;
+		private var _time : String = "day";
+		private var _scrollAcc : Number = 0;
 		
 		public function Room() 
 		{
-			
+			updateAssets();
 		}
 		
 		public function addPlayer () : void
@@ -26,7 +29,7 @@ package
 		override public function addChild(child:DisplayObject):DisplayObject 
 		{
 			super.addChild(child);
-			setChildIndex(child, getChildIndex(getChildByName("shadow_" + name + "_0")) - 1);
+			setChildIndex(child, getChildIndex(getChildByName("s" + name + "_0")));
 			return child;
 		}
 		
@@ -60,6 +63,7 @@ package
 			
 			if (_player)
 			{
+				//trace (getChildByName(name + "_area").x);
 				if (_player.x < getChildByName(name + "_area").x)
 				{
 					_player.x = getChildByName(name + "_area").x;
@@ -95,7 +99,7 @@ package
 						
 						if (o.interactive && !o.hidden)
 						{
-							if ((h = (getChildByName("hitbox_" + o.id) as Hitbox)))
+							if ((h = (getChildByName("h" + name + "_" + o.id) as Hitbox)))
 							{
 								if (_player.x <= h.x + h.width && (_player.x + _player.width) >= h.x)
 								{
@@ -144,38 +148,39 @@ package
 				
 				//scrollX
 				var scrollX : Number = 0;
-				if (_player.x >= 924 && Game.keyPressed(Action.RIGHT) && (getChildByName("back").x + getChildByName("back").width) > 1024)
+				if (_player.x >= 724 && Game.keyPressed(Action.RIGHT) && _scrollAcc > -(getChildByName("back").width - 1024))
 				{
-					if ((getChildByName("back").x + getChildByName("back").width - (1024) * Game.dt / 1000) < 1024)
+					if (_scrollAcc - 1024 * Game.dt < -(getChildByName("back").width - 1024))
 					{
-						scrollX = (getChildByName("back").x + getChildByName("back").width) - 1024;
+						scrollX = -Math.round((_scrollAcc + (getChildByName("back").width - 1024)));
 					}
 					else
 					{
-						scrollX = (1024) * Game.dt / 1000;
+						scrollX = -Math.round(1024 * Game.dt);
 					}
+					
 					for (i = 0; i < numChildren; i++)
 					{
 						if (getChildAt(i).name != "front")
 						{
-							getChildAt(i).x -= scrollX;
+							getChildAt(i).x += scrollX;
 						}
 						else
 						{
-							getChildAt(i).x -= scrollX * _frontScrollFactor;
+							getChildAt(i).x += scrollX * _frontScrollFactor;
 						}
 					}
 				}
 				
-				if (_player.x <= 100 && Game.keyPressed(Action.LEFT) && getChildByName("back").x < 0)
+				if (_player.x <= 300 && Game.keyPressed(Action.LEFT) && _scrollAcc < 0)
 				{
-					if ((getChildByName("back").x + (1024) * Game.dt / 1000) > 0)
+					if ((_scrollAcc + 1024 * Game.dt) > 0)
 					{
-						scrollX = - getChildByName("back").x;
+						scrollX = -Math.round(_scrollAcc);
 					}
 					else
 					{
-						scrollX = (1024) * Game.dt / 1000;
+						scrollX = Math.round(1024 * Game.dt);
 					}
 					for (i = 0; i < numChildren; i++)
 					{
@@ -189,6 +194,7 @@ package
 						}
 					}
 				}
+				_scrollAcc += scrollX;
 			}
 		}
 		
@@ -200,6 +206,22 @@ package
 		override protected function destroy(e:Event):void 
 		{
 			super.destroy(e);
+		}
+		
+		public function updateAssets () : void
+		{
+			(getChildByName("back") as MovieClip).gotoAndStop(_time);
+			(getChildByName("front") as MovieClip).gotoAndStop(_time);
+			
+			var obj : GameObject;
+			for (var i : int = 0; i < numChildren; i++)
+			{
+				if ((obj = (getChildAt(i) as GameObject)))
+				{
+					obj.time = _time;
+					obj.updateAsset();
+				}
+			}
 		}
 	}
 

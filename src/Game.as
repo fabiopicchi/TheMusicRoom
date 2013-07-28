@@ -22,7 +22,6 @@ package
 		private static var pKeyState : int = 0;
 		
 		private static var _status : int = 0;
-		
 		private static const NONE : int = 0;
 		private static const TYPING_TEXT : int = 1 << 0;
 		private static const PLAYING_CUTSCENE : int = 1 << 1;
@@ -36,18 +35,27 @@ package
 		private static var _text : String;
 		private static var _textBox : TextField;
 		private static var _textTime : Number = 0;
-		private static var _textCounter : Number = 0;
-		private const _LETTER_INTERVAL : Number = 100;
+		private static var _textCounter : int = 0;
+		private static var _pageCounter : int = 0;
+		private static var _typing : Boolean = false;
+		private static var _waitingInput : Boolean = false;
+		private static var _arText : Array = [
+			"Qwerty uiop asd fghjkl\nçzxcvbnm qwe",
+			"Uiop asdfg hjkl"
+		];
+		private const _LETTER_INTERVAL : Number = 0.1;
 		
 		private static var _nextRoom:String = "";
 		private var _room : String = "porch";
 		private var _roomMap : Object = {
-			smpl1 : new SampleRoom,
-			smpl2 : new SampleRoom2,
+			/*smpl1 : new SampleRoom,
+			smpl2 : new SampleRoom2,*/
 			porch : new Porch
 		};
+		
 		private var _shade : Shape = new Shape();
 		private var _changingRooms : Boolean = false;
+		
 		private static var _inventory : Inventory = new Inventory ();
 		
 		public function Game():void 
@@ -62,7 +70,7 @@ package
 		
 		private function init(e:Event):void 
 		{
-			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
@@ -93,12 +101,12 @@ package
 		}
 		
 		private function run(e:Event):void 
-		{
+		{	
 			pKeyState = keyState;
 			keyState = keyMap;
 			
 			var cTime : Number = (new Date()).getTime();
-			_dt = cTime - _time;
+			_dt = (cTime - _time) / 1000;
 			_time = cTime;
 			
 			update();
@@ -133,36 +141,6 @@ package
 			
 			if (!_changingRooms)
 			{
-				if (keyJustPressed(Action.INVENTORY))
-				{
-					if ((_status & INVENTORY_OPEN) != INVENTORY_OPEN)
-					{
-						showInventory();
-						_status |= INVENTORY_OPEN;
-						_playerInstance.setFlag(Player.INACTIVE);
-					}
-					else
-					{
-						hideInventory();
-						_status &= ~INVENTORY_OPEN;
-						_playerInstance.resetFlag(Player.INACTIVE);
-					}
-				}
-				
-				for (var i : int = 0; i < numChildren; i++)
-				{
-					var e : Entity;
-					if ((e = (getChildAt(i) as Entity)) && !(e is Room))
-					{
-						e.update();
-					}
-				}
-				
-				for (var k : String in _roomMap)
-				{
-					_roomMap[k].update();
-				}
-				
 				if ((_status & INVENTORY_OPEN) == INVENTORY_OPEN)
 				{
 					if (keyJustPressed(Action.LEFT))
@@ -179,17 +157,40 @@ package
 				{
 					typeText();
 				}
+				
+				else
+				{
+					if (keyJustPressed(Action.INVENTORY))
+					{
+						if ((_status & INVENTORY_OPEN) != INVENTORY_OPEN)
+						{
+							showInventory();
+							_status |= INVENTORY_OPEN;
+							_playerInstance.setFlag(Player.INACTIVE);
+						}
+						else
+						{
+							hideInventory();
+							_status &= ~INVENTORY_OPEN;
+							_playerInstance.resetFlag(Player.INACTIVE);
+						}
+					}
+					
+					for (var i : int = 0; i < numChildren; i++)
+					{
+						var e : Entity;
+						if ((e = (getChildAt(i) as Entity)) && !(e is Room))
+						{
+							e.update();
+						}
+					}
+					
+					for (var k : String in _roomMap)
+					{
+						_roomMap[k].update();
+					}
+				}
 			}
-		}
-		
-		private function showInventory():void 
-		{
-			TweenLite.to(_inventory, 0.5, { y : 668 } );
-		}
-		
-		private function hideInventory():void 
-		{
-			TweenLite.to(_inventory, 0.5, { y : 768 } );
 		}
 		
 		private function draw():void 
@@ -204,60 +205,23 @@ package
 			}
 		}
 		
-		private function onKeyReleased(e:KeyboardEvent):void 
+		
+		
+		//Inventory control methods
+		private function showInventory():void 
 		{
-			var action : int;
-			if ((action = Action.getAction(e.keyCode)) != Action.NONE)
-			{
-				keyMap &= (~action);
-			}
+			TweenLite.to(_inventory, 0.5, { y : 668 } );
 		}
 		
-		private function onKeyPressed(e:KeyboardEvent):void 
+		private function hideInventory():void 
 		{
-			var action : int;
-			if ((action = Action.getAction(e.keyCode)) != Action.NONE)
-			{
-				keyMap |= action;
-			}
-		}	
-		
-		public static function keyPressed(action:int) : Boolean
-		{
-			return ((keyState & action) == action);
+			TweenLite.to(_inventory, 0.5, { y : 768 } );
 		}
 		
-		public static function keyJustPressed(action:int) : Boolean
-		{
-			return (((keyState ^ pKeyState) & action) == action && keyPressed(action));
-		}
 		
-		public static function keyJustReleased(action:int) : Boolean
-		{
-			return (((keyState ^ pKeyState) & action) == action && !keyPressed(action));
-		}
 		
-		public static function get dt():Number 
-		{
-			return _dt;
-		}
-		
-		public static function get playerInstance():Player 
-		{
-			return _playerInstance;
-		}
-		
-		public static function setFlag (flag : int) : void
-		{
-			_status |= flag;
-		}
-		
-		public static function resetFlag (flag : int) : void
-		{
-			_status &= ~flag;
-		}
-		
-		public static function displayText(text:String) : void
+		//Text typing methods
+		public static function displayText(id:String) : void
 		{
 			_textBox.visible = true;
 			_textBox.width = 424;
@@ -271,27 +235,53 @@ package
 			_textBox.border = true;
 			_textBox.borderColor = 0xFFFFFF;
 			
-			_text = text;
+			_textCounter = 0;
+			_pageCounter = 0;
+			_textTime = 0;
+			_waitingInput = false;
+			_text = _arText[_pageCounter];
+			_playerInstance.setFlag(Player.INACTIVE);
 			setFlag(TYPING_TEXT);
 		}
 		
 		private function typeText() : void
 		{
-			_textTime += _dt
+			_textTime += _dt;
 			
-			if (_textTime >= _LETTER_INTERVAL)
+			if (!_waitingInput )
 			{
-				_textTime = 0;
-				_textBox.text = _text.slice(0, _textCounter);
-				if (_textCounter == _text.length)
+				if (keyJustPressed(Action.INTERACT))
 				{
-					_textCounter = 0;
+					_textCounter = _text.length;
+					_textTime = _LETTER_INTERVAL;
+				}
+				if (_textTime >= _LETTER_INTERVAL)
+				{
 					_textTime = 0;
-					resetFlag(TYPING_TEXT);
+					_textBox.text = _text.slice(0, _textCounter);
+					if (_textCounter == _text.length)
+					{
+						_textCounter = 0;
+						_textTime = 0;
+						_waitingInput = true;
+					}
+					else
+					{
+						_textCounter++;
+					}
+				}
+			}
+			else if (keyJustPressed(Action.INTERACT))
+			{
+				_waitingInput = false;
+				_pageCounter++;
+				if (_pageCounter < _arText.length)
+				{
+					_text = _arText[_pageCounter];
 				}
 				else
 				{
-					_textCounter++
+					Game.closeText();
 				}
 			}
 		}
@@ -317,12 +307,81 @@ package
 		{
 			_textBox.text = "";
 			_textBox.visible = false;
+			_playerInstance.resetFlag(Player.INACTIVE);
 			resetFlag(TYPING_TEXT);
 		}
 		
+		
+		
+		//Game state control
+		public static function setFlag (flag : int) : void
+		{
+			_status |= flag;
+		}
+		
+		public static function resetFlag (flag : int) : void
+		{
+			_status &= ~flag;
+		}
+		
+		
+		
+		//Room control
 		public static function setNextRoom (room : String) : void
 		{
 			_nextRoom = room;
+		}
+		
+		
+		
+		//Input API
+		public static function keyPressed(action:int) : Boolean
+		{
+			return ((keyState & action) == action);
+		}
+		
+		public static function keyJustPressed(action:int) : Boolean
+		{
+			return (((keyState ^ pKeyState) & action) == action && keyPressed(action));
+		}
+		
+		public static function keyJustReleased(action:int) : Boolean
+		{
+			return (((keyState ^ pKeyState) & action) == action && !keyPressed(action));
+		}
+		
+		
+		
+		//Keyboard Events
+		private function onKeyReleased(e:KeyboardEvent):void 
+		{
+			var action : int;
+			if ((action = Action.getAction(e.keyCode)) != Action.NONE)
+			{
+				keyMap &= (~action);
+			}
+		}
+		
+		private function onKeyPressed(e:KeyboardEvent):void 
+		{
+			var action : int;
+			if ((action = Action.getAction(e.keyCode)) != Action.NONE)
+			{
+				keyMap |= action;
+			}
+		}	
+		
+		
+		
+		//Static getters
+		public static function get dt():Number 
+		{
+			return _dt;
+		}
+		
+		public static function get playerInstance():Player 
+		{
+			return _playerInstance;
 		}
 	}
 }

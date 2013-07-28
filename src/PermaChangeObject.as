@@ -37,11 +37,9 @@ package
 		{
 			super.interact();
 			
-			if (currentFrameLabel == "A")
-			{
-				gotoAndStop("B");
-			}
+			_asset = "B";
 			out();
+			updateAsset();
 			_interactive = false;
 		}
 	}

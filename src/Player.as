@@ -3,6 +3,7 @@ package
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	/**
 	 * ...
 	 * @author arthur e fabio
@@ -15,26 +16,45 @@ package
 		public static const NONE : int = 0;
 		public static const HIDDEN : int = 1 << 0;
 		public static const INACTIVE : int = 1 << 1;
+		public static const CROUCH : int = 1 << 2;
 		
 		private var _room : String;
+		private var _currentAnim : String = "idle";
+		private var _pAnim : String = "idle";
+		private var b:Boy;
+		private var hitbox : Rectangle = new Rectangle(0, 0, 110, 290);
+		
 		
 		public function Player() 
 		{
 			super();
+			_status = NONE;
+		}
+		
+		override public function get width():Number 
+		{
+			return hitbox.width;
+		}
+		
+		override public function get height():Number 
+		{
+			return hitbox.height;
+		}
+		
+		override public function set height(value:Number):void 
+		{
+			super.height = value;
 		}
 		
 		override protected function init(e:Event):void 
 		{
 			super.init(e);
 			
-			var s : Shape = new Shape();
-			s.graphics.beginFill(0xFFFFFF);
-			s.graphics.drawRect(0, 0, 30, 100);
-			s.graphics.endFill();
+			addChild(b = new Boy());
+			b.x += hitbox.width / 2;
+			b.y += hitbox.height / 2;
 			
-			this.y = 500;
-			
-			addChild(s);
+			y = 300;
 			
 			_keyPoints.push(new Point (0, 0));
 			_keyPoints.push(new Point (width, 0));
@@ -47,24 +67,55 @@ package
 			super.update();
 			
 			_room = parent.name;
-		
-			if (Game.keyPressed(Action.LEFT) && !((_status & INACTIVE) == INACTIVE))
-			{
-				this.x -= (1024) * Game.dt / 1000;
-			}
 			
-			if (Game.keyPressed(Action.RIGHT) && !((_status & INACTIVE) == INACTIVE))
-			{
-				this.x += (1024) * Game.dt / 1000;
-			}
+			var dx : Number = 0;
 			
-			if (Game.keyJustPressed(Action.INTERACT))
+			if (!isInactive())
 			{
-				if (_gameObject)
+				if (Game.keyPressed(Action.LEFT))
 				{
-					_gameObject.interact();
+					b.scaleX = -1;
+					dx -= Math.round((1024) * Game.dt);
+				}
+				
+				if (Game.keyPressed(Action.RIGHT))
+				{
+					b.scaleX = 1;
+					dx += Math.round((1024) * Game.dt);
+				}
+				
+				if (Game.keyJustPressed(Action.INTERACT))
+				{
+					if (_gameObject)
+					{
+						_gameObject.interact();
+					}
+				}
+				
+				if (Game.keyJustPressed(Action.CROUCH))
+				{
+					setFlag(CROUCH);
+				}
+				else if (Game.keyJustReleased(Action.CROUCH))
+				{
+					resetFlag(CROUCH);
 				}
 			}
+			
+			if (dx == 0)
+				_currentAnim = "idle";
+			else
+			{
+				this.x += dx;
+				_currentAnim = "walking";
+			}
+			
+			if (_currentAnim != _pAnim)
+			{
+				b.gotoAndPlay(_currentAnim);
+				_pAnim = _currentAnim;
+			}
+			
 		}
 		
 		public function isOverlappedBy (s : Shadow) : Boolean
@@ -102,6 +153,24 @@ package
 		public function get room():String 
 		{
 			return _room;
+		}
+		
+		override public function setFlag(flag:int):void 
+		{
+			super.setFlag(flag);
+			if (flag == INACTIVE)
+			{
+				b.stop();
+			}
+		}
+		
+		override public function resetFlag(flag:int):void 
+		{
+			super.resetFlag(flag);
+			if (flag == INACTIVE)
+			{
+				b.gotoAndPlay(b.currentFrame);
+			}
 		}
 	}
 
