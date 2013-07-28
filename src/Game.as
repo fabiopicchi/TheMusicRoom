@@ -4,6 +4,7 @@ package
 	import com.greensock.TweenLite;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.text.TextField;
@@ -61,6 +62,8 @@ package
 		
 		private function init(e:Event):void 
 		{
+			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			_shade.graphics.beginFill(0x000000);
@@ -85,7 +88,7 @@ package
 			_inventory.x = 0;
 			_inventory.y = 768;
 			
-			var myFormat : TextFormat = new TextFormat("Verdana", 30, 0xFFFFFF);
+			var myFormat : TextFormat = new TextFormat("Comic Sans MS", 30, 0xFFFFFF);
 			_textBox.defaultTextFormat = myFormat;
 		}
 		

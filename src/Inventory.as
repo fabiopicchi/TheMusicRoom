@@ -29,8 +29,12 @@ package
 			spacing = (1024 - 2 * X_0 - ITEM_WIDTH) / ITEMS_DISPLAYED;
 			
 			for (var i : int = 0; i < 15; i++)
-				addItem(new InventoryItem);
+				addItem(new InventoryItem(i));
+			
+			menu[0].over();
 		}
+		
+		
 		
 		public function nextRight () : void
 		{
@@ -41,7 +45,7 @@ package
 				return;
 			}
 			
-			moveItems();
+			moveItems(true);
 		}
 		
 		public function nextLeft () : void
@@ -53,10 +57,10 @@ package
 				return;
 			}
 			
-			moveItems();
+			moveItems(false);
 		}
 		
-		private function moveItems () : void
+		private function moveItems (movingRight : Boolean) : void
 		{
 			for (var j : int = 0; j < menu.length; j++)
 			{
@@ -64,11 +68,18 @@ package
 			}
 			menu[_currentItem].over();
 			
-			if (_currentItem > ITEMS_DISPLAYED && _currentItem < menu.length - ITEMS_DISPLAYED)
+			if (movingRight && (_currentItem % (ITEMS_DISPLAYED + 1) == 0))
 			{
 				for (var i : int = 0; i < menu.length; i++)
 				{
 					TweenLite.to(menu[i], 0.5, { ease: Elastic.easeInOut, x : (X_0 + (i - _currentItem) * spacing) } );
+				}
+			}
+			else if (!movingRight && ((_currentItem + 1) % (ITEMS_DISPLAYED + 1) == 0))
+			{
+				for (var h : int = 0; h < menu.length; h++)
+				{
+					TweenLite.to(menu[h], 0.5, { ease: Elastic.easeInOut, x : (X_0 + (h - _currentItem + ITEMS_DISPLAYED) * spacing) } );
 				}
 			}
 		}
