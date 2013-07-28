@@ -28,10 +28,9 @@ package
 			
 			spacing = (1024 - 2 * X_0 - ITEM_WIDTH) / ITEMS_DISPLAYED;
 			
-			for (var i : int = 0; i < 30; i++)
-				addItem(new InventoryItem(i));
+			for (var i : int = 0; i < 4; i++)
+				addItem(new InventoryItem);
 			
-			menu[0].over();
 		}
 		
 		
@@ -87,10 +86,32 @@ package
 		public function addItem (i : InventoryItem) : void
 		{
 			i.y = 25;
-			i.x = X_0 + (menu.length - _currentItem) * spacing;
+			i.x = X_0 + menu.length * spacing;
 			menu.push(i);
 			
+			if (menu.length == 1)
+			{
+				menu[0].over();
+			}
+			
 			addChild(i);
+		}
+		
+		public function removeItem (id : String) : void
+		{
+			for (var i : Number = 0; i < menu.length; i++)
+			{
+				if (menu[i].id == id)
+				{
+					menu.splice(i, 1);
+					
+					if (i == menu.length - 1)
+					{
+						_currentItem--;
+						menu[_currentItem].over();
+					}
+				}
+			}
 		}
 	}
 

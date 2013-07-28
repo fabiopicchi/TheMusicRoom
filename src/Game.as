@@ -70,7 +70,7 @@ package
 		
 		private function init(e:Event):void 
 		{
-			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
@@ -218,7 +218,15 @@ package
 			TweenLite.to(_inventory, 0.5, { y : 768 } );
 		}
 		
+		public static function addToInventory(id : String) : void
+		{
+			_inventory.addItem(new InventoryItem(id));
+		}
 		
+		public static function removeFromInventory(id : String) : void
+		{
+			_inventory.removeItem(id);
+		}
 		
 		//Text typing methods
 		public static function displayText(id:String) : void

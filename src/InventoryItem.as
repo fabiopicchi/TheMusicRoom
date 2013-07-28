@@ -11,22 +11,18 @@ package
 	public class InventoryItem extends MovieClip 
 	{
 		
-		private var _textBox : TextField;
+		private var _id : String;
 		
-		public function InventoryItem(n : Number = 0) 
+		public function InventoryItem(id : String = "") 
 		{
+			_id = id;
+			
 			var s : Shape = new Shape;
 			s.graphics.beginFill(0xAA900F);
 			s.graphics.drawRect(0, 0, 50, 50);
 			s.graphics.endFill();
 			
 			addChild(s);
-			
-			_textBox = new TextField();
-			_textBox.text = String(n);
-			
-			addChild(_textBox);
-			setChildIndex(_textBox, numChildren - 1);
 		}
 		
 		public function over () : void
@@ -39,7 +35,6 @@ package
 			s.graphics.endFill();
 			
 			addChild(s);
-			setChildIndex(_textBox, numChildren - 1);
 		}
 		
 		public function out () : void
@@ -52,7 +47,11 @@ package
 			s.graphics.endFill();
 			
 			addChild(s);
-			setChildIndex(_textBox, numChildren - 1);
+		}
+		
+		public function get id():String 
+		{
+			return _id;
 		}
 	}
 }
