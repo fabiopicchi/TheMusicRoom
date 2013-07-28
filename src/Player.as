@@ -28,6 +28,7 @@ package
 		public function Player() 
 		{
 			super();
+			_status = NONE;
 		}
 		
 		override public function get width():Number 
@@ -69,16 +70,36 @@ package
 			
 			var dx : Number = 0;
 			
-			if (Game.keyPressed(Action.LEFT) && !((_status & INACTIVE) == INACTIVE))
+			if (!isInactive())
 			{
-				b.scaleX = -1;
-				dx -= Math.round((1024) * Game.dt);
-			}
-			
-			if (Game.keyPressed(Action.RIGHT) && !((_status & INACTIVE) == INACTIVE))
-			{
-				b.scaleX = 1;
-				dx += Math.round((1024) * Game.dt);
+				if (Game.keyPressed(Action.LEFT))
+				{
+					b.scaleX = -1;
+					dx -= Math.round((1024) * Game.dt);
+				}
+				
+				if (Game.keyPressed(Action.RIGHT))
+				{
+					b.scaleX = 1;
+					dx += Math.round((1024) * Game.dt);
+				}
+				
+				if (Game.keyJustPressed(Action.INTERACT))
+				{
+					if (_gameObject)
+					{
+						_gameObject.interact();
+					}
+				}
+				
+				if (Game.keyJustPressed(Action.CROUCH))
+				{
+					setFlag(CROUCH);
+				}
+				else if (Game.keyJustReleased(Action.CROUCH))
+				{
+					resetFlag(CROUCH);
+				}
 			}
 			
 			if (dx == 0)
@@ -88,15 +109,6 @@ package
 				this.x += dx;
 				_currentAnim = "walking";
 			}
-			
-			if (Game.keyJustPressed(Action.INTERACT))
-			{
-				if (_gameObject)
-				{
-					_gameObject.interact();
-				}
-			}
-			
 			
 			if (_currentAnim != _pAnim)
 			{
@@ -141,6 +153,24 @@ package
 		public function get room():String 
 		{
 			return _room;
+		}
+		
+		override public function setFlag(flag:int):void 
+		{
+			super.setFlag(flag);
+			if (flag == INACTIVE)
+			{
+				b.stop();
+			}
+		}
+		
+		override public function resetFlag(flag:int):void 
+		{
+			super.resetFlag(flag);
+			if (flag == INACTIVE)
+			{
+				b.gotoAndPlay(b.currentFrame);
+			}
 		}
 	}
 

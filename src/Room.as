@@ -29,7 +29,7 @@ package
 		override public function addChild(child:DisplayObject):DisplayObject 
 		{
 			super.addChild(child);
-			setChildIndex(child, getChildIndex(getChildByName("s" + name + "_0")) - 1);
+			setChildIndex(child, getChildIndex(getChildByName("s" + name + "_0")));
 			return child;
 		}
 		

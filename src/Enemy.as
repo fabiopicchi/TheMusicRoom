@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Shape;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	/**
@@ -13,36 +14,36 @@ package
 		public static const PATROL:int = 1 << 0;
 		public static const PURSUE:int = 1 << 1;
 		public static const LOOKING:int = 1 << 2;
+		public static const LOOKING_CROUCH:int = 1 << 3;
+		
+		private var _attackRange : Number = 10;
+		private var _patrolRoom : Room;
 		
 		private var _arRoute : Array = [];
 		private var _arWait : Array = [];
-		private var _speed : Number = 512;
-		private var _room : String = "";
 		private var _routePosition : int = 0;
-		private var _facing : int;
+		
+		private var _lookingTimeout : int;
+		private var _lookingStartX : Number = 0;
+		
 		private var _waiting : Boolean = false;
 		private var _waitingTimeout : int;
-		private var _lookingTimeout : int;
-		private var _attackRange : Number = 10;
-		private var _lookingStartX : Number = 0;
-		private var _patrolRoom : Room;
+		
+		private var _room : String = "";
+		private var _speed : Number = 512;
+		private var _facing : int;
+		
+		private var _target : Number;
 		
 		public function Enemy() 
 		{
-			_arRoute = [100, 200, 400, 300, 500];
+			_arRoute = [500, 600, 800, 700, 900];
 			_arWait = [1000, 1000, 1000, 1000, 1000];
 			
 			setFlag(PATROL);
 			_routePosition = 0;
+			_target = _arRoute[_routePosition + 1]; 
 			this.x = _arRoute[_routePosition];
-			if (x < _arRoute[_routePosition + 1])
-			{
-				_facing = Entity.RIGHT;
-			}
-			else
-			{
-				_facing = Entity.LEFT;
-			}
 		}
 		
 		override protected function init(e:Event):void 
@@ -68,22 +69,11 @@ package
 			
 			_room = parent.name;
 			
+			moveToTarget();
+			
 			if (isPatrolling())
 			{
-				if (x != _arRoute[_routePosition + 1])
-				{
-					if (isFacing(LEFT))
-					{
-						x -= Math.round(_speed * Game.dt);
-						if (x < _arRoute[_routePosition + 1]) x = _arRoute[_routePosition + 1];
-					}
-					else
-					{
-						x += Math.round(_speed * Game.dt);
-						if (x > _arRoute[_routePosition + 1]) x = _arRoute[_routePosition + 1];
-					}
-				}
-				else
+				if (x == _target)
 				{
 					if (!_waiting)
 					{
@@ -95,29 +85,8 @@ package
 							if (_routePosition >= _arRoute.length - 1)
 								_routePosition = 0;					
 							
-							if (x < _arRoute[_routePosition + 1])
-							{
-								_facing = Entity.RIGHT;
-							}
-							else
-							{
-								_facing = Entity.LEFT;
-							}
+							_target = _arRoute[_routePosition + 1];
 						}, _arWait[_routePosition]);
-					}
-				}
-				
-				if (Game.playerInstance.room == room)
-				{
-					if (!Game.playerInstance.isHidden())
-					{
-						if (Game.playerInstance.getMidPoint().x < x && isFacing(LEFT) || Game.playerInstance.getMidPoint().x > x && isFacing(RIGHT))
-						{
-							resetFlag(PATROL);
-							setFlag(PURSUE);
-							_waiting = false;
-							clearTimeout(_waitingTimeout);
-						}
 					}
 				}
 			}
@@ -128,35 +97,17 @@ package
 				{
 					if (!isWithinRange())
 					{
-						if (Game.playerInstance.getMidPoint().x < x)
-						{
-							_facing = Entity.LEFT;
-							x -= Math.round(_speed * Game.dt);
-						}
-						else
-						{
-							_facing = Entity.RIGHT;
-							x += Math.round(_speed * Game.dt);
-						}
+						_target = Game.playerInstance.getMidPoint().x;
 					}
 				}
 				else
 				{
-					var target : GameObject = (parent.getChildByName("object_" + Game.playerInstance.room) as GameObject);
-					if (target)
+					var porta : GameObject = (parent.getChildByName("object_" + Game.playerInstance.room) as GameObject);
+					if (porta)
 					{
-						if (!(target.x <= x + width && (target.x + target.width) >= x))
+						if (!(porta.x <= x + width && (porta.x + porta.width) >= x))
 						{
-							if (target.getMidPoint().x < x)
-							{
-								_facing = Entity.LEFT;
-								x -= Math.round(_speed * Game.dt);
-							}
-							else
-							{
-								_facing = Entity.RIGHT;
-								x += Math.round(_speed * Game.dt);
-							}
+							_target = porta.getMidPoint().x;
 						}
 						else
 						{
@@ -172,6 +123,8 @@ package
 								
 								_lookingStartX = x;
 								_facing = ((Math.floor(Math.random() * 2)) ? Entity.LEFT : Entity.RIGHT);
+								if (isFacing(LEFT)) _target = _lookingStartX - 100;
+								if (isFacing(RIGHT)) _target = _lookingStartX + 100;
 								_lookingTimeout = 3000;
 							}
 						}
@@ -189,7 +142,6 @@ package
 				{
 					if (isFacing(LEFT))
 					{
-						x -= _speed * Game.dt / 1000;
 						if (getMidPoint().x < _lookingStartX - 100)
 						{
 							_waiting = true
@@ -197,6 +149,7 @@ package
 							{
 								_waiting = false;
 								_facing = Entity.RIGHT;
+								_target = _lookingStartX + 100;
 								if (_lookingTimeout <= 0)
 								{
 									teleportBack();
@@ -206,7 +159,6 @@ package
 					}
 					else
 					{
-						x += _speed * Game.dt / 1000;
 						if (getMidPoint().x > _lookingStartX + 100)
 						{
 							_waiting = true
@@ -214,6 +166,7 @@ package
 							{
 								_waiting = false;
 								_facing = Entity.LEFT;
+								_target = _lookingStartX - 100;
 								if (_lookingTimeout <= 0)
 								{
 									teleportBack();
@@ -223,21 +176,48 @@ package
 					}
 				}
 				
-				if (Game.playerInstance.room == room)
+				_lookingTimeout -= Game.dt;
+			}
+			
+			if (isLookingCrouch())
+			{
+				if (!_waiting)
 				{
-					if (!Game.playerInstance.isHidden())
+					if (isFacing(LEFT))
 					{
-						if (Game.playerInstance.getMidPoint().x < x && isFacing(LEFT) || Game.playerInstance.getMidPoint().x > x && isFacing(RIGHT))
+						if (getMidPoint().x < _lookingStartX - 100)
 						{
-							resetFlag(LOOKING);
-							setFlag(PURSUE);
-							_waiting = false
-							clearTimeout(_waitingTimeout);
+							_waiting = true
+							_waitingTimeout = setTimeout(function () : void
+							{
+								_waiting = false;
+								_facing = Entity.RIGHT;
+								_target = _lookingStartX + 100;
+								if (_lookingTimeout <= 0)
+								{
+									teleportBack();
+								}
+							}, 500);
+						}
+					}
+					else
+					{
+						if (getMidPoint().x > _lookingStartX + 100)
+						{
+							_waiting = true
+							_waitingTimeout = setTimeout(function () : void
+							{
+								_waiting = false;
+								_facing = Entity.LEFT;
+								_target = _lookingStartX - 100;
+								if (_lookingTimeout <= 0)
+								{
+									teleportBack();
+								}
+							}, 500);
 						}
 					}
 				}
-				
-				_lookingTimeout -= Game.dt;
 			}
 		}
 		
@@ -270,6 +250,11 @@ package
 			return ((_status & LOOKING) == LOOKING);
 		}
 		
+		public function isLookingCrouch () : Boolean
+		{
+			return ((_status & LOOKING_CROUCH) == LOOKING_CROUCH);
+		}
+		
 		public function attack():void 
 		{
 			
@@ -288,6 +273,39 @@ package
 		public function isFacing (dir : int) : Boolean
 		{
 			return (_facing == dir);
+		}
+		
+		public function moveToTarget () : void
+		{
+			if (x != _target)
+			{
+				if (x > _target)
+				{
+					x -= Math.round(_speed * Game.dt);
+					_facing = Entity.LEFT;
+				}
+				else
+				{
+					x += Math.round(_speed * Game.dt);
+					_facing = Entity.RIGHT;
+				}
+				
+				if ((isFacing(LEFT) && x < _target) || (isFacing(RIGHT) && x > _target))
+				{
+					x = _target;
+				}
+			}
+
+			if (!isPursuing() && Game.playerInstance.room == room && !Game.playerInstance.isHidden())
+			{
+				if (Game.playerInstance.getMidPoint().x < x && isFacing(LEFT) || Game.playerInstance.getMidPoint().x > x && isFacing(RIGHT))
+				{
+					_status = 0;
+					setFlag(PURSUE);
+					_waiting = false;
+					clearTimeout(_waitingTimeout);
+				}
+			}
 		}
 		
 		public function get room():String 
