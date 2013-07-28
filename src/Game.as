@@ -143,6 +143,7 @@ package
 					}
 					else
 					{
+						hideInventory();
 						_status &= ~INVENTORY_OPEN;
 						_playerInstance.resetFlag(Player.INACTIVE);
 					}
@@ -184,6 +185,11 @@ package
 		private function showInventory():void 
 		{
 			TweenLite.to(_inventory, 0.5, { y : 668 } );
+		}
+		
+		private function hideInventory():void 
+		{
+			TweenLite.to(_inventory, 0.5, { y : 768 } );
 		}
 		
 		private function draw():void 
