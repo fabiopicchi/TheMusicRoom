@@ -41,8 +41,8 @@ package
 		private static var _nextRoom:String = "";
 		private var _room : String = "porch";
 		private var _roomMap : Object = {
-			smpl1 : new SampleRoom,
-			smpl2 : new SampleRoom2,
+			/*smpl1 : new SampleRoom,
+			smpl2 : new SampleRoom2,*/
 			porch : new Porch
 		};
 		private var _shade : Shape = new Shape();
@@ -95,7 +95,7 @@ package
 			keyState = keyMap;
 			
 			var cTime : Number = (new Date()).getTime();
-			_dt = cTime - _time;
+			_dt = (cTime - _time) / 1000;
 			_time = cTime;
 			
 			update();

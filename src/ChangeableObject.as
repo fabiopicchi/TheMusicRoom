@@ -37,13 +37,13 @@ package
 		{
 			super.interact();
 			
-			if (currentFrameLabel == "A")
+			if (_asset == "A")
 			{
-				gotoAndStop("B");
+				_asset = "B";
 			}
 			else
 			{
-				gotoAndStop("A");
+				_asset = "A";
 			}
 			if (fromPlayer)
 			{
@@ -53,6 +53,7 @@ package
 			{
 				out();
 			}
+			updateAsset();
 		}
 	}
 

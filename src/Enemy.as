@@ -74,12 +74,12 @@ package
 				{
 					if (isFacing(LEFT))
 					{
-						x -= _speed * Game.dt / 1000;
+						x -= Math.round(_speed * Game.dt);
 						if (x < _arRoute[_routePosition + 1]) x = _arRoute[_routePosition + 1];
 					}
 					else
 					{
-						x += _speed * Game.dt / 1000;
+						x += Math.round(_speed * Game.dt);
 						if (x > _arRoute[_routePosition + 1]) x = _arRoute[_routePosition + 1];
 					}
 				}
@@ -131,12 +131,12 @@ package
 						if (Game.playerInstance.getMidPoint().x < x)
 						{
 							_facing = Entity.LEFT;
-							x -= _speed * Game.dt / 1000;
+							x -= Math.round(_speed * Game.dt);
 						}
 						else
 						{
 							_facing = Entity.RIGHT;
-							x += _speed * Game.dt / 1000;
+							x += Math.round(_speed * Game.dt);
 						}
 					}
 				}
@@ -150,12 +150,12 @@ package
 							if (target.getMidPoint().x < x)
 							{
 								_facing = Entity.LEFT;
-								x -= _speed * Game.dt / 1000;
+								x -= Math.round(_speed * Game.dt);
 							}
 							else
 							{
 								_facing = Entity.RIGHT;
-								x += _speed * Game.dt / 1000;
+								x += Math.round(_speed * Game.dt);
 							}
 						}
 						else
