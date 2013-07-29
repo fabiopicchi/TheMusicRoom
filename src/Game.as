@@ -4,6 +4,7 @@ package
 	import com.greensock.TweenLite;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Scene;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
@@ -86,7 +87,7 @@ package
 		
 		private function init(e:Event):void 
 		{
-			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			var jsonArray : Array = [];
 			var jsonObject : Object;
@@ -102,7 +103,7 @@ package
 				{
 					for (var j : int = 0; j < room.numChildren; j++)
 					{
-						if ((el = (room.getChildAt(j) as LightSwitch)))
+						if ((el = (room.getChildAt(j) as SceneElement)))
 						{
 							if (el.name == jsonObject.name)
 							{
@@ -149,6 +150,27 @@ package
 							if (s.name == jsonObject.name)
 							{
 								s.loadData(jsonObject);
+							}
+						}
+					}
+				}
+			}
+			
+			jsonArray = (JSONLoader.loadFile("doors.json") as Array);
+			var d : Door;
+			for (var i : int = 0; i < jsonArray.length; i++)
+			{
+				jsonObject = jsonArray[i];
+				room = ROOM_MAP[jsonObject.room];
+				if (room)
+				{
+					for (var j : int = 0; j < room.numChildren; j++)
+					{
+						if ((d = (room.getChildAt(j) as Door)))
+						{
+							if (d.name == jsonObject.name)
+							{
+								d.loadData(jsonObject);
 							}
 						}
 					}
@@ -212,6 +234,7 @@ package
 					_playerInstance.x = _nextRoomPosition;
 					_room = _nextRoom;
 					_nextRoom = "";
+					trace(_room);
 					ROOM_MAP[_room].addPlayer();
 					addChildAt(ROOM_MAP[_room], 0);
 					if (_nextRoomCallback != null) _nextRoomCallback();

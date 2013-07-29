@@ -16,38 +16,37 @@ package
 		
 		public function loadData (data : Object) : void
 		{
+			trace(data.destiny);
+			
 			_destiny = data.destiny;
 		}
 		
 		override public function interact(item : InventoryItem = null) : void
 		{
-			var r : Room;
+			var r : Room = Game.ROOM_MAP[_destiny];
 			var door : Door;
 			var roomPosition : Number;
 			var found : Boolean = false;
 			
-			for (var k : String in Game.ROOM_MAP)
+			
+			if (r)
 			{
-				r = Game.ROOM_MAP[k] as Room;
-				if (r.name == _destiny)
+				for (var i : int = 0; i <  r.numChildren; i++)
 				{
-					for (var i : int = 0; i <  r.numChildren; i++)
+					if ((door = r.getChildAt(i) as Door))
 					{
-						if (door = r.getChildAt(i) as Door)
+						if (door.destiny == parent.name)
 						{
-							if (door.destiny == name)
-							{
-								roomPosition = door.x;
-								found = true;
-								break;
-							}
+							roomPosition = door.x;
+							found = true;
+							break;
 						}
 					}
 				}
-				if (found) break;
 			}
 			
-			Game.setNextRoom(_destiny, roomPosition);
+			if (found)
+				Game.setNextRoom(_destiny, roomPosition);
 		}
 		
 		public function get destiny():String 

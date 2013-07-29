@@ -1,0 +1,12 @@
+[
+    {
+        "name": "door1",
+        "room": "porch",
+        "destiny": "foyer"
+    },
+    {
+        "name": "door1",
+        "room": "foyer",
+        "destiny": "porch"
+    }
+]

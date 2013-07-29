@@ -3,5 +3,10 @@
         "name": "shadow1",
         "room": "foyer",
         "nightInitialState": 0
+    },
+	{
+        "name": "sfoyer_1",
+        "room": "foyer",
+        "nightInitialState": 0
     }
 ]

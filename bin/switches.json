@@ -2,7 +2,8 @@
     {
         "name": "switch1",
         "shadows": [
-            "shadow1"
+            "shadow1",
+			"sfoyer_1"
         ],
         "room": "foyer"
     }
