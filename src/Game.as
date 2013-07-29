@@ -88,72 +88,9 @@ package
 		{
 			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
-			var jsonArray : Array = [];
-			var jsonObject : Object;
-			var room : Room;
-			
-			jsonArray = (JSONLoader.loadFile("sceneElements.json") as Array);
-			var el : SceneElement;
-			for (var i : int = 0; i < jsonArray.length; i++)
-			{
-				jsonObject = jsonArray[i];
-				room = _roomMap[jsonObject.room];
-				if (room)
-				{
-					for (var j : int = 0; j < room.numChildren; j++)
-					{
-						if ((el = (room.getChildAt(j) as SceneElement)))
-						{
-							if (el.name == jsonObject.name)
-							{
-								el.loadData(jsonObject);
-							}
-						}
-					}
-				}
-			}
-			
-			jsonArray = (JSONLoader.loadFile("switches.json") as Array);
-			var l : LightSwitch;
-			for (var i : int = 0; i < jsonArray.length; i++)
-			{
-				jsonObject = jsonArray[i];
-				room = _roomMap[jsonObject.room];
-				if (room)
-				{
-					for (var j : int = 0; j < room.numChildren; j++)
-					{
-						if ((l = (room.getChildAt(j) as LightSwitch)))
-						{
-							if (l.name == jsonObject.name)
-							{
-								l.loadData(jsonObject);
-							}
-						}
-					}
-				}
-			}
-			
-			jsonArray = (JSONLoader.loadFile("shadows.json") as Array);
-			var s : Shadow;
-			for (var i : int = 0; i < jsonArray.length; i++)
-			{
-				jsonObject = jsonArray[i];
-				room = _roomMap[jsonObject.room];
-				if (room)
-				{
-					for (var j : int = 0; j < room.numChildren; j++)
-					{
-						if ((s = (room.getChildAt(j) as Shadow)))
-						{
-							if (s.name == jsonObject.name)
-							{
-								s.loadData(jsonObject);
-							}
-						}
-					}
-				}
-			}
+			loadJSONProperties("sceneElements.json", SceneElement);
+			loadJSONProperties("switches.json", LightSwitch);
+			loadJSONProperties("shadows.json", Shadow);
 			
 			_arTeleport = (JSONLoader.loadFile("teleports.json") as Array);
 			
@@ -578,6 +515,36 @@ package
 					removeChild(_shade);
 				}});
 			}});
+		}
+		
+		
+		
+		//load JSON properties
+		private function loadJSONProperties (fileName : String, cl : Class) : void
+		{
+			var jsonArray : Array = [];
+			var jsonObject : Object;
+			var room : Room;
+			jsonArray = (JSONLoader.loadFile(fileName) as Array);
+			var obj : DisplayObject;
+			for (var i : int = 0; i < jsonArray.length; i++)
+			{
+				jsonObject = jsonArray[i];
+				room = _roomMap[jsonObject.room];
+				if (room)
+				{
+					for (var j : int = 0; j < room.numChildren; j++)
+					{
+						if ((obj = room.getChildAt(j)) is cl)
+						{
+							if (obj.name == jsonObject.name)
+							{
+								(obj as cl).loadData(jsonObject);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
