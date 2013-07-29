@@ -9,11 +9,15 @@ package
 	{
 		
 		private var _nightInitialState : Boolean;
-		private var _room : Room;
 		
 		public function Shadow() 
 		{
 			
+		}
+		
+		public function loadData (data : Object) : void
+		{
+			_nightInitialState = data.nightInitialState;
 		}
 		
 		public function resetNightState() : void

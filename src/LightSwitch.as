@@ -7,7 +7,7 @@ package
 	public class LightSwitch extends Entity 
 	{
 		
-		private var _shadows : Array = new Array();
+		private var _shadows : Array;
 		private var _room : Room;
 		
 		public function LightSwitch() 
@@ -15,15 +15,19 @@ package
 			
 		}
 		
-		public function interact()
+		public function loadData (data : Object) : void
+		{
+			_shadows = ((data.shadows is Array) ? data.shadows : [data.shadows]);
+			_room = data.room;
+		}
+		
+		public function interact() : void
 		{
 			var s : Shadow;
-			for (var i : int = 0; i < shadows.length; i++)
+			for (var i : int = 0; i < _shadows.length; i++)
 			{	
-				if ((s = _room.getChildByName("s_" + i) as Shadow))
-				{
-					s.visible = !s.visible;
-				}
+				s = parent.getChildByName(_shadows[i]) as Shadow;
+				s.visible = !s.visible;
 			}
 		}
 	}

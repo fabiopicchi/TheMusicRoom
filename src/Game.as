@@ -88,10 +88,10 @@ package
 			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			var jsonArray : Array = [];
-			jsonArray = (JSONLoader.loadFile("test.json") as Array);
+			//jsonArray = (JSONLoader.loadFile("switches.json") as Array);
 			var jsonObject : Object;
 			var room : Room;
-			var el : SceneElement;
+			var el : LightSwitch;
 			for (var i : int = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
@@ -100,11 +100,32 @@ package
 				{
 					for (var j : int = 0; j < room.numChildren; j++)
 					{
-						if ((el = (room.getChildAt(j) as SceneElement)))
+						if ((el = (room.getChildAt(j) as LightSwitch)))
 						{
 							if (el.name == jsonObject.name)
 							{
 								el.loadData(jsonObject);
+							}
+						}
+					}
+				}
+			}
+			
+			//jsonArray = (JSONLoader.loadFile("shadows.json") as Array);
+			var s : Shadow;
+			for (var i : int = 0; i < jsonArray.length; i++)
+			{
+				jsonObject = jsonArray[i];
+				room = _roomMap[jsonObject.room];
+				if (room)
+				{
+					for (var j : int = 0; j < room.numChildren; j++)
+					{
+						if ((s = (room.getChildAt(j) as Shadow)))
+						{
+							if (s.name == jsonObject.name)
+							{
+								s.loadData(jsonObject);
 							}
 						}
 					}
