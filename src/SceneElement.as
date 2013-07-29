@@ -4,7 +4,7 @@ package
 	 * ...
 	 * @author arthur e fabio
 	 */
-	public class SceneElement extends Entity 
+	public class SceneElement extends InteractiveElement 
 	{
 		//Interaction properties
 		private var _textNoItem : String;
@@ -18,11 +18,6 @@ package
 		private var _inventoryItemSpawned : String;
 		private var _teleport : String;
 		private var _periodChange : Boolean;
-		
-		//Possible entity status
-		public static const OUT : int = 1 << 0;
-		public static const OVER : int = 1 << 1;
-		public static const HIDDEN : int = 1 << 2;
 		
 		public function SceneElement() 
 		{
@@ -42,8 +37,9 @@ package
 			_periodChange = (data.periodChange == "-" ? false : true);
 		}
 		
-		public function interact (item : InventoryItem = null) : void
+		override public function interact (item : InventoryItem = null) : void
 		{			
+			super.interact();
 			if (item)
 			{
 				if (item.id == _inventoryItemNeeded)
@@ -57,7 +53,7 @@ package
 			}
 			else
 			{
-				if (!_inventoryItemNeeded && _inventoryItemSpawned)
+				if (_inventoryItemNeeded == "-" && _inventoryItemSpawned)
 				{
 					Game.displayText(_textNoItem.split("\n\r"), interactionCallback);
 				}

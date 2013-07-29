@@ -52,7 +52,8 @@ package
 		
 		private static var _room : String = "porch";
 		private static const _roomMap : Object = {
-			porch : new Porch
+			porch : new Porch,
+			foyer : new Foyer
 			/*smpl1 : new SampleRoom,
 			smpl2 : new SampleRoom2,*/
 			/*porch : new Porch,
@@ -88,9 +89,10 @@ package
 			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			var jsonArray : Array = [];
-			jsonArray = (JSONLoader.loadFile("test.json") as Array);
 			var jsonObject : Object;
 			var room : Room;
+			
+			jsonArray = (JSONLoader.loadFile("sceneElements.json") as Array);
 			var el : SceneElement;
 			for (var i : int = 0; i < jsonArray.length; i++)
 			{
@@ -110,6 +112,50 @@ package
 					}
 				}
 			}
+			
+			jsonArray = (JSONLoader.loadFile("switches.json") as Array);
+			var l : LightSwitch;
+			for (var i : int = 0; i < jsonArray.length; i++)
+			{
+				jsonObject = jsonArray[i];
+				room = _roomMap[jsonObject.room];
+				if (room)
+				{
+					for (var j : int = 0; j < room.numChildren; j++)
+					{
+						if ((l = (room.getChildAt(j) as LightSwitch)))
+						{
+							if (l.name == jsonObject.name)
+							{
+								l.loadData(jsonObject);
+							}
+						}
+					}
+				}
+			}
+			
+			jsonArray = (JSONLoader.loadFile("shadows.json") as Array);
+			var s : Shadow;
+			for (var i : int = 0; i < jsonArray.length; i++)
+			{
+				jsonObject = jsonArray[i];
+				room = _roomMap[jsonObject.room];
+				if (room)
+				{
+					for (var j : int = 0; j < room.numChildren; j++)
+					{
+						if ((s = (room.getChildAt(j) as Shadow)))
+						{
+							if (s.name == jsonObject.name)
+							{
+								s.loadData(jsonObject);
+							}
+						}
+					}
+				}
+			}
+			
+			_arTeleport = (JSONLoader.loadFile("teleports.json") as Array);
 			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
@@ -379,13 +425,24 @@ package
 		
 		public static function teleport (id : String) : void
 		{
-			setNextRoom (_arTeleport[id].room, _arTeleport[id].position, function () : void
+			var teleport : Object;
+			for (var i : int = 0; i < _arTeleport.length; i++)
+			{
+				trace (_arTeleport[i].name);
+				if (_arTeleport[i].name == id)
+				{
+					teleport = _arTeleport[i];
+					break;
+				}
+			}
+			
+			setNextRoom (teleport.room, teleport.position, function () : void
 			{
 				_changingRooms = true;
 				setTimeout(function () : void
 				{
 					_changingRooms = false;
-					Game.displayText(_arTeleport[id].text);
+					Game.displayText(teleport.text.split("\n\r"));
 				}, 500);
 			});
 		}
