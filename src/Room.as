@@ -1,7 +1,6 @@
 package  
 {
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -9,66 +8,16 @@ package
 	 * ...
 	 * @author arthur e fabio
 	 */
-	public class Room extends Entity
+	
+	public class Room extends Entity 
 	{
 		private var _player:Player;
 		private var _frontScrollFactor : Number;
 		private var _time : String = "day";
 		private var _scrollAcc : Number = 0;
 		
-		private var _mcShadows : MovieClip;
-		private var _mcEnemies : MovieClip;
-		private var _mcPlayer : MovieClip;
-		private var _mcObjects : MovieClip;
-		
-		
 		public function Room() 
 		{
-			var i : int = 0;
-			var obj : DisplayObject;
-			
-			var arShadow : Array = [];
-			var arEnemies : Array = [];
-			var arPlayer : Array = [];
-			var arElements : Array = [];
-			
-			for (i = 0; i < numChildren; i++)
-			{
-				if ((obj = getChildAt(i)) is Shadow)
-				{
-					removeChild(obj);
-					arShadow.push(obj);
-				}
-				else if ((obj = getChildAt(i)) is InteractiveElement || (obj = getChildAt(i)) is Hitbox)
-				{
-					removeChild(obj);
-					arElements.push(obj);
-				}
-				else if ((obj = getChildAt(i)) is Enemy)
-				{
-					removeChild(obj);
-					arEnemies.push(obj);
-				}
-				else if ((obj = getChildAt(i)) is Player)
-				{
-					removeChild(obj);
-					arPlayer.push(obj);
-				}
-			}
-			
-			for (i = 0; i < arShadow.length; i++) _mcShadows.addChild(arShadow[i]);
-			for (i = 0; i < arElements.length; i++) _mcShadows.addChild(arElements[i]);
-			for (i = 0; i < arEnemies.length; i++) _mcShadows.addChild(arEnemies[i]);
-			for (i = 0; i < arPlayer.length; i++) _mcShadows.addChild(arPlayer[i]);
-			
-			addChild(_mcObjects);
-			addChild(_mcPlayer);
-			addChild(_mcEnemies);
-			addChild(_mcShadows);
-			
-			setChildIndex (getChildByName("back"), 0);
-			setChildIndex (getChildByName("fronr"), numChildren - 1);
-			
 			updateAssets();
 		}
 		
@@ -80,17 +29,8 @@ package
 		
 		override public function addChild(child:DisplayObject):DisplayObject 
 		{
-			if (child is Enemy) _mcEnemies.addChild(child);
-			if (child is Player) _mcPlayer.addChild(child);
-			else super.addChild(child);
-			return child;
-		}
-		
-		override public function removeChild(child:DisplayObject):DisplayObject 
-		{
-			if (child is Enemy) _mcEnemies.removeChild(child);
-			if (child is Player) _mcPlayer.removeChild(child);
-			else super.removeChild(child);
+			super.addChild(child);
+			zOrder();
 			return child;
 		}
 		
@@ -121,8 +61,10 @@ package
 			super.init(e);
 		}
 		
-		public function update():void 
+		override public function update():void 
 		{
+			super.update();
+			
 			if (_player)
 			{
 				if (_player.x < getChildByName("area").x)
@@ -208,7 +150,6 @@ package
 				
 				//scrollX
 				var scrollX : Number = 0;
-				var child : DisplayObject;
 				if (_player.x >= 724 && _scrollAcc > -(getChildByName("back").width - 1024))
 				{
 					if (_scrollAcc - 1024 * Game.dt < -(getChildByName("back").width - 1024))
@@ -222,22 +163,13 @@ package
 					
 					for (i = 0; i < numChildren; i++)
 					{
-						child = getChildAt(i);
-						if (child.name != "front")
+						if (getChildAt(i).name != "front")
 						{
-							if (child.name == "back" || child.name == "area")
-							{
-								getChildAt(i).x += scrollX;
-							}
-							else
-							{
-								for (var j : int = 0; j < (child as MovieClip).numChildren; j++)
-									(child as MovieClip).getChildAt(j).x += scrollX;
-							}
+							getChildAt(i).x += scrollX;
 						}
 						else
 						{
-							child.x += scrollX * _frontScrollFactor;
+							getChildAt(i).x += scrollX * _frontScrollFactor;
 						}
 					}
 				}
@@ -254,27 +186,28 @@ package
 					}
 					for (i = 0; i < numChildren; i++)
 					{
-						child = getChildAt(i);
-						if (child.name != "front")
+						if (getChildAt(i).name != "front")
 						{
-							if (child.name == "back" || child.name == "area")
-							{
-								getChildAt(i).x += scrollX;
-							}
-							else
-							{
-								for (var j : int = 0; j < (child as MovieClip).numChildren; j++)
-									(child as MovieClip).getChildAt(j).x += scrollX;
-							}
+							getChildAt(i).x += scrollX;
 						}
 						else
 						{
-							child.x += scrollX * _frontScrollFactor;
+							getChildAt(i).x += scrollX * _frontScrollFactor;
 						}
 					}
 				}
 				_scrollAcc += scrollX;
 			}
+		}
+		
+		override public function draw():void 
+		{
+			super.draw();
+		}
+		
+		override protected function destroy(e:Event):void 
+		{
+			super.destroy(e);
 		}
 		
 		public function updateAssets () : void
@@ -293,6 +226,48 @@ package
 					obj.updateAsset(_time, "normal");
 				}
 			}
+		}
+		
+		public function zOrder () : void
+		{
+			var arShadows : Array = [];
+			var arPlayer : Array = [];
+			var arEnemies : Array = [];
+			var arObjects : Array = [];
+			var i : int = 0;
+			var child : Entity;
+			
+			for (i = 0; i < numChildren; i++)
+			{
+				if ((child = getChildAt(i) as Entity))
+				{
+					if (child is Shadow)
+						arShadows.push(child);
+					if (child is Player)
+						arPlayer.push(child);
+					if (child is Enemy)
+						arEnemies.push (child);
+					if (child is InteractiveElement)
+						arObjects.push (child);
+				}
+			}
+			
+			setChildIndex(getChildByName("back"), 0);
+			
+			var zIndex : int = 1;
+			
+			var j : int = 1;
+			for (j = 1; j < arObjects.length; j++)
+				setChildIndex(arObjects[j], j);
+				
+			for (j = arObjects.length; j < arObjects.length + arPlayer.length; j++)
+				setChildIndex(arPlayer[j - arObjects.length], j);
+				
+			for (j = arObjects.length + arPlayer.length; j < arObjects.length + arPlayer.length + arEnemies.length; j++)
+				setChildIndex(arEnemies[j - arObjects.length - arPlayer.length], j);
+				
+			for (j = arObjects.length + arPlayer.length + arEnemies.length; j < arObjects.length + arPlayer.length + arEnemies.length + arShadows.length; j++)
+				setChildIndex(arShadows[j - arEnemies.length - arObjects.length - arPlayer.length], j);
 		}
 	}
 

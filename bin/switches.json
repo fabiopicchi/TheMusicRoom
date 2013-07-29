@@ -1,0 +1,9 @@
+[
+    {
+        "name": "switch1",
+        "shadows": [
+            "shadow1"
+        ],
+        "room": "foyer"
+    }
+]
