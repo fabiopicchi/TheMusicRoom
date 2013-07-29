@@ -4,11 +4,10 @@ package
 	 * ...
 	 * @author arthur e fabio
 	 */
-	public class LightSwitch extends Entity 
+	public class LightSwitch extends InteractiveElement 
 	{
 		
 		private var _shadows : Array;
-		private var _room : Room;
 		
 		public function LightSwitch() 
 		{
@@ -18,11 +17,12 @@ package
 		public function loadData (data : Object) : void
 		{
 			_shadows = ((data.shadows is Array) ? data.shadows : [data.shadows]);
-			_room = data.room;
 		}
 		
-		public function interact() : void
+		override public function interact(item : InventoryItem = null) : void
 		{
+			super.interact();
+			
 			var s : Shadow;
 			for (var i : int = 0; i < _shadows.length; i++)
 			{	

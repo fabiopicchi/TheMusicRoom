@@ -51,8 +51,9 @@ package
 		private static var _nextRoomCallback : Function;
 		
 		private static var _room : String = "porch";
-		private static const _roomMap : Object = {
-			porch : new Porch
+		public static const ROOM_MAP : Object = {
+			porch : new Porch,
+			foyer : new Foyer
 			/*smpl1 : new SampleRoom,
 			smpl2 : new SampleRoom2,*/
 			/*porch : new Porch,
@@ -77,9 +78,9 @@ package
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 			
-			for (var k : String in _roomMap)
+			for (var k : String in ROOM_MAP)
 			{
-				_roomMap[k].name = k;
+				ROOM_MAP[k].name = k;
 			}
 		}
 		
@@ -88,14 +89,15 @@ package
 			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			var jsonArray : Array = [];
-			//jsonArray = (JSONLoader.loadFile("switches.json") as Array);
 			var jsonObject : Object;
 			var room : Room;
-			var el : LightSwitch;
+			
+			jsonArray = (JSONLoader.loadFile("sceneElements.json") as Array);
+			var el : SceneElement;
 			for (var i : int = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
-				room = _roomMap[jsonObject.room];
+				room = ROOM_MAP[jsonObject.room];
 				if (room)
 				{
 					for (var j : int = 0; j < room.numChildren; j++)
@@ -111,12 +113,33 @@ package
 				}
 			}
 			
-			//jsonArray = (JSONLoader.loadFile("shadows.json") as Array);
+			jsonArray = (JSONLoader.loadFile("switches.json") as Array);
+			var l : LightSwitch;
+			for (var i : int = 0; i < jsonArray.length; i++)
+			{
+				jsonObject = jsonArray[i];
+				room = ROOM_MAP[jsonObject.room];
+				if (room)
+				{
+					for (var j : int = 0; j < room.numChildren; j++)
+					{
+						if ((l = (room.getChildAt(j) as LightSwitch)))
+						{
+							if (l.name == jsonObject.name)
+							{
+								l.loadData(jsonObject);
+							}
+						}
+					}
+				}
+			}
+			
+			jsonArray = (JSONLoader.loadFile("shadows.json") as Array);
 			var s : Shadow;
 			for (var i : int = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
-				room = _roomMap[jsonObject.room];
+				room = ROOM_MAP[jsonObject.room];
 				if (room)
 				{
 					for (var j : int = 0; j < room.numChildren; j++)
@@ -132,6 +155,8 @@ package
 				}
 			}
 			
+			_arTeleport = (JSONLoader.loadFile("teleports.json") as Array);
+			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			_shade.graphics.beginFill(0x000000);
@@ -145,9 +170,9 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
-			_roomMap[_room].addChild(new Enemy ());
-			_roomMap[_room].addPlayer();
-			addChild(_roomMap[_room]);
+			ROOM_MAP[_room].addChild(new Enemy ());
+			ROOM_MAP[_room].addPlayer();
+			addChild(ROOM_MAP[_room]);
 			
 			_textBox = new TextField();
 			addChild(_textBox);
@@ -181,14 +206,14 @@ package
 				fadeToBlack(function () : void
 				{
 					_changingRooms = false;
-					_roomMap[_room].removePlayer();
-					removeChild(_roomMap[_room]);
+					ROOM_MAP[_room].removePlayer();
+					removeChild(ROOM_MAP[_room]);
 					
 					_playerInstance.x = _nextRoomPosition;
 					_room = _nextRoom;
 					_nextRoom = "";
-					_roomMap[_room].addPlayer();
-					addChildAt(_roomMap[_room], 0);
+					ROOM_MAP[_room].addPlayer();
+					addChildAt(ROOM_MAP[_room], 0);
 					if (_nextRoomCallback != null) _nextRoomCallback();
 				});
 			}
@@ -200,9 +225,9 @@ package
 				fadeToBlack(function () : void
 				{
 					_changingPeriod = false;
-					for (var k : String in _roomMap)
+					for (var k : String in ROOM_MAP)
 					{
-						_roomMap[k].updateAssets();
+						ROOM_MAP[k].updateAssets();
 					}
 				});
 			}
@@ -253,9 +278,9 @@ package
 						}
 					}
 					
-					for (var k : String in _roomMap)
+					for (var k : String in ROOM_MAP)
 					{
-						_roomMap[k].update();
+						ROOM_MAP[k].update();
 					}
 				}
 			}
@@ -400,13 +425,24 @@ package
 		
 		public static function teleport (id : String) : void
 		{
-			setNextRoom (_arTeleport[id].room, _arTeleport[id].position, function () : void
+			var teleport : Object;
+			for (var i : int = 0; i < _arTeleport.length; i++)
+			{
+				trace (_arTeleport[i].name);
+				if (_arTeleport[i].name == id)
+				{
+					teleport = _arTeleport[i];
+					break;
+				}
+			}
+			
+			setNextRoom (teleport.room, teleport.position, function () : void
 			{
 				_changingRooms = true;
 				setTimeout(function () : void
 				{
 					_changingRooms = false;
-					Game.displayText(_arTeleport[id].text);
+					Game.displayText(teleport.text.split("\n\r"));
 				}, 500);
 			});
 		}
@@ -471,9 +507,9 @@ package
 			var r : Room;
 			var found : Boolean = false;
 			var el : SceneElement;
-			for (var k : String in _roomMap)
+			for (var k : String in ROOM_MAP)
 			{
-				r = _roomMap[k] as Room;
+				r = ROOM_MAP[k] as Room;
 				for (var i : int = 0; i < r.numChildren; i++)
 				{
 					if ((el = (r.getChildAt(i) as SceneElement)))
@@ -500,9 +536,9 @@ package
 			var r : Room;
 			var found : Boolean = false;
 			var el : PuzzleElement;
-			for (var k : String in _roomMap)
+			for (var k : String in ROOM_MAP)
 			{
-				r = _roomMap[k] as Room;
+				r = ROOM_MAP[k] as Room;
 				for (var i : int = 0; i < r.numChildren; i++)
 				{
 					if ((el = (r.getChildAt(i) as PuzzleElement)))
