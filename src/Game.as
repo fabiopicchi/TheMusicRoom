@@ -71,7 +71,7 @@ package
 		
 		// Day/Night event list
 		private static var _arPeriod : Array = [];
-		private static var _currentPeriod : int = 0;;
+		private static var _currentPeriod : int = 0;
 		
 		private static var _inventory : Inventory = new Inventory ();
 		

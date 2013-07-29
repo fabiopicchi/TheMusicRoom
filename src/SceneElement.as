@@ -58,7 +58,11 @@ package
 		private function interactionCallback () : void
 		{
 			var i : int = 0;
-			Game.addToInventory(_inventoryItemSpawned);
+			
+			if (_inventoryItemSpawned)
+			{
+				Game.addToInventory(_inventoryItemSpawned);
+			}
 			for (i = 0; i < _sceneElementsAffected.length; i++)
 			{
 				Game.changeSceneElement(_sceneElementsAffected[i]);
