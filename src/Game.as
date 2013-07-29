@@ -16,6 +16,7 @@ package
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
 	import flash.utils.setTimeout;
+	import com.adobe.serialization.json.JSON;
 	
 	/**
 	 * ...
@@ -55,6 +56,7 @@ package
 		
 		private static var _room : String = "foyer";
 		private static const _roomMap : Object = {
+			porch : new Porch
 			/*smpl1 : new SampleRoom,
 			smpl2 : new SampleRoom2,*/
 			/*porch : new Porch,
@@ -89,15 +91,34 @@ package
 		{
 			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
-			var jsonFile:File = File.applicationDirectory.resolvePath("test.txt");
+			var jsonFile:File = File.applicationDirectory.resolvePath("test.json");
 			var fStream:FileStream = new FileStream();
 			fStream.open(jsonFile, FileMode.READ);
 			var data:String = fStream.readUTFBytes(fStream.bytesAvailable);
 			fStream.close();
 			
-			var o : Object = JSON.parse(data);
-			
-			trace (o);
+			var jsonArray : Array = com.adobe.serialization.json.JSON.decode(data);
+			var jsonObject : Object;
+			var room : Room;
+			var el : SceneElement;
+			for (var i : int = 0; i < jsonArray.length; i++)
+			{
+				jsonObject = jsonArray[i];
+				room = _roomMap[jsonObject.room];
+				if (room)
+				{
+					for (var j : int = 0; j < room.numChildren; j++)
+					{
+						if ((el = (room.getChildAt(i) as SceneElement)))
+						{
+							if ((el.name = jsonObject.name))
+							{
+								el.loadData(jsonObject);
+							}
+						}
+					}
+				}
+			}
 			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
