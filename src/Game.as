@@ -428,7 +428,6 @@ package
 			var teleport : Object;
 			for (var i : int = 0; i < _arTeleport.length; i++)
 			{
-				trace (_arTeleport[i].name);
 				if (_arTeleport[i].name == id)
 				{
 					teleport = _arTeleport[i];

@@ -8,7 +8,6 @@ package
 	{
 		
 		private var _shadows : Array;
-		private var _room : Room;
 		
 		public function LightSwitch() 
 		{
@@ -18,7 +17,6 @@ package
 		public function loadData (data : Object) : void
 		{
 			_shadows = ((data.shadows is Array) ? data.shadows : [data.shadows]);
-			_room = data.room;
 		}
 		
 		override public function interact(item : InventoryItem = null) : void
