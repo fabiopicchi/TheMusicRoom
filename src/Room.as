@@ -110,7 +110,7 @@ package
 								}
 								else
 								{
-									el.updateAsset(_time, "out");
+									el.updateAsset(_time, "normal");
 								}
 							}
 							else 
@@ -123,7 +123,7 @@ package
 								}
 								else
 								{
-									el.updateAsset(_time, "out");
+									el.updateAsset(_time, "normal");
 								}
 							}
 						}
@@ -222,7 +222,7 @@ package
 			{
 				if ((obj = (getChildAt(i) as SceneElement)))
 				{
-					obj.updateAsset(_time, "out");
+					obj.updateAsset(_time, "normal");
 				}
 			}
 		}
