@@ -9,6 +9,9 @@ package
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
@@ -84,7 +87,17 @@ package
 		
 		private function init(e:Event):void 
 		{
-			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			
+			var jsonFile:File = File.applicationDirectory.resolvePath("test.txt");
+			var fStream:FileStream = new FileStream();
+			fStream.open(jsonFile, FileMode.READ);
+			var data:String = fStream.readUTFBytes(fStream.bytesAvailable);
+			fStream.close();
+			
+			var o : Object = JSON.parse(data);
+			
+			trace (o);
 			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
