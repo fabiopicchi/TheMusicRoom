@@ -9,14 +9,10 @@ package
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
 	import flash.utils.setTimeout;
-	import com.adobe.serialization.json.JSON;
 	
 	/**
 	 * ...
@@ -54,7 +50,7 @@ package
 		private static var _nextRoomPosition : Number;
 		private static var _nextRoomCallback : Function;
 		
-		private static var _room : String = "foyer";
+		private static var _room : String = "porch";
 		private static const _roomMap : Object = {
 			porch : new Porch
 			/*smpl1 : new SampleRoom,
@@ -91,13 +87,8 @@ package
 		{
 			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
-			var jsonFile:File = File.applicationDirectory.resolvePath("test.json");
-			var fStream:FileStream = new FileStream();
-			fStream.open(jsonFile, FileMode.READ);
-			var data:String = fStream.readUTFBytes(fStream.bytesAvailable);
-			fStream.close();
-			
-			var jsonArray : Array = com.adobe.serialization.json.JSON.decode(data);
+			var jsonArray : Array = [];
+			jsonArray = (JSONLoader.loadFile("test.json") as Array);
 			var jsonObject : Object;
 			var room : Room;
 			var el : SceneElement;
@@ -109,9 +100,9 @@ package
 				{
 					for (var j : int = 0; j < room.numChildren; j++)
 					{
-						if ((el = (room.getChildAt(i) as SceneElement)))
+						if ((el = (room.getChildAt(j) as SceneElement)))
 						{
-							if ((el.name = jsonObject.name))
+							if (el.name == jsonObject.name)
 							{
 								el.loadData(jsonObject);
 							}
@@ -133,7 +124,7 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
-			_roomMap[_room].addChild(new Enemy());
+			_roomMap[_room].addChild(new Enemy ());
 			_roomMap[_room].addPlayer();
 			addChild(_roomMap[_room]);
 			
@@ -360,7 +351,7 @@ package
 			_textBox.visible = false;
 			_playerInstance.resetFlag(Player.INACTIVE);
 			resetFlag(TYPING_TEXT);
-			_textCallback();
+			if (_textCallback != null) _textCallback();
 		}
 		
 		

@@ -68,7 +68,7 @@ package
 			}
 		}
 		
-		private function interactionCallback () : void
+		public function interactionCallback () : void
 		{
 			var i : int = 0;
 			Game.addToInventory(_inventoryItemSpawned);

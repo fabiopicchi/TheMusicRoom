@@ -79,7 +79,7 @@ package
 		
 		public function updateAsset (time : String, mode : String) : void
 		{
-			gotoAndStop(time + "_" + mode);
+			gotoAndStop(mode + "_" + time);
 		}
 	}
 
