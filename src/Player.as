@@ -18,17 +18,35 @@ package
 		public static const INACTIVE : int = 1 << 1;
 		public static const CROUCH : int = 1 << 2;
 		
+		private var _animationData : Object = {
+			idle : {looped : false},
+			walking : {looped : true}
+		};
+		
 		private var _room : String;
 		private var _currentAnim : String = "idle";
-		private var _pAnim : String = "idle";
+		private var _pAnim : String = "";
 		private var b:Boy;
 		private var hitbox : Rectangle = new Rectangle(0, 0, 110, 290);
-		
+		private var _looped : Boolean = false;
 		
 		public function Player() 
 		{
 			super();
 			_status = NONE;
+			addEventListener(Event.COMPLETE, animationCompleted);
+		}
+		
+		private function animationCompleted(e:Event):void 
+		{
+			if (_looped)
+			{
+				b.gotoAndPlay(_currentAnim);
+			}
+			else
+			{
+				
+			}
 		}
 		
 		override public function get width():Number 
@@ -41,18 +59,13 @@ package
 			return hitbox.height;
 		}
 		
-		override public function set height(value:Number):void 
-		{
-			super.height = value;
-		}
-		
 		override protected function init(e:Event):void 
 		{
 			super.init(e);
 			
 			addChild(b = new Boy());
-			b.x += hitbox.width / 2;
-			b.y += hitbox.height / 2;
+			b.x = hitbox.width / 2;
+			b.y = hitbox.height;
 			
 			y = 300;
 			
@@ -72,23 +85,26 @@ package
 			
 			if (!isInactive())
 			{
-				if (Game.keyPressed(Action.LEFT))
+				if (!isCrouching())
 				{
-					b.scaleX = -1;
-					dx -= Math.round((1024) * Game.dt);
-				}
-				
-				if (Game.keyPressed(Action.RIGHT))
-				{
-					b.scaleX = 1;
-					dx += Math.round((1024) * Game.dt);
-				}
-				
-				if (Game.keyJustPressed(Action.INTERACT))
-				{
-					if (_gameObject)
+					if (Game.keyPressed(Action.LEFT))
 					{
-						_gameObject.interact();
+						b.scaleX = -1;
+						dx -= Math.round((1024) * Game.dt);
+					}
+					
+					if (Game.keyPressed(Action.RIGHT))
+					{
+						b.scaleX = 1;
+						dx += Math.round((1024) * Game.dt);
+					}
+					
+					if (Game.keyJustPressed(Action.INTERACT))
+					{
+						if (_gameObject)
+						{
+							_gameObject.interact();
+						}
 					}
 				}
 				
@@ -112,6 +128,7 @@ package
 			
 			if (_currentAnim != _pAnim)
 			{
+				_looped = _animationData[_currentAnim].looped;
 				b.gotoAndPlay(_currentAnim);
 				_pAnim = _currentAnim;
 			}
@@ -138,6 +155,11 @@ package
 		public function isInactive () : Boolean
 		{
 			return ((_status & INACTIVE) == INACTIVE);
+		}
+		
+		public function isCrouching () : Boolean
+		{
+			return ((_status & CROUCH) == CROUCH);
 		}
 		
 		public function set gameObject(value:GameObject):void 
@@ -169,7 +191,8 @@ package
 			super.resetFlag(flag);
 			if (flag == INACTIVE)
 			{
-				b.gotoAndPlay(b.currentFrame);
+				b.gotoAndPlay(b.currentFrame - 1);
+				b.gotoAndPlay(b.currentFrame + 1);
 			}
 		}
 	}

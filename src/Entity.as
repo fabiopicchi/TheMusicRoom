@@ -16,12 +16,12 @@ package
 		
 		public function Entity() 
 		{
-			addEventListener (Event.ADDED_TO_STAGE, init);
+			addEventListener (Event.ADDED, init);
 		}
 		
 		protected function init(e:Event):void 
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
+			removeEventListener(Event.ADDED, init);
 			addEventListener(Event.REMOVED_FROM_STAGE, destroy);
 		}
 		

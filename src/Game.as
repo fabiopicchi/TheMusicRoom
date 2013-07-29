@@ -2,6 +2,8 @@ package
 {
 	import com.greensock.easing.Quad;
 	import com.greensock.TweenLite;
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
@@ -46,11 +48,13 @@ package
 		private const _LETTER_INTERVAL : Number = 0.1;
 		
 		private static var _nextRoom:String = "";
-		private var _room : String = "porch";
+		private var _room : String = "foyer";
 		private var _roomMap : Object = {
 			/*smpl1 : new SampleRoom,
 			smpl2 : new SampleRoom2,*/
-			porch : new Porch
+			porch : new Porch,
+			foyer : new Foyer,
+			livingroom : new LivingRoom
 		};
 		
 		private var _shade : Shape = new Shape();
@@ -126,11 +130,16 @@ package
 					_roomMap[_room].removePlayer();
 					removeChild(_roomMap[_room]);
 					
-					_playerInstance.x = (_roomMap[_nextRoom] as Room).getChildByName("object_" + _room).x + ((_roomMap[_nextRoom] as Room).getChildByName("object_" + _room).width - _playerInstance.width) / 2;
+					var nextDoor : DisplayObject;
+					nextDoor = (_roomMap[_nextRoom] as Room).getChildByName("h" + _nextRoom + "_" + _room);
+					if (!nextDoor)
+						nextDoor = (_roomMap[_nextRoom] as Room).getChildByName("o" + _nextRoom + "_" + _room);
+						
+					_playerInstance.x = nextDoor.x + (nextDoor.width - _playerInstance.width) / 2;
 					_room = _nextRoom;
 					_nextRoom = "";
 					_roomMap[_room].addPlayer();
-					addChild(_roomMap[_room]);
+					addChildAt(_roomMap[_room], 0);
 					
 					TweenLite.to(_shade, 0.5, { alpha : 0, ease:Quad.easeIn, onComplete : function () : void
 					{

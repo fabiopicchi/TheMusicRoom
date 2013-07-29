@@ -1,8 +1,10 @@
 package  
 {
-	import flash.display.Shape;
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	/**
@@ -15,15 +17,22 @@ package
 		public static const PURSUE:int = 1 << 1;
 		public static const LOOKING:int = 1 << 2;
 		public static const LOOKING_CROUCH:int = 1 << 3;
+		public static const ATTACKING:int = 1 << 4;
 		
 		private var _attackRange : Number = 10;
 		private var _patrolRoom : Room;
+		
+		private var _animationData : Object = {
+			idle : {looped : true},
+			walking : { looped : true },
+			attack : {looped : false}
+		};
 		
 		private var _arRoute : Array = [];
 		private var _arWait : Array = [];
 		private var _routePosition : int = 0;
 		
-		private var _lookingTimeout : int;
+		private var _lookingTimeout : Number;
 		private var _lookingStartX : Number = 0;
 		
 		private var _waiting : Boolean = false;
@@ -35,6 +44,12 @@ package
 		
 		private var _target : Number;
 		
+		private var _body : MovieClip;
+		private var _currentAnim : String = "idle";
+		private var _pAnim : String = "";
+		private var _looped : Boolean = false;
+		private var hitbox : Rectangle = new Rectangle(0, 0, 110, 290);
+		
 		public function Enemy() 
 		{
 			_arRoute = [500, 600, 800, 700, 900];
@@ -44,6 +59,28 @@ package
 			_routePosition = 0;
 			_target = _arRoute[_routePosition + 1]; 
 			this.x = _arRoute[_routePosition];
+			addEventListener(Event.COMPLETE, animationCompleted);
+		}
+		
+		override public function get width():Number 
+		{
+			return hitbox.width;
+		}
+		
+		private function animationCompleted(e:Event):void 
+		{
+			if (_looped)
+			{
+				_body.gotoAndPlay(_currentAnim);
+			}
+			else
+			{
+				if (_currentAnim == "attack")
+				{
+					resetFlag(ATTACKING);
+					_pAnim = "";
+				}
+			}
 		}
 		
 		override protected function init(e:Event):void 
@@ -52,15 +89,11 @@ package
 			
 			if (!_patrolRoom) _patrolRoom = (parent as Room);
 			
-			var s : Shape = new Shape();
-			s.graphics.beginFill(0xCC0408);
-			s.graphics.drawRect(0, 0, 30, 100);
-			s.graphics.endFill();
+			addChild(_body = new Monster1);
+			_body.x = hitbox.width / 2;
+			_body.y = hitbox.height / 2;
 			
-			this.y = 500;
-			
-			addChild(s);
-			
+			y = 300;
 		}
 		
 		override public function update():void 
@@ -99,33 +132,44 @@ package
 					{
 						_target = Game.playerInstance.getMidPoint().x;
 					}
+					else
+					{
+						_currentAnim = "attack";
+						setFlag(ATTACKING);
+					}
 				}
 				else
 				{
-					var porta : GameObject = (parent.getChildByName("object_" + Game.playerInstance.room) as GameObject);
-					if (porta)
+					var door : DisplayObject;
+					door = (parent as Room).getChildByName("h" + room + "_" + Game.playerInstance.room);
+					if (!door)
+						door = (parent as Room).getChildByName("o" + room + "_" + Game.playerInstance.room);
+					
+					if (door)
 					{
-						if (!(porta.x <= x + width && (porta.x + porta.width) >= x))
+						if (!(door.x <= x + width && (door.x + door.width) >= x))
 						{
-							_target = porta.getMidPoint().x;
+							_target = (door as Entity).getMidPoint().x;
 						}
 						else
 						{
 							var prevRoom : String = parent.name;
 							parent.removeChild(this);
 							Game.playerInstance.parent.addChild(this);
-							x = (parent.getChildByName("object_" + prevRoom) as GameObject).x + ((parent.getChildByName("object_" + prevRoom) as GameObject).width - width) / 2;
+							
+							door = parent.getChildByName("o" + Game.playerInstance.room + "_" + prevRoom);
+							x = door.x + (door.width - width) / 2;
 							
 							if (Game.playerInstance.isHidden())
 							{
-								resetFlag(PURSUE);
+								_status = 0;
 								setFlag(LOOKING);
 								
 								_lookingStartX = x;
 								_facing = ((Math.floor(Math.random() * 2)) ? Entity.LEFT : Entity.RIGHT);
 								if (isFacing(LEFT)) _target = _lookingStartX - 100;
 								if (isFacing(RIGHT)) _target = _lookingStartX + 100;
-								_lookingTimeout = 3000;
+								_lookingTimeout = 3;
 							}
 						}
 					}
@@ -138,41 +182,35 @@ package
 			
 			if (isLooking())
 			{
-				if (!_waiting)
+				if (!_waiting && x == _target)
 				{
 					if (isFacing(LEFT))
 					{
-						if (getMidPoint().x < _lookingStartX - 100)
+						_waiting = true
+						_waitingTimeout = setTimeout(function () : void
 						{
-							_waiting = true
-							_waitingTimeout = setTimeout(function () : void
+							_waiting = false;
+							_facing = Entity.RIGHT;
+							_target = _lookingStartX + 100;
+							if (_lookingTimeout <= 0)
 							{
-								_waiting = false;
-								_facing = Entity.RIGHT;
-								_target = _lookingStartX + 100;
-								if (_lookingTimeout <= 0)
-								{
-									teleportBack();
-								}
-							}, 500);
-						}
+								teleportBack();
+							}
+						}, 500);
 					}
 					else
 					{
-						if (getMidPoint().x > _lookingStartX + 100)
+						_waiting = true
+						_waitingTimeout = setTimeout(function () : void
 						{
-							_waiting = true
-							_waitingTimeout = setTimeout(function () : void
+							_waiting = false;
+							_facing = Entity.LEFT;
+							_target = _lookingStartX - 100;
+							if (_lookingTimeout <= 0)
 							{
-								_waiting = false;
-								_facing = Entity.LEFT;
-								_target = _lookingStartX - 100;
-								if (_lookingTimeout <= 0)
-								{
-									teleportBack();
-								}
-							}, 500);
-						}
+								teleportBack();
+							}
+						}, 500);
 					}
 				}
 				
@@ -181,44 +219,104 @@ package
 			
 			if (isLookingCrouch())
 			{
-				if (!_waiting)
+				if (!_waiting && x == _target)
 				{
 					if (isFacing(LEFT))
 					{
-						if (getMidPoint().x < _lookingStartX - 100)
+						_waiting = true;
+						_waitingTimeout = setTimeout(function () : void
 						{
-							_waiting = true
-							_waitingTimeout = setTimeout(function () : void
+							_waiting = false;
+							_facing = Entity.RIGHT;
+							if (_lookingTimeout >= 0)
 							{
-								_waiting = false;
-								_facing = Entity.RIGHT;
-								_target = _lookingStartX + 100;
-								if (_lookingTimeout <= 0)
+								_target = _lookingStartX + 150;
+							}
+							else
+							{
+								//Go far
+								if (Math.floor(Math.random() * 2) == 0)
 								{
-									teleportBack();
+									_target = _lookingStartX + 300 + Math.floor(Math.random() * 200);
 								}
-							}, 500);
-						}
+								//Go near
+								else
+								{
+									if (_lookingStartX - x >= 150)
+									{
+										if (Math.floor(Math.random() * 2) == 0)
+										{
+											_target = _lookingStartX + 150 - Math.floor(Math.random() * 75);
+										}
+										else
+										{
+											_target = _lookingStartX - 150 + Math.floor(Math.random() * 75);
+										}
+									}
+									else
+									{
+										_target = _lookingStartX + 150;
+									}
+								}
+							}
+						}, 500);
 					}
 					else
 					{
-						if (getMidPoint().x > _lookingStartX + 100)
+						_waiting = true;
+						_waitingTimeout = setTimeout(function () : void
 						{
-							_waiting = true
-							_waitingTimeout = setTimeout(function () : void
+							_waiting = false;
+							_facing = Entity.LEFT;
+							if (_lookingTimeout >= 0)
 							{
-								_waiting = false;
-								_facing = Entity.LEFT;
-								_target = _lookingStartX - 100;
-								if (_lookingTimeout <= 0)
+								_target = _lookingStartX - 150;
+							}
+							else
+							{
+								//Go far
+								if (Math.floor(Math.random() * 2) == 0)
 								{
-									teleportBack();
+									_target = _lookingStartX - 300 - Math.floor(Math.random() * 200);
 								}
-							}, 500);
-						}
+								//Go near
+								else
+								{
+									if (x - _lookingStartX >= 150)
+									{
+										if (Math.floor(Math.random() * 2) == 0)
+										{
+											_target = _lookingStartX - 150 + Math.floor(Math.random() * 75);
+										}
+										else
+										{
+											_target = _lookingStartX + 150 - Math.floor(Math.random() * 75);
+										}
+									}
+									else
+									{
+										_target = _lookingStartX - 150;
+									}
+								}
+							}
+						}, 500);
 					}
 				}
+				
+				if (_lookingTimeout > 0) _lookingTimeout -= Game.dt;
 			}
+			
+			if (_currentAnim != _pAnim)
+			{
+				_looped = _animationData[_currentAnim].looped;
+				_body.gotoAndPlay(_currentAnim);
+				_pAnim = _currentAnim;
+			}
+			if (isFacing(LEFT))
+				_body.scaleX = -1;
+			else
+				_body.scaleX = 1;
+			
 		}
 		
 		private function teleportBack () : void
@@ -231,8 +329,8 @@ package
 		
 		private function isWithinRange():Boolean
 		{
-			return ((Game.playerInstance.x > x && Math.abs(Game.playerInstance.x - (x + width)) < _attackRange) || 
-					(Game.playerInstance.x < x && Math.abs(x - (Game.playerInstance.x + Game.playerInstance.width)) < _attackRange));
+			return ((Game.playerInstance.x > x && Game.playerInstance.x - (x + width) < _attackRange) || 
+					(Game.playerInstance.x < x && x - (Game.playerInstance.x + Game.playerInstance.width) < _attackRange));
 		}
 		
 		public function isPatrolling () : Boolean
@@ -277,26 +375,41 @@ package
 		
 		public function moveToTarget () : void
 		{
-			if (x != _target)
+			var dx : Number = 0;
+			
+			_target = Math.round(_target);
+			
+			if (x != _target && !(isPursuing() && isWithinRange()))
 			{
 				if (x > _target)
 				{
-					x -= Math.round(_speed * Game.dt);
+					dx -= Math.round(_speed * Game.dt);
 					_facing = Entity.LEFT;
 				}
 				else
 				{
-					x += Math.round(_speed * Game.dt);
+					dx += Math.round(_speed * Game.dt);
 					_facing = Entity.RIGHT;
 				}
 				
-				if ((isFacing(LEFT) && x < _target) || (isFacing(RIGHT) && x > _target))
+				if ((isFacing(LEFT) && x + dx < _target) || (isFacing(RIGHT) && x + dx > _target))
 				{
-					x = _target;
+					dx = (_target - x);
+				}
+			}
+			
+			if ((_status & ATTACKING) != ATTACKING)
+			{
+				if (dx == 0)
+					_currentAnim = "idle";
+				else
+				{
+					this.x += dx;
+					_currentAnim = "walking";
 				}
 			}
 
-			if (!isPursuing() && Game.playerInstance.room == room && !Game.playerInstance.isHidden())
+			if (!isPursuing() && Game.playerInstance.room == room && (!Game.playerInstance.isHidden() && !Game.playerInstance.isCrouching()))
 			{
 				if (Game.playerInstance.getMidPoint().x < x && isFacing(LEFT) || Game.playerInstance.getMidPoint().x > x && isFacing(RIGHT))
 				{
@@ -305,6 +418,14 @@ package
 					_waiting = false;
 					clearTimeout(_waitingTimeout);
 				}
+			}
+			
+			else if (Game.playerInstance.isCrouching() && !isLookingCrouch())
+			{
+				_lookingStartX = Game.playerInstance.getMidPoint().x;
+				_status = 0;
+				_lookingTimeout = 3;
+				setFlag(LOOKING_CROUCH);
 			}
 		}
 		
