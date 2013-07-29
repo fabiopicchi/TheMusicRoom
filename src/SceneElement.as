@@ -29,6 +29,19 @@ package
 			
 		}
 		
+		public function loadData (data : Object) : void
+		{
+			_textNoItem = data.textNoItem;
+			_textRightItem = data.textRightItem;
+			_textWrongItem = data.textWrongItem;
+			_inventoryItemNeeded = data.itemNeeded;
+			_sceneElementsAffected = ((data.elementsAffected is Array) ? data.elementsAffected : [data.elementsAffected]);
+			_puzzleElementAffected = ((data.puzzlesAffected is Array) ? data.puzzlesAffected : [data.puzzlesAffected]);
+			_inventoryItemSpawned = data.itemSpawned;
+			_teleport = data.teleport;
+			_periodChange = (data.periodChange == "-" ? false : true);
+		}
+		
 		public function interact (item : InventoryItem = null) : void
 		{			
 			if (item)
