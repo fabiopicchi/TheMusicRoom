@@ -79,51 +79,51 @@ package
 				var objectSet : Boolean = false;
 				for (var i : int = 0; i < numChildren; i++)
 				{
-					var o : GameObject;
+					var el : SceneElement;
 					var oMidPoint : Point;
 					var h : Hitbox;
 					var s : Shadow;
-					if ((o = (getChildAt(i) as GameObject)))
+					if ((el = (getChildAt(i) as SceneElement)))
 					{
-						o.hidden = false;
+						el.resetFlag(SceneElement.HIDDEN);
 						for (var j : int = 0; j < numChildren; j++)
 						{
 							if ((s = getChildAt(j) as Shadow))
 							{
-								if (s.visible && s.hitTestPoint(o.x, o.y, true) && s.hitTestPoint(o.x + o.width, o.y, true))
+								if (s.visible && s.hitTestPoint(el.x, el.y, true) && s.hitTestPoint(el.x + el.width, el.y, true))
 								{
-									o.hidden = true;
+									el.setFlag(SceneElement.HIDDEN);
 									break;
 								}
 							}
 						}
 						
-						if (o.interactive && !o.hidden)
+						if (el.visible && !el.testFlag(SceneElement.HIDDEN))
 						{
-							if ((h = (getChildByName("h" + name + "_" + o.id) as Hitbox)))
+							if ((h = (getChildByName("h" + name + "_"/*TODO HITBOX ID*/) as Hitbox)))
 							{
 								if (_player.getMidPoint().x <= h.x + h.width && _player.getMidPoint().x >= h.x)
 								{
-									o.over();
-									_player.gameObject = o;
+									el.updateAsset(_time, "over");
+									_player.gameObject = el;
 									objectSet = true;
 								}
 								else
 								{
-									o.out();
+									el.updateAsset(_time, "out");
 								}
 							}
 							else 
 							{
-								if (_player.getMidPoint().x <= o.x + o.width && _player.getMidPoint().x >= o.x)
+								if (_player.getMidPoint().x <= el.x + el.width && _player.getMidPoint().x >= el.x)
 								{
 									objectSet = true;
-									_player.gameObject = o;
-									o.over();
+									_player.gameObject = el;
+									el.updateAsset(_time, "over");
 								}
 								else
 								{
-									o.out();
+									el.updateAsset(_time, "out");
 								}
 							}
 						}
@@ -217,13 +217,12 @@ package
 				(getChildByName("front") as MovieClip).gotoAndStop(_time);
 			}
 			
-			var obj : GameObject;
+			var obj : SceneElement;
 			for (var i : int = 0; i < numChildren; i++)
 			{
-				if ((obj = (getChildAt(i) as GameObject)))
+				if ((obj = (getChildAt(i) as SceneElement)))
 				{
-					obj.time = _time;
-					obj.updateAsset();
+					obj.updateAsset(_time, "out");
 				}
 			}
 		}

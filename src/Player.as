@@ -10,7 +10,7 @@ package
 	 */
 	public class Player extends Entity 
 	{
-		private var _gameObject : GameObject;
+		private var _gameObject : SceneElement;
 		private var _keyPoints : Array = [];
 		
 		public static const NONE : int = 0;
@@ -162,7 +162,7 @@ package
 			return ((_status & CROUCH) == CROUCH);
 		}
 		
-		public function set gameObject(value:GameObject):void 
+		public function set gameObject(value:SceneElement):void 
 		{
 			_gameObject = value;
 		}

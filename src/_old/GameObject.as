@@ -16,6 +16,7 @@ package
 		protected var _asset:String = "A";
 		protected var _mode:String = "normal";
 		
+		
 		public function GameObject() 
 		{
 			updateAsset();

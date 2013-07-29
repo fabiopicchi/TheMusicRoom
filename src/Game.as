@@ -12,6 +12,7 @@ package
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
+	import flash.utils.setTimeout;
 	
 	/**
 	 * ...
@@ -41,24 +42,33 @@ package
 		private static var _pageCounter : int = 0;
 		private static var _typing : Boolean = false;
 		private static var _waitingInput : Boolean = false;
-		private static var _arText : Array = [
-			"Qwerty uiop asd fghjkl\nçzxcvbnm qwe",
-			"Uiop asdfg hjkl"
-		];
+		private static var _arText : Array;
+		private static var _textCallback:Function;
 		private const _LETTER_INTERVAL : Number = 0.1;
 		
 		private static var _nextRoom:String = "";
-		private var _room : String = "foyer";
-		private var _roomMap : Object = {
+		private static var _nextRoomPosition : Number;
+		private static var _nextRoomCallback : Function;
+		
+		private static var _room : String = "foyer";
+		private static const _roomMap : Object = {
 			/*smpl1 : new SampleRoom,
 			smpl2 : new SampleRoom2,*/
-			porch : new Porch,
+			/*porch : new Porch,
 			foyer : new Foyer,
-			livingroom : new LivingRoom
+			livingroom : new LivingRoom*/
 		};
 		
-		private var _shade : Shape = new Shape();
-		private var _changingRooms : Boolean = false;
+		private static var _shade : Shape = new Shape();
+		private static var _changingRooms : Boolean = false;
+		private static var _changingPeriod : Boolean = false;
+		
+		// Teleport event list
+		private static var _arTeleport : Array = [];
+		
+		// Day/Night event list
+		private static var _arPeriod : Array = [];
+		private static var _currentPeriod : int = 0;;
 		
 		private static var _inventory : Inventory = new Inventory ();
 		
@@ -122,33 +132,36 @@ package
 			if (!_changingRooms && _nextRoom != "")
 			{
 				_changingRooms = true;
-				_shade.alpha = 0;
-				addChild(_shade);
-				TweenLite.to(_shade, 0.5, { alpha : 1, onComplete : function () : void
+				fadeToBlack(function () : void
 				{
 					_changingRooms = false;
 					_roomMap[_room].removePlayer();
 					removeChild(_roomMap[_room]);
 					
-					var nextDoor : DisplayObject;
-					nextDoor = (_roomMap[_nextRoom] as Room).getChildByName("h" + _nextRoom + "_" + _room);
-					if (!nextDoor)
-						nextDoor = (_roomMap[_nextRoom] as Room).getChildByName("o" + _nextRoom + "_" + _room);
-						
-					_playerInstance.x = nextDoor.x + (nextDoor.width - _playerInstance.width) / 2;
+					_playerInstance.x = _nextRoomPosition;
 					_room = _nextRoom;
 					_nextRoom = "";
 					_roomMap[_room].addPlayer();
 					addChildAt(_roomMap[_room], 0);
-					
-					TweenLite.to(_shade, 0.5, { alpha : 0, ease:Quad.easeIn, onComplete : function () : void
-					{
-						removeChild(_shade);
-					}});
-				}});
+					if (_nextRoomCallback != null) _nextRoomCallback();
+				});
 			}
 			
-			if (!_changingRooms)
+			else if (_changingPeriod)
+			{
+				var event : Object = _arPeriod[_currentPeriod++];
+				
+				fadeToBlack(function () : void
+				{
+					_changingPeriod = false;
+					for (var k : String in _roomMap)
+					{
+						_roomMap[k].updateAssets();
+					}
+				});
+			}
+			
+			if (!_changingRooms && !_changingPeriod)
 			{
 				if ((_status & INVENTORY_OPEN) == INVENTORY_OPEN)
 				{
@@ -237,8 +250,10 @@ package
 			_inventory.removeItem(id);
 		}
 		
+		
+		
 		//Text typing methods
-		public static function displayText(id:String) : void
+		public static function displayText(arText : Array, callback : Function = null) : void
 		{
 			_textBox.visible = true;
 			_textBox.width = 424;
@@ -256,6 +271,8 @@ package
 			_pageCounter = 0;
 			_textTime = 0;
 			_waitingInput = false;
+			_arText = arText;
+			_textCallback = callback;
 			_text = _arText[_pageCounter];
 			_playerInstance.setFlag(Player.INACTIVE);
 			setFlag(TYPING_TEXT);
@@ -303,29 +320,13 @@ package
 			}
 		}
 		
-		public static function completedText() : Boolean
-		{
-			_textCounter = 0;
-			_textTime = 0;
-			
-			if (_textBox.text.length == _text.length)
-			{
-				return true;
-			}
-			else
-			{
-				_textBox.text = _text;
-				resetFlag(TYPING_TEXT);
-				return false;
-			}
-		}
-		
-		public static function closeText() : void
+		private static function closeText() : void
 		{
 			_textBox.text = "";
 			_textBox.visible = false;
 			_playerInstance.resetFlag(Player.INACTIVE);
 			resetFlag(TYPING_TEXT);
+			_textCallback();
 		}
 		
 		
@@ -344,9 +345,24 @@ package
 		
 		
 		//Room control
-		public static function setNextRoom (room : String) : void
+		public static function setNextRoom (room : String, nextRoomPosition : Number, nextRoomCallback : Function = null) : void
 		{
 			_nextRoom = room;
+			_nextRoomPosition = nextRoomPosition;
+			_nextRoomCallback = nextRoomCallback;
+		}
+		
+		public static function teleport (id : String) : void
+		{
+			setNextRoom (_arTeleport[id].room, _arTeleport[id].position, function () : void
+			{
+				_changingRooms = true;
+				setTimeout(function () : void
+				{
+					_changingRooms = false;
+					Game.displayText(_arTeleport[id].text);
+				}, 500);
+			});
 		}
 		
 		
@@ -399,6 +415,88 @@ package
 		public static function get playerInstance():Player 
 		{
 			return _playerInstance;
+		}
+		
+		
+		
+		//SceneElement spawn/destroy
+		public static function changeSceneElement (id : String):Boolean
+		{
+			var r : Room;
+			var found : Boolean = false;
+			var el : SceneElement;
+			for (var k : String in _roomMap)
+			{
+				r = _roomMap[k] as Room;
+				for (var i : int = 0; i < r.numChildren; i++)
+				{
+					if ((el = (r.getChildAt(i) as SceneElement)))
+					{
+						if (el.name == id)
+						{
+							el.visible = !el.visible;
+							found = true;
+							break;
+						}
+					}
+				}
+				if (found) break;
+			}
+			
+			return found;
+		}
+		
+		
+		
+		//Puzzle spawn/destroy
+		public static function changePuzzleElement (id : String):Boolean
+		{
+			var r : Room;
+			var found : Boolean = false;
+			var el : PuzzleElement;
+			for (var k : String in _roomMap)
+			{
+				r = _roomMap[k] as Room;
+				for (var i : int = 0; i < r.numChildren; i++)
+				{
+					if ((el = (r.getChildAt(i) as PuzzleElement)))
+					{
+						if (el.name == id)
+						{
+							el.visible = !el.visible;
+							found = true;
+							break;
+						}
+					}
+				}
+				if (found) break;
+			}
+			
+			return found;
+		}
+		
+		
+		
+		//Period change
+		public static function periodChange () : void
+		{
+			_changingPeriod = true;
+		}
+		
+		
+		private function fadeToBlack (callback : Function) : void
+		{
+			_shade.alpha = 0;
+			addChild(_shade);
+			TweenLite.to(_shade, 0.5, { alpha : 1, onComplete : function () : void
+			{
+				callback();
+				
+				TweenLite.to(_shade, 0.5, { alpha : 0, ease:Quad.easeIn, onComplete : function () : void
+				{
+					removeChild(_shade);
+				}});
+			}});
 		}
 	}
 }

@@ -9,6 +9,7 @@ package
 	 */
 	public class Entity extends MovieClip
 	{
+		//Facing directions
 		public static const LEFT : int = 0;
 		public static const RIGHT : int = 1;
 		
@@ -71,6 +72,15 @@ package
 			_status &= ~flag;
 		}
 		
+		public function testFlag (flag : int) : Boolean
+		{
+			return ((_status & flag) == flag);
+		}
+		
+		public function updateAsset (time : String, mode : String) : void
+		{
+			gotoAndStop(time + "_" + mode);
+		}
 	}
 
 }
