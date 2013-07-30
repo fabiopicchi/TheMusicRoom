@@ -30,6 +30,7 @@ package
 		private static const TYPING_TEXT : int = 1 << 0;
 		private static const PLAYING_CUTSCENE : int = 1 << 1;
 		private static const INVENTORY_OPEN : int = 1 << 2;
+		private static const PUZZLESCREEN_OPEN : int = 1 << 3;
 		
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
@@ -92,16 +93,18 @@ package
 			var jsonArray : Array = [];
 			var jsonObject : Object;
 			var room : Room;
+			var i : int = 0;
+			var j : int = 0;
 			
 			jsonArray = (JSONLoader.loadFile("sceneElements.json") as Array);
 			var el : SceneElement;
-			for (var i : int = 0; i < jsonArray.length; i++)
+			for (i = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
 				room = ROOM_MAP[jsonObject.room];
 				if (room)
 				{
-					for (var j : int = 0; j < room.numChildren; j++)
+					for (j = 0; j < room.numChildren; j++)
 					{
 						if ((el = (room.getChildAt(j) as SceneElement)))
 						{
@@ -116,13 +119,13 @@ package
 			
 			jsonArray = (JSONLoader.loadFile("switches.json") as Array);
 			var l : LightSwitch;
-			for (var i : int = 0; i < jsonArray.length; i++)
+			for (i = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
 				room = ROOM_MAP[jsonObject.room];
 				if (room)
 				{
-					for (var j : int = 0; j < room.numChildren; j++)
+					for (j = 0; j < room.numChildren; j++)
 					{
 						if ((l = (room.getChildAt(j) as LightSwitch)))
 						{
@@ -137,13 +140,13 @@ package
 			
 			jsonArray = (JSONLoader.loadFile("shadows.json") as Array);
 			var s : Shadow;
-			for (var i : int = 0; i < jsonArray.length; i++)
+			for (i = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
 				room = ROOM_MAP[jsonObject.room];
 				if (room)
 				{
-					for (var j : int = 0; j < room.numChildren; j++)
+					for (j = 0; j < room.numChildren; j++)
 					{
 						if ((s = (room.getChildAt(j) as Shadow)))
 						{
@@ -158,13 +161,13 @@ package
 			
 			jsonArray = (JSONLoader.loadFile("doors.json") as Array);
 			var d : Door;
-			for (var i : int = 0; i < jsonArray.length; i++)
+			for (i = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
 				room = ROOM_MAP[jsonObject.room];
 				if (room)
 				{
-					for (var j : int = 0; j < room.numChildren; j++)
+					for (j = 0; j < room.numChildren; j++)
 					{
 						if ((d = (room.getChildAt(j) as Door)))
 						{
@@ -273,7 +276,6 @@ package
 				{
 					typeText();
 				}
-				
 				else
 				{
 					if (keyJustPressed(Action.INVENTORY))
