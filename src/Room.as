@@ -209,7 +209,7 @@ package
 				var scrollX : Number = 0;
 				if (_player.x >= 724 && _scrollAcc > -(getChildByName("back").width - 1024))
 				{
-					if (_scrollAcc - 1024 * Game.dt < -(getChildByName("back").width - 1024))
+					if (_scrollAcc - Game.playerInstance.speed * Game.dt < -(getChildByName("back").width - 1024))
 					{
 						scrollX = -Math.round((_scrollAcc + (getChildByName("back").width - 1024)));
 					}
@@ -233,7 +233,7 @@ package
 				
 				if (_player.x <= 300 && _scrollAcc < 0)
 				{
-					if ((_scrollAcc + 1024 * Game.dt) > 0)
+					if ((_scrollAcc + Game.playerInstance.speed * Game.dt) > 0)
 					{
 						scrollX = -Math.round(_scrollAcc);
 					}
@@ -324,8 +324,9 @@ package
 			}
 			
 			setChildIndex(getChildByName("back"), 0);
+			setChildIndex(getChildByName("area"), 1);
 			
-			var zIndex : int = 1;
+			var zIndex : int = 2;
 			
 			var j : int = 1;
 			for (j = 0; j < arObjects.length; j++)
@@ -337,16 +338,20 @@ package
 			{
 				setChildIndex(arPlayer[j], zIndex++);
 			}
-				
+			
 			for (j = 0; j < arEnemies.length; j++)
 			{
 				setChildIndex(arEnemies[j], zIndex++);
 			}
-				
+			
+			setChildIndex(getChildByName("shadow"), zIndex++);
+			
 			for (j = 0; j < arLights.length; j++)
 			{
 				setChildIndex(arLights[j], zIndex++);
 			}
+			
+			setChildIndex(getChildByName("front"), numChildren - 1);
 		}
 		
 		public function get time():String 

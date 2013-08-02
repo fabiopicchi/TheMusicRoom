@@ -60,22 +60,22 @@ package
 		private static var _nextRoomPosition : Number;
 		private static var _nextRoomCallback : Function;
 		
-		private static var _room : String = "foyer";
+		private static var _room : String = "daddyRoom";
 		public static const ROOM_MAP : Object = {
 			bathroom1 : new Bathroom1,
 			bathroom2 : new Bathroom2,
 			centralHallway : new CentralHallway,
-			daddysRoom : new DaddyRoom,
+			daddyRoom : new DaddyRoom,
 			dinnerRoom : new DinnerRoom,
 			foyer : new Foyer,
 			garden : new Garden,
-			grandmasRoom : new GrandmaRoom,
+			grandmaRoom : new GrandmaRoom,
 			hallway : new Hallway,
 			kitchen : new Kitchen,
 			livingRoom : new LivingRoom,
 			mainHallway : new MainHallway,
 			musicHallway : new MusicHallway,
-			nancysRoom : new NancyRoom,
+			nancyRoom : new NancyRoom,
 			porch : new Porch,
 			projectorRoom : new ProjectorRoom,
 			upperHallway : new UpperHallway
@@ -97,7 +97,7 @@ package
 		
 		private static var _inventory : Inventory = new Inventory ();
 		
-		private var _puzzleScreen : PuzzleScreen = null;
+		private static var _puzzleScreen : PuzzleScreen = null;
 		
 		public function Game():void 
 		{
@@ -310,6 +310,7 @@ package
 			loadJSONProperties("switches.json", LightSwitch);
 			loadJSONProperties("lights.json", Light);
 			loadJSONProperties("doors.json", Door);
+			loadJSONProperties("puzzleElements.json", PuzzleElement);
 			
 			_arTeleport = (JSONLoader.loadFile("teleports.json") as Array);
 			
@@ -422,13 +423,12 @@ package
 					{
 						fadeToBlack(function () : void
 						{
-							//addChild (_puzzleScreen = new PuzzleScreen());
+							addChild (_puzzleScreen);
 						});
 					}
-					
-					if (_puzzleScreen)
+					if (contains(_puzzleScreen))
 					{
-						
+						_puzzleScreen.update();
 					}
 				}
 				else
@@ -766,6 +766,15 @@ package
 		}
 		
 		
+		//go to puzzle screen
+		public static function puzzleScreen (element : PuzzleElement) : void
+		{
+			_puzzleScreen = new ToyBoxScreen();
+			_puzzleScreen.initPuzzleScreen(element);
+			setFlag(PUZZLESCREEN_OPEN);
+		}
+		
+		
 		
 		//load JSON properties
 		private function loadJSONProperties (fileName : String, cl : Class) : void
@@ -801,6 +810,10 @@ package
 				{
 					for (var j : int = 0; j < room.numChildren; j++)
 					{
+						if (jsonObject.room == "daddyRoom")
+						{
+							trace (getQualifiedClassName(room.getChildAt(j)));
+						}
 						if ((obj = room.getChildAt(j)) is cl)
 						{
 							if (obj.name == jsonObject.name)

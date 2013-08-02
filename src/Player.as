@@ -17,6 +17,7 @@ package
 		public static const HIDDEN : int = 1 << 0;
 		public static const INACTIVE : int = 1 << 1;
 		public static const CROUCH : int = 1 << 2;
+		private var _speed : Number = 256;
 		
 		private var _animationData : Object = {
 			idle : {looped : false},
@@ -90,13 +91,13 @@ package
 					if (Game.keyPressed(Action.LEFT))
 					{
 						b.scaleX = -1;
-						dx -= Math.round((1024) * Game.dt);
+						dx -= Math.round((_speed) * Game.dt);
 					}
 					
 					if (Game.keyPressed(Action.RIGHT))
 					{
 						b.scaleX = 1;
-						dx += Math.round((1024) * Game.dt);
+						dx += Math.round((_speed) * Game.dt);
 					}
 					
 					if (Game.keyJustPressed(Action.INTERACT))
@@ -175,6 +176,16 @@ package
 		public function get room():String 
 		{
 			return _room;
+		}
+		
+		public function get speed():Number 
+		{
+			return _speed;
+		}
+		
+		public function set speed(value:Number):void 
+		{
+			_speed = value;
 		}
 		
 		override public function setFlag(flag:int):void 

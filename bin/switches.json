@@ -1,17 +1,66 @@
 [
     {
-        "name": "bporch1",
-        "shadows": [
-            "sporch1"
-        ],
-        "room": "porch"
+        "name": "sbathroom11",
+        "room": "bathroom1",
+        "lights": [
+            "lbathroom11"
+        ]
     },
-	{
-        "name": "bfoyer1",
-        "shadows": [
-            "sfoyer1",
-			"sfoyer2"
-        ],
-        "room": "foyer"
+    {
+        "name": "sdinnerRoom1",
+        "room": "dinnerRoom",
+        "lights": [
+            "ldinnerRoom1"
+        ]
+    },
+    {
+        "name": "sfoyer1",
+        "room": "foyer",
+        "lights": [
+            "lfoyer2",
+            "lfoyer3"
+        ]
+    },
+    {
+        "name": "sbathroom21",
+        "room": "bathroom2",
+        "lights": [
+            "lbathroom21"
+        ]
+    },
+    {
+        "name": "sgrandmaRoom1",
+        "room": "grandmaRoom",
+        "lights": [
+            "lgrandmaRoom1"
+        ]
+    },
+    {
+        "name": "slivingRoom1",
+        "room": "livingRoom",
+        "lights": [
+            "llivingRoom1"
+        ]
+    },
+    {
+        "name": "smainHallway1",
+        "room": "mainHallway",
+        "lights": [
+            "lmainHallway1"
+        ]
+    },
+    {
+        "name": "smainHallway2",
+        "room": "mainHallway",
+        "lights": [
+            "lmainHallway2"
+        ]
+    },
+    {
+        "name": "smainHallway3",
+        "room": "mainHallway",
+        "lights": [
+            "lmainHallway3"
+        ]
     }
 ]

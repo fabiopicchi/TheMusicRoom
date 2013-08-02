@@ -41,6 +41,7 @@ package
 		{
 			super.visible = value;
 		}
+		
 		public function toggle () : void
 		{
 			if ((parent as Room).time == "night")

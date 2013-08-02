@@ -1,0 +1,15 @@
+[
+    {
+        "name": "toyBoxPuzzle",
+        "puzzleScreen": "toyBoxScreen",
+        "itemsNeeded": [
+            "circlePiece",
+            "trianglePiece",
+            "squarePiece"
+        ],
+        "elementsDestroyed": "chest",
+        "elementsCreated": "",
+        "inventoryItemReward": "toyShovel",
+		"room": "daddyRoom"
+    }
+]

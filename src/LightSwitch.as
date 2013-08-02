@@ -23,11 +23,11 @@ package
 		{
 			super.interact();
 			
-			var s : Light;
+			var l : Light;
 			for (var i : int = 0; i < _lights.length; i++)
 			{	
-				s = parent.getChildByName(_lights[i]) as Light;
-				s.toggle();
+				l = parent.getChildByName(_lights[i]) as Light;
+				l.toggle();
 			}
 		}
 	}
