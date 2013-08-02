@@ -12,6 +12,7 @@ package
 		public static const INTERACT:int = 1 << 2;
 		public static const INVENTORY:int = 1 << 3;
 		public static const CROUCH:int = 1 << 4;
+		public static const BACK:int = 1 << 5;
 		
 		public function Action() 
 		{
@@ -36,7 +37,10 @@ package
 					
 				case 32:
 					return INTERACT;
-					
+				
+				case 88:
+					return BACK;
+				
 				case 73:
 					return INVENTORY;
 				

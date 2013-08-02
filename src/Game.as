@@ -31,11 +31,14 @@ package
 		private static var pKeyState : int = 0;
 		
 		private static var _status : int = 0;
-		private static const NONE : int = 0;
-		private static const TYPING_TEXT : int = 1 << 0;
-		private static const PLAYING_CUTSCENE : int = 1 << 1;
-		private static const INVENTORY_OPEN : int = 1 << 2;
-		private static const PUZZLESCREEN_OPEN : int = 1 << 3;
+		private static var _pStatus : int = 0;
+		public static const NONE : int = 0;
+		public static const TYPING_TEXT : int = 1 << 0;
+		public static const PLAYING_CUTSCENE : int = 1 << 1;
+		public static const INVENTORY_OPEN : int = 1 << 2;
+		public static const PUZZLESCREEN_OPEN : int = 1 << 3;
+		public static const CHANGING_ROOM : int = 1 << 4;
+		public static const PERIOD_CHANGE : int = 1 << 5;
 		
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
@@ -57,7 +60,7 @@ package
 		private static var _nextRoomPosition : Number;
 		private static var _nextRoomCallback : Function;
 		
-		private static var _room : String = "porch";
+		private static var _room : String = "foyer";
 		public static const ROOM_MAP : Object = {
 			bathroom1 : new Bathroom1,
 			bathroom2 : new Bathroom2,
@@ -79,8 +82,6 @@ package
 		};
 		
 		private static var _shade : Shape = new Shape();
-		private static var _changingRooms : Boolean = false;
-		private static var _changingPeriod : Boolean = false;
 		
 		private static var _arSceneElement : Array = [];
 		private static var _arDoors : Array = [];
@@ -95,6 +96,8 @@ package
 		private static var _currentPeriod : int = 0;
 		
 		private static var _inventory : Inventory = new Inventory ();
+		
+		private var _puzzleScreen : PuzzleScreen = null;
 		
 		public function Game():void 
 		{
@@ -359,12 +362,17 @@ package
 		
 		private function update():void 
 		{
-			if (!_changingRooms && _nextRoom != "")
+			var changedStatus : int = 0;
+			if (_status != _pStatus)
 			{
-				_changingRooms = true;
+				changedStatus = (_status ^ _pStatus);
+				_pStatus = _status;
+			}
+			if ((changedStatus & CHANGING_ROOM) == CHANGING_ROOM && (_status & CHANGING_ROOM) == CHANGING_ROOM)
+			{
 				fadeToBlack(function () : void
 				{
-					_changingRooms = false;
+					resetFlag(CHANGING_ROOM);
 					ROOM_MAP[_room].removePlayer();
 					removeChild(ROOM_MAP[_room]);
 					
@@ -377,12 +385,12 @@ package
 				});
 			}
 			
-			else if (_changingPeriod)
+			else if ((changedStatus & PERIOD_CHANGE) == PERIOD_CHANGE && (_status & PERIOD_CHANGE) == PERIOD_CHANGE)
 			{
 				var event : Object = _arPeriod[_currentPeriod++];
 				fadeToBlack(function () : void
 				{
-					_changingPeriod = false;
+					resetFlag(PERIOD_CHANGE);
 					for (var k : String in ROOM_MAP)
 					{
 						ROOM_MAP[k].updateAssets();
@@ -390,7 +398,7 @@ package
 				});
 			}
 			
-			if (!_changingRooms && !_changingPeriod)
+			if ((_status & PERIOD_CHANGE) != PERIOD_CHANGE && (_status & CHANGING_ROOM) != CHANGING_ROOM)
 			{
 				if ((_status & INVENTORY_OPEN) == INVENTORY_OPEN)
 				{
@@ -408,6 +416,21 @@ package
 				{
 					typeText();
 				}
+				else if ((_status & PUZZLESCREEN_OPEN) == PUZZLESCREEN_OPEN)
+				{
+					if ((changedStatus & PUZZLESCREEN_OPEN) == PUZZLESCREEN_OPEN)
+					{
+						fadeToBlack(function () : void
+						{
+							//addChild (_puzzleScreen = new PuzzleScreen());
+						});
+					}
+					
+					if (_puzzleScreen)
+					{
+						
+					}
+				}
 				else
 				{
 					if (keyJustPressed(Action.INVENTORY))
@@ -424,6 +447,11 @@ package
 							_status &= ~INVENTORY_OPEN;
 							_playerInstance.resetFlag(Player.INACTIVE);
 						}
+					}
+					
+					if (keyJustPressed(Action.BACK))
+					{
+						periodChange();
 					}
 					
 					for (var i : int = 0; i < numChildren; i++)
@@ -594,10 +622,10 @@ package
 			
 			setNextRoom (teleport.room, teleport.position, function () : void
 			{
-				_changingRooms = true;
+				setFlag(CHANGING_ROOM);
 				setTimeout(function () : void
 				{
-					_changingRooms = false;
+					resetFlag(CHANGING_ROOM);
 					Game.displayText(teleport.text.split("\n\r"));
 				}, 500);
 			});
@@ -718,7 +746,7 @@ package
 		//Period change
 		public static function periodChange () : void
 		{
-			_changingPeriod = true;
+			setFlag(PERIOD_CHANGE);
 		}
 		
 		

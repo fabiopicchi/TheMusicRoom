@@ -269,6 +269,11 @@ package
 		
 		public function updateAssets () : void
 		{
+			if (_time == "day")
+				_time = "night";
+			else
+				_time = "day";
+			
 			(getChildByName("back") as MovieClip).gotoAndStop(_time);
 			if (getChildByName("front"))
 			{

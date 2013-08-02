@@ -8,44 +8,32 @@ package
 	 */
 	public class PuzzleScreen extends MovieClip 
 	{
-		
-		private var _inventoryItemReward : String;
-		private var _itemsNeeded : Array;
-		
 		public static const TYPE_CHEST : int = 1 << 0;
 		
-		public function PuzzleScreen() 
+		private var _pElement : PuzzleElement;
+		
+		public function PuzzleScreen(p : PuzzleElement) 
 		{
-			
+			_pElement = p;
 		}
 		
-		public function loadData (data : Object) : void
+		public function insertItem (item : InventoryItem) : Boolean
 		{
-			_inventoryItemReward = data.inventoryItemReward;
-			_itemsNeeded = ((data.itemsNeeded is Array) ? data.itemsNeeded : [data.itemsNeeded]);
-		}
-		
-		public function addItemToPuzzle (item : String) : void
-		{
-			for (var i : int = 0; i < _itemsNeeded.length; i++)
+			if (_pElement.addItemToPuzzle(item.id))
 			{
-				if (item == _itemsNeeded[i])
-				{
-					_itemsNeeded.splice(i, 1);
-					//Mudar frame do elemento do puzzle
-				}
+				this[item.id].gotoAndStop(2);
+				return true;
 			}
-			
-			if (_itemsNeeded.length == 0)
+			else
 			{
-				fadeToBlack(function () : void
-				{
-					Game.addToInventory(_inventoryItemReward);
-					parent.removeChild(this);
-				});
+				return false;
 			}
 		}
 		
+		public function close () : void
+		{
+			
+		}
 	}
 
 }
