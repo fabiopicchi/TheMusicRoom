@@ -35,6 +35,7 @@ package
 		private static const TYPING_TEXT : int = 1 << 0;
 		private static const PLAYING_CUTSCENE : int = 1 << 1;
 		private static const INVENTORY_OPEN : int = 1 << 2;
+		private static const PUZZLESCREEN_OPEN : int = 1 << 3;
 		
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
@@ -407,7 +408,6 @@ package
 				{
 					typeText();
 				}
-				
 				else
 				{
 					if (keyJustPressed(Action.INVENTORY))
