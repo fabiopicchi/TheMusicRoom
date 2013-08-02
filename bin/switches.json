@@ -1,8 +1,16 @@
 [
     {
-        "name": "switch1",
+        "name": "bporch1",
         "shadows": [
-            "shadow1"
+            "sporch1"
+        ],
+        "room": "porch"
+    },
+	{
+        "name": "bfoyer1",
+        "shadows": [
+            "sfoyer1",
+			"sfoyer2"
         ],
         "room": "foyer"
     }

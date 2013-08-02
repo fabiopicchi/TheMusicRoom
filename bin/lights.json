@@ -1,0 +1,17 @@
+[
+    {
+        "name": "sporch1",
+        "room": "porch",
+        "nightInitialState": 1
+    },
+	{
+        "name": "sfoyer1",
+        "room": "foyer",
+        "nightInitialState": 0
+    },
+	{
+        "name": "sfoyer2",
+        "room": "foyer",
+        "nightInitialState": 1
+    }
+]

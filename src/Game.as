@@ -4,14 +4,20 @@ package
 	import com.greensock.TweenLite;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Scene;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
+	import flash.utils.getQualifiedClassName;
+	import flash.utils.SetIntervalTimer;
 	import flash.utils.setTimeout;
 	
 	/**
@@ -51,26 +57,41 @@ package
 		private static var _nextRoomCallback : Function;
 		
 		private static var _room : String = "porch";
-		private static const _roomMap : Object = {
-			porch : new Porch,
-			foyer : new Foyer
-			/*smpl1 : new SampleRoom,
-			smpl2 : new SampleRoom2,*/
-			/*porch : new Porch,
+		public static const ROOM_MAP : Object = {
+			bathroom1 : new Bathroom1,
+			bathroom2 : new Bathroom2,
+			centralHallway : new CentralHallway,
+			daddysRoom : new DaddyRoom,
+			dinnerRoom : new DinnerRoom,
 			foyer : new Foyer,
-			livingroom : new LivingRoom*/
+			garden : new Garden,
+			grandmasRoom : new GrandmaRoom,
+			hallway : new Hallway,
+			kitchen : new Kitchen,
+			livingRoom : new LivingRoom,
+			mainHallway : new MainHallway,
+			musicHallway : new MusicHallway,
+			nancysRoom : new NancyRoom,
+			porch : new Porch,
+			projectorRoom : new ProjectorRoom,
+			upperHallway : new UpperHallway
 		};
 		
 		private static var _shade : Shape = new Shape();
 		private static var _changingRooms : Boolean = false;
 		private static var _changingPeriod : Boolean = false;
 		
+		private static var _arSceneElement : Array = [];
+		private static var _arDoors : Array = [];
+		private static var _arLightSwitches : Array = [];
+		private static var _arLights : Array = [];
+		
 		// Teleport event list
 		private static var _arTeleport : Array = [];
 		
 		// Day/Night event list
 		private static var _arPeriod : Array = [];
-		private static var _currentPeriod : int = 0;;
+		private static var _currentPeriod : int = 0;
 		
 		private static var _inventory : Inventory = new Inventory ();
 		
@@ -78,10 +99,203 @@ package
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 			
-			for (var k : String in _roomMap)
+			for (var k : String in ROOM_MAP)
 			{
-				_roomMap[k].name = k;
+				ROOM_MAP[k].name = k;
 			}
+		}
+		
+		public static function debugDump () : void
+		{
+			var appPath:File = File.applicationDirectory.resolvePath("");
+			var file : File;
+			var fStream:FileStream;
+			var room : Room;
+			var j : int = 0;
+			
+			for (var k : String in ROOM_MAP)
+			{
+				room = ROOM_MAP[k];
+				file = new File (appPath.nativePath + "/../logs/" + room.name + ".txt");
+				fStream = new FileStream();
+				fStream.open(file, FileMode.WRITE);
+				fStream.writeUTFBytes("Room code: " + k + "\n");
+				fStream.writeUTFBytes("    Object naming status: \n" + room.checkObjectNames() + "\n");
+				
+				if (room.getChildByName("area"))
+					fStream.writeUTFBytes("    Has area: Yes\n");
+				else
+					fStream.writeUTFBytes("    Has area: No\n");
+					
+				if (room.getChildByName("back"))
+					fStream.writeUTFBytes("    Has back: Yes\n");
+				else
+					fStream.writeUTFBytes("    Has back: No\n");
+					
+				if (room.getChildByName("front"))
+					fStream.writeUTFBytes("    Has front: Yes\n");
+				else
+					fStream.writeUTFBytes("    Has front: No\n");
+				
+				fStream.writeUTFBytes ("\n");
+				for (var i : int = 0; i < room.numChildren; i++)
+				{
+					var child : DisplayObject = room.getChildAt(i);
+					if (child is Door)
+					{
+						fStream.writeUTFBytes ("	Object class: Door\n");
+					}
+					else if (child is SceneElement)
+					{
+						fStream.writeUTFBytes ("	Object class: SceneElement\n");
+					}
+					else if (child is LightSwitch)
+					{
+						fStream.writeUTFBytes ("	Object class: LightSwitch\n");
+					}
+					else if (child is Light)
+					{
+						fStream.writeUTFBytes ("	Object class: Light\n");
+					}
+					else if (child is PuzzleElement)
+					{
+						fStream.writeUTFBytes ("	Object class: PuzzleElement\n");
+					}
+					else
+					{
+						fStream.writeUTFBytes ("	Object class: " + getQualifiedClassName(child) + "\n");
+					}
+					fStream.writeUTFBytes ("		Name: " + child.name + "\n");
+					fStream.writeUTFBytes ("		Position: (" + child.x + ", " + child.y + ")\n");
+					fStream.writeUTFBytes ("		Dimensions: (" + child.width + ", " + child.height + ")\n");
+					
+					if (child is InteractiveElement)
+					{
+						fStream.writeUTFBytes ("		IsInteractive: Yes\n");
+						if (room.getChildByName(child.name + "_h"))
+							fStream.writeUTFBytes ("		Has hitbox: Yes\n");
+						else 
+							fStream.writeUTFBytes ("		Has hitbox: No\n");
+						
+						fStream.writeUTFBytes ("		Frame Names:\n");
+						for (j = 1; j <= (child  as MovieClip).totalFrames; j++)
+						{
+							(child as MovieClip).gotoAndStop(j);
+							fStream.writeUTFBytes ("			" + j + ": " + (child as MovieClip).currentFrameLabel + "\n");
+						}
+					}
+					fStream.writeUTFBytes ("\n");
+					
+				}
+				
+				fStream.close();
+			}
+			
+			file = new File (appPath.nativePath + "/../logs/sceneElementCheck.txt");
+			fStream = new FileStream();
+			fStream.open(file, FileMode.WRITE);
+			for (j = 0; j < _arSceneElement.length; j++)
+			{
+				obj = _arSceneElement[j];
+				room = ROOM_MAP[obj.room];
+				
+				if (!room)
+				{
+					fStream.writeUTFBytes("    Object " + obj.name + " has an invalid room name in the json file!");
+				}
+				else
+				{
+					if (room.getChildByName(obj.name))
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+					}
+					else
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " not found at room " + obj.room);
+					}
+				}
+				fStream.writeUTFBytes ("\n");
+			}
+			
+			file = new File (appPath.nativePath + "/../logs/doorCheck.txt");
+			fStream = new FileStream();
+			fStream.open(file, FileMode.WRITE);
+			var obj : Object;
+			for (j = 0; j < _arDoors.length; j++)
+			{
+				obj = _arDoors[j];
+				room  = ROOM_MAP[obj.room];
+				
+				if (!room)
+				{
+					fStream.writeUTFBytes("    Object " + obj.name + " has an invalid room name in the json file!");
+				}
+				else
+				{
+					if (room.getChildByName(obj.name))
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+					}
+					else
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " not found at room " + obj.room);
+					}
+				}
+				fStream.writeUTFBytes ("\n");
+			}
+			
+			file = new File (appPath.nativePath + "/../logs/lightSwitchCheck.txt");
+			fStream = new FileStream();
+			fStream.open(file, FileMode.WRITE);
+			for (j = 0; j < _arLightSwitches.length; j++)
+			{
+				obj = _arLightSwitches[j];
+				room  = ROOM_MAP[obj.room];
+				
+				if (!room)
+				{
+					fStream.writeUTFBytes("    Object " + obj.name + " has an invalid room name in the json file!");
+				}
+				else
+				{
+					if (room.getChildByName(obj.name))
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+					}
+					else
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " not found at room " + obj.room);
+					}
+				}
+				fStream.writeUTFBytes ("\n");
+			}
+			
+			file = new File (appPath.nativePath + "/../logs/lightCheck.txt");
+			fStream = new FileStream();
+			fStream.open(file, FileMode.WRITE);
+			for (j = 0; j < _arLights.length; j++)
+			{
+				obj = _arLights[j];
+				room = ROOM_MAP[obj.room];
+				
+				if (!room)
+				{
+					fStream.writeUTFBytes("    Object " + obj.name + " has an invalid room name in the json file!");
+				}
+				else
+				{
+					if (room.getChildByName(obj.name))
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+					}
+					else
+					{
+						fStream.writeUTFBytes("    Object " + obj.name + " not found at room " + obj.room);
+					}
+				}
+				fStream.writeUTFBytes ("\n");
+			}
+			fStream.close();
 		}
 		
 		private function init(e:Event):void 
@@ -90,7 +304,8 @@ package
 			
 			loadJSONProperties("sceneElements.json", SceneElement);
 			loadJSONProperties("switches.json", LightSwitch);
-			loadJSONProperties("shadows.json", Shadow);
+			loadJSONProperties("lights.json", Light);
+			loadJSONProperties("doors.json", Door);
 			
 			_arTeleport = (JSONLoader.loadFile("teleports.json") as Array);
 			
@@ -107,9 +322,10 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
-			_roomMap[_room].addChild(new Enemy ());
-			_roomMap[_room].addPlayer();
-			addChild(_roomMap[_room]);
+			debugDump();
+			
+			ROOM_MAP[_room].addPlayer();
+			addChild(ROOM_MAP[_room]);
 			
 			_textBox = new TextField();
 			addChild(_textBox);
@@ -120,6 +336,11 @@ package
 			
 			var myFormat : TextFormat = new TextFormat("Comic Sans MS", 30, 0xFFFFFF);
 			_textBox.defaultTextFormat = myFormat;
+			
+			for (var k : String in ROOM_MAP)
+			{
+				(ROOM_MAP[k] as Room).updateAssets();
+			}
 		}
 		
 		private function run(e:Event):void 
@@ -143,14 +364,14 @@ package
 				fadeToBlack(function () : void
 				{
 					_changingRooms = false;
-					_roomMap[_room].removePlayer();
-					removeChild(_roomMap[_room]);
+					ROOM_MAP[_room].removePlayer();
+					removeChild(ROOM_MAP[_room]);
 					
 					_playerInstance.x = _nextRoomPosition;
 					_room = _nextRoom;
 					_nextRoom = "";
-					_roomMap[_room].addPlayer();
-					addChildAt(_roomMap[_room], 0);
+					ROOM_MAP[_room].addPlayer();
+					addChildAt(ROOM_MAP[_room], 0);
 					if (_nextRoomCallback != null) _nextRoomCallback();
 				});
 			}
@@ -158,13 +379,12 @@ package
 			else if (_changingPeriod)
 			{
 				var event : Object = _arPeriod[_currentPeriod++];
-				
 				fadeToBlack(function () : void
 				{
 					_changingPeriod = false;
-					for (var k : String in _roomMap)
+					for (var k : String in ROOM_MAP)
 					{
-						_roomMap[k].updateAssets();
+						ROOM_MAP[k].updateAssets();
 					}
 				});
 			}
@@ -215,9 +435,9 @@ package
 						}
 					}
 					
-					for (var k : String in _roomMap)
+					for (var k : String in ROOM_MAP)
 					{
-						_roomMap[k].update();
+						ROOM_MAP[k].update();
 					}
 				}
 			}
@@ -443,9 +663,9 @@ package
 			var r : Room;
 			var found : Boolean = false;
 			var el : SceneElement;
-			for (var k : String in _roomMap)
+			for (var k : String in ROOM_MAP)
 			{
-				r = _roomMap[k] as Room;
+				r = ROOM_MAP[k] as Room;
 				for (var i : int = 0; i < r.numChildren; i++)
 				{
 					if ((el = (r.getChildAt(i) as SceneElement)))
@@ -472,9 +692,9 @@ package
 			var r : Room;
 			var found : Boolean = false;
 			var el : PuzzleElement;
-			for (var k : String in _roomMap)
+			for (var k : String in ROOM_MAP)
 			{
-				r = _roomMap[k] as Room;
+				r = ROOM_MAP[k] as Room;
 				for (var i : int = 0; i < r.numChildren; i++)
 				{
 					if ((el = (r.getChildAt(i) as PuzzleElement)))
@@ -526,11 +746,29 @@ package
 			var jsonObject : Object;
 			var room : Room;
 			jsonArray = (JSONLoader.loadFile(fileName) as Array);
+			
+			if (getQualifiedClassName(cl) == getQualifiedClassName(SceneElement))
+			{
+				_arSceneElement = jsonArray;
+			}
+			else if (getQualifiedClassName(cl) == getQualifiedClassName(Light))
+			{
+				_arLights = jsonArray;
+			}
+			else if (getQualifiedClassName(cl) == getQualifiedClassName(LightSwitch))
+			{
+				_arLightSwitches = jsonArray;
+			}
+			else if (getQualifiedClassName(cl) == getQualifiedClassName(Door))
+			{
+				_arDoors = jsonArray;
+			}
+			
 			var obj : DisplayObject;
 			for (var i : int = 0; i < jsonArray.length; i++)
 			{
 				jsonObject = jsonArray[i];
-				room = _roomMap[jsonObject.room];
+				room = ROOM_MAP[jsonObject.room];
 				if (room)
 				{
 					for (var j : int = 0; j < room.numChildren; j++)

@@ -140,16 +140,25 @@ package
 				}
 				else
 				{
-					var door : DisplayObject;
-					door = (parent as Room).getChildByName("h" + room + "_" + Game.playerInstance.room);
-					if (!door)
-						door = (parent as Room).getChildByName("o" + room + "_" + Game.playerInstance.room);
+					var door : Door;
+					var targetObject : DisplayObject;
+					var i : int;
+					for (i = 0; i < parent.numChildren; i++)
+					{
+						if ((door = (parent.getChildAt(i) as Door)))
+						{
+							if (door.destiny == Game.playerInstance.room)
+								break;
+						}
+					}
 					
 					if (door)
 					{
-						if (!(door.x <= x + width && (door.x + door.width) >= x))
+						if (!(targetObject = parent.getChildByName(door.name + "_h") )) targetObject = door;
+						
+						if (!(targetObject.x <= x + width && (targetObject.x + targetObject.width) >= x))
 						{
-							_target = (door as Entity).getMidPoint().x;
+							_target = (targetObject as Entity).getMidPoint().x;
 						}
 						else
 						{
@@ -157,8 +166,17 @@ package
 							parent.removeChild(this);
 							Game.playerInstance.parent.addChild(this);
 							
-							door = parent.getChildByName("o" + Game.playerInstance.room + "_" + prevRoom);
-							x = door.x + (door.width - width) / 2;
+							for (i = 0; i < parent.numChildren; i++)
+							{
+								if ((door = (parent.getChildAt(i) as Door)))
+								{
+									if (door.destiny == prevRoom)
+										break;
+								}
+							}
+							if (!(targetObject = parent.getChildByName(door.name + "_h") )) targetObject = door;
+							
+							x = targetObject.x + (targetObject.width - width) / 2;
 							
 							if (Game.playerInstance.isHidden())
 							{

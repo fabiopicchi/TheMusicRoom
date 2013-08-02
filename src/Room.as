@@ -8,16 +8,75 @@ package
 	 * ...
 	 * @author arthur e fabio
 	 */
+	
 	public class Room extends Entity 
 	{
 		private var _player:Player;
 		private var _frontScrollFactor : Number;
-		private var _time : String = "day";
+		private var _time : String = "night";
 		private var _scrollAcc : Number = 0;
 		
 		public function Room() 
 		{
-			updateAssets();
+			
+		}
+		
+		public function checkObjectNames () : String
+		{
+			var arLights : Array = [];
+			var arSwitches : Array = [];
+			var arDoors : Array = [];
+			
+			var lightStatus : String = "";
+			var switchStatus : String = "";
+			var doorStatus : String = "";
+			
+			var i : int = 0;
+			var child : Entity;
+			
+			for (i = 0; i < numChildren; i++)
+			{
+				if ((child = getChildAt(i) as Entity))
+				{
+					if (child is Light)
+						arLights.push(child);
+					if (child is Door)
+						arDoors.push(child);
+					if (child is LightSwitch)
+						arSwitches.push (child);
+				}
+			}
+			
+			arLights.sortOn(["x"], Array.NUMERIC);
+			arSwitches.sortOn(["x"], Array.NUMERIC);
+			arDoors.sortOn(["x"], Array.NUMERIC);
+			
+			for (i = 0; i < arDoors.length; i++)
+			{
+				if (arDoors[i].name != "d" + name + (i + 1))
+				{
+					doorStatus += "        Error at door name: " + arDoors[i].name + ". Should be: " + "d" + name + (i + 1) + "\n";
+				}
+			}
+			
+			for (i = 0; i < arLights.length; i++)
+			{
+				if (arLights[i].name != "l" + name + (i + 1))
+				{
+					lightStatus += "        Error at light name: " + arLights[i].name + ". Should be: " + "l" + name + (i + 1) + "\n";
+				}
+			}
+			
+			for (i = 0; i < arSwitches.length; i++)
+			{
+				if (arSwitches[i].name != "b" + name + (i + 1))
+				{
+					switchStatus += "        Error at switch name: " + arSwitches[i].name + ". Should be: " + "b" + name + (i + 1) + "\n";
+				}
+			}
+			
+			if (switchStatus == "" && lightStatus == "" && doorStatus == "") return "        Success\n";
+			else return doorStatus + lightStatus + switchStatus;
 		}
 		
 		public function addPlayer () : void
@@ -47,10 +106,9 @@ package
 			}
 			for (var i : int = 0; i < numChildren; i++)
 			{
-				var h : Hitbox;
-				if ((h = (getChildAt(i) as Hitbox)))
+				if (getChildAt(i).name.indexOf("_h") != -1)
 				{
-					h.visible = false;
+					getChildAt(i).visible = false;
 				}
 				if (getChildAt(i).name == "area")
 				{
@@ -81,14 +139,14 @@ package
 				{
 					var el : InteractiveElement;
 					var oMidPoint : Point;
-					var h : Hitbox;
-					var s : Shadow;
+					var h : MovieClip;
+					var s : Light;
 					if ((el = (getChildAt(i) as InteractiveElement)))
 					{
 						el.resetFlag(InteractiveElement.HIDDEN);
 						for (var j : int = 0; j < numChildren; j++)
 						{
-							if ((s = getChildAt(j) as Shadow))
+							if ((s = getChildAt(j) as Light))
 							{
 								if (s.visible && s.hitTestPoint(el.x, el.y, true) && s.hitTestPoint(el.x + el.width, el.y, true))
 								{
@@ -100,7 +158,7 @@ package
 						
 						if (el.visible && !el.testFlag(InteractiveElement.HIDDEN))
 						{
-							if ((h = (getChildByName(el.name + "_h") as Hitbox)))
+							if ((h = (getChildByName(el.name + "_h") as MovieClip)))
 							{
 								if (_player.getMidPoint().x <= h.x + h.width && _player.getMidPoint().x >= h.x)
 								{
@@ -129,7 +187,7 @@ package
 						}
 					}
 					
-					if ((s = getChildAt(i) as Shadow))
+					if ((s = getChildAt(i) as Light))
 					{
 						if (s.visible)
 						{
@@ -217,19 +275,28 @@ package
 				(getChildByName("front") as MovieClip).gotoAndStop(_time);
 			}
 			
-			var obj : InteractiveElement;
+			var el : InteractiveElement;
+			var s : Light;
 			for (var i : int = 0; i < numChildren; i++)
 			{
-				if ((obj = (getChildAt(i) as InteractiveElement)))
+				if ((el = (getChildAt(i) as InteractiveElement)))
 				{
-					obj.updateAsset(_time, "normal");
+					el.updateAsset(_time, "normal");
+				}
+				
+				if ((s = (getChildAt(i) as Light)))
+				{
+					if (_time == "night")
+						s.resetNightState();
+					else
+						s.visible = false;
 				}
 			}
 		}
 		
 		public function zOrder () : void
 		{
-			var arShadows : Array = [];
+			var arLights : Array = [];
 			var arPlayer : Array = [];
 			var arEnemies : Array = [];
 			var arObjects : Array = [];
@@ -240,8 +307,8 @@ package
 			{
 				if ((child = getChildAt(i) as Entity))
 				{
-					if (child is Shadow)
-						arShadows.push(child);
+					if (child is Light)
+						arLights.push(child);
 					if (child is Player)
 						arPlayer.push(child);
 					if (child is Enemy)
@@ -256,17 +323,30 @@ package
 			var zIndex : int = 1;
 			
 			var j : int = 1;
-			for (j = 1; j < arObjects.length; j++)
-				setChildIndex(arObjects[j], j);
+			for (j = 0; j < arObjects.length; j++)
+			{
+				setChildIndex(arObjects[j], zIndex++);
+			}
 				
-			for (j = arObjects.length; j < arObjects.length + arPlayer.length; j++)
-				setChildIndex(arPlayer[j - arObjects.length], j);
+			for (j = 0; j < arPlayer.length; j++)
+			{
+				setChildIndex(arPlayer[j], zIndex++);
+			}
 				
-			for (j = arObjects.length + arPlayer.length; j < arObjects.length + arPlayer.length + arEnemies.length; j++)
-				setChildIndex(arEnemies[j - arObjects.length - arPlayer.length], j);
+			for (j = 0; j < arEnemies.length; j++)
+			{
+				setChildIndex(arEnemies[j], zIndex++);
+			}
 				
-			for (j = arObjects.length + arPlayer.length + arEnemies.length; j < arObjects.length + arPlayer.length + arEnemies.length + arShadows.length; j++)
-				setChildIndex(arShadows[j - arEnemies.length - arObjects.length - arPlayer.length], j);
+			for (j = 0; j < arLights.length; j++)
+			{
+				setChildIndex(arLights[j], zIndex++);
+			}
+		}
+		
+		public function get time():String 
+		{
+			return _time;
 		}
 	}
 

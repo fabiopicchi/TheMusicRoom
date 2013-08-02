@@ -7,7 +7,7 @@ package
 	public class LightSwitch extends InteractiveElement 
 	{
 		
-		private var _shadows : Array;
+		private var _lights : Array;
 		
 		public function LightSwitch() 
 		{
@@ -16,17 +16,18 @@ package
 		
 		public function loadData (data : Object) : void
 		{
-			_shadows = ((data.shadows is Array) ? data.shadows : [data.shadows]);
+			_lights = ((data.lights is Array) ? data.lights : [data.lights]);
 		}
 		
 		override public function interact(item : InventoryItem = null) : void
 		{
 			super.interact();
-			var s : Shadow;
-			for (var i : int = 0; i < _shadows.length; i++)
+			
+			var s : Light;
+			for (var i : int = 0; i < _lights.length; i++)
 			{	
-				s = parent.getChildByName(_shadows[i]) as Shadow;
-				s.visible = !s.visible;
+				s = parent.getChildByName(_lights[i]) as Light;
+				s.toggle();
 			}
 		}
 	}

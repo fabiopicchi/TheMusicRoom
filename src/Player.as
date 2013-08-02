@@ -119,23 +119,23 @@ package
 			}
 			
 			if (dx == 0)
-				_currentAnim = "idle";
+				_currentAnim = "idle_" + (parent as Room).time;
 			else
 			{
 				this.x += dx;
-				_currentAnim = "walking";
+				_currentAnim = "walking_" + (parent as Room).time;
 			}
 			
 			if (_currentAnim != _pAnim)
 			{
-				_looped = _animationData[_currentAnim].looped;
+				_looped = _animationData[_currentAnim.split("_")[0]].looped;
 				b.gotoAndPlay(_currentAnim);
 				_pAnim = _currentAnim;
 			}
 			
 		}
 		
-		public function isOverlappedBy (s : Shadow) : Boolean
+		public function isOverlappedBy (s : Light) : Boolean
 		{
 			for (var i : int = 0; i < _keyPoints.length; i++)
 			{

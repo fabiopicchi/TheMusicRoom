@@ -34,7 +34,8 @@ package
 			_puzzleElementAffected = ((data.puzzlesAffected is Array) ? data.puzzlesAffected : [data.puzzlesAffected]);
 			_inventoryItemSpawned = data.itemSpawned;
 			_teleport = data.teleport;
-			_periodChange = (data.periodChange == "-" ? false : true);
+			
+			_periodChange = (data.periodChange == null ? false : true);
 		}
 		
 		override public function interact (item : InventoryItem = null) : void
@@ -44,22 +45,22 @@ package
 			{
 				if (item.id == _inventoryItemNeeded)
 				{
-					Game.displayText(_textRightItem.split("\n\r"), interactionCallback);
+					Game.displayText(_textRightItem.split("#pb"), interactionCallback);
 				}
 				else
 				{
-					Game.displayText(_textWrongItem.split("\n\r"));
+					Game.displayText(_textWrongItem.split("#pb"));
 				}
 			}
 			else
 			{
-				if (_inventoryItemNeeded == "-" && _inventoryItemSpawned)
+				if (_inventoryItemNeeded == "")
 				{
-					Game.displayText(_textNoItem.split("\n\r"), interactionCallback);
+					Game.displayText(_textNoItem.split("#pb"), interactionCallback);
 				}
 				else
 				{
-					Game.displayText(_textNoItem.split("\n\r"));
+					Game.displayText(_textNoItem.split("#pb"));
 				}
 			}
 		}
@@ -67,7 +68,11 @@ package
 		public function interactionCallback () : void
 		{
 			var i : int = 0;
-			Game.addToInventory(_inventoryItemSpawned);
+			
+			if (_inventoryItemSpawned)
+			{
+				Game.addToInventory(_inventoryItemSpawned);
+			}
 			for (i = 0; i < _sceneElementsAffected.length; i++)
 			{
 				Game.changeSceneElement(_sceneElementsAffected[i]);
