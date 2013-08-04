@@ -1,0 +1,37 @@
+[
+  {
+    "name":"night1",
+    "elementsDestroyed":["nancy2", "grandma4", "nancysClothes"],
+    "elementsCreated":["hanger"]
+  },
+  {
+    "name":"day2",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"night2",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"day3",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"night3",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"day4",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"night4",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  }
+]

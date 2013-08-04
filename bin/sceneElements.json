@@ -6,14 +6,16 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": [
-            "introDoor",
+        "elementsDestroyed": [
+            "introDoor"
+        ],
+        "elementsCreated": [
+            "dPorch1",
             "porchWindow"
         ],
         "itemSpawned": "",
         "teleport": "teleportArrival1",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "nancy1_1",
@@ -22,60 +24,63 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": [
-            "nancy1_1",
+        "elementsDestroyed": [
+            "nancy1_1"
+        ],
+        "elementsCreated": [
             "nancy1_2",
             "grandma1_1"
         ],
         "itemSpawned": "",
         "teleport": "teleportArrival2",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "nancy1_2",
-        "room": "daddysRoom",
+        "room": "daddyRoom",
         "textNoItem": "Nancy: Please enjoy your stay.",
         "textRightItem": "Nancy: I believe this belonged to your dad.",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "grandma1_1",
         "room": "kitchen",
-        "textNoItem": "Grandma: Ed! Look at you! You’ve grown so much! You’re looking just like your father! How was the trip, dear?#lbEdgard: It was alright, grandma... Just a bit long.#lbGrandma: Yes, yes, I know....But now we are going to take good care of you, dear.#lb>Grandma: Fala que vai fazer cupcakes mas precisa de um livro",
+        "textNoItem": "(PLACEHOLDER) Grandma: Ed! Look at you! You’ve grown so much! You’re looking just like your father! How was the trip, dear?#pbEdgard: It was alright, grandma... Just a bit long.#pbGrandma: Yes, yes, I know....But now we are going to take good care of you, dear.#pbGrandma: For starters, today we will have a very special dessert just for you. Your mother told me you are very fond of cupcakes, is that right?#pbEdgard: Yes, they're my favorite dessert.#pbGrandma: I've got a recipe book in my room. Could you be a dear and bring it to your grandmother?#pbEdgard: Sure, grandma!",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": [
-            "grandma1_1",
+        "elementsDestroyed": [
+            "grandma1_1"
+        ],
+        "elementsCreated": [
             "grandma1_2"
         ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "grandma1_2",
         "room": "kitchen",
         "textNoItem": "Grandma: Could you bring me my recipe book? I think I left it in my room.",
-        "textRightItem": "Grandma: Thank you, dear. Oh my, se lembra que também precisa achar o cupcake tins.\n",
+        "textRightItem": "Grandma: Thank you, dear.#pbGrandma: Now let's see...#pbGrandma: Oh my, I just remembered we will need a special cupcake tin to make this recipe... I used to have one, but I haven't seen it in ages. Could you help me find it, dear?",
         "textWrongItem": "Edgard: Grandma asked for a recipe book. I should try to find it first.",
-        "itemNeeded": "recipeBook",
-        "elementsAffected": [
-            "grandma1_2",
+        "itemNeeded": "irecipeBook",
+        "elementsDestroyed": [
+            "grandma1_2"
+        ],
+        "elementsCreated": [
             "grandma1_3"
         ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "grandma1_3",
@@ -83,15 +88,16 @@
         "textNoItem": "Grandma: Now where did I leave that cupcake tin...",
         "textRightItem": "Grandma: Now let's make some cupcakes!",
         "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "cupcakeTin",
-        "elementsAffected": [
-            "grandma1_3",
+        "itemNeeded": "icupcakeTin",
+        "elementsDestroyed": [
+            "grandma1_3"
+        ],
+        "elementsCreated": [
             "grandma1_4"
         ],
         "itemSpawned": "",
         "teleport": "teleportKitchenFakeFadeOut",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "grandma1_4",
@@ -100,37 +106,43 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "grandma1_4",
-        "itemSpawned": "squarePiece",
+        "elementsDestroyed": [
+            "grandma1_4"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "isquarePiece",
         "teleport": "teleportNight1",
-        "periodChange": "night1",
-        "puzzlesAffected": null
+        "periodChange": "night1"
     },
     {
-        "name": "houseMap",
-        "room": "daddysRoom",
+        "name": "map",
+        "room": "daddyRoom",
         "textNoItem": "Edgard: What is this? A map?",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "houseMap",
-        "itemSpawned": "houseMap",
+        "elementsDestroyed": [
+            "map"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "imap",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "recipeBook",
-        "room": "grandmasRoom",
+        "room": "grandmaRoom",
         "textNoItem": "Edgard: I found a recipe book.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "recipeBook",
-        "itemSpawned": "recipeBook",
+        "elementsDestroyed": [
+            "recipeBook"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "irecipeBook",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "cupboardKey",
@@ -139,11 +151,13 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "cupboardKey",
-        "itemSpawned": "cupboardKey",
+        "elementsDestroyed": [
+            "cupboardKey"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "icupboardKey",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "cupboard",
@@ -151,38 +165,42 @@
         "textNoItem": "Edgard: It's locked. I need to find a key.",
         "textRightItem": "Edgard: I found a cupcake tin!",
         "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "cupboardKey",
-        "elementsAffected": "cupboard",
-        "itemSpawned": "cupcakeTin",
+        "itemNeeded": "icupboardKey",
+        "elementsDestroyed": [
+            "cupboard"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "icupcakeTin",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "trianglePiece",
         "room": "bathroom2",
-        "textNoItem": "",
+        "textNoItem": "Edgard: I picked up the toy.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "trianglePiece",
-        "itemSpawned": "trianglePiece",
+        "elementsDestroyed": [
+            "trianglePiece"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "itrianglePiece",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "nancysClothes",
-        "room": "nancysRoom",
+        "room": "nancyRoom",
         "textNoItem": "Edgard: Nancy's sleeping clothes.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "porchWindow1",
@@ -191,24 +209,28 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "vase",
         "room": "porch",
         "textNoItem": "Edgard: There's some soft soil in this vase.",
-        "textRightItem": "Edgard: There's something buried here!#lbIt's some kind of metal box...#lbLet's open it.#lb...#lbEdgard: (Inside I found some old toys and drawings, as well as some family pictures belonging to my dad.#lbAmong the toys, there's a beautiful marble. I'll keep it)",
+        "textRightItem": "Edgard: There's something buried here!",
         "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "toyShovel",
-        "elementsAffected": "",
-        "itemSpawned": "marble",
+        "itemNeeded": "itoyShovel",
+        "elementsDestroyed": [
+            "vase"
+        ],
+        "elementsCreated": [
+            "tinBox"
+        ],
+        "itemSpawned": "imarble",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "mint",
@@ -217,11 +239,11 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "wineBook",
@@ -230,27 +252,28 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "projector1",
         "room": "projectorRoom",
-        "textNoItem": "",
+        "textNoItem": "Edgard: There's a a switch.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": [
-            "projector1",
+        "elementsDestroyed": [
+            "projector1"
+        ],
+        "elementsCreated": [
             "projector2"
         ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "projector2",
@@ -258,106 +281,233 @@
         "textNoItem": "Edgard: I can barely understand what's going on.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "monocle",
-        "elementsAffected": [
-            "projector2",
+        "itemNeeded": "imonocle",
+        "elementsDestroyed": [
+            "projector2"
+        ],
+        "elementsCreated": [
             "projector3"
         ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
-    },
-    {
-        "name": "hanger",
-        "room": "nancysRoom",
-        "textNoItem": "Edgard: (I will need this.)",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsAffected": "hanger",
-        "itemSpawned": "hanger",
-        "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
         "name": "secondFloorKey",
         "room": "foyer",
-        "textNoItem": "",
+        "textNoItem": "Edgard: I can't reach it with my bare hands.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "secondFloorKey",
-        "itemSpawned": "secondFloorKey",
+        "elementsDestroyed": [
+            "secondFloorKey"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "isecondFloorKey",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
+    },
+    {
+        "name": "ginger1",
+        "room": "garden",
+        "textNoItem": "Edgard: This plant has a very strong smell.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "lockedMusicHallwayDoor4",
+        "room": "musicHallway",
+        "textNoItem": "Edgard: It seems to be the door to the Music Room.#pbEdgard: It is locked.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "imusicRoomKey",
+        "elementsDestroyed": [
+            "lockedMusicHallwayDoor"
+        ],
+        "elementsCreated": [
+            "dmusicHallway4"
+        ],
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "lockedGardenDoor2static",
+        "room": "garden",
+        "textNoItem": "Edgard: The door to the cellar is locked.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "lockedUpperHallwayDoor1",
+        "room": "upperHallway",
+        "textNoItem": "Edgard: It is missing the dook knob.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "lockedUpperHallwayDoor"
+        ],
+        "elementsCreated": [
+            "dupperHallway2"
+        ],
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "lockedUpperHallwayDoor2",
+        "room": "upperHallway",
+        "textNoItem": "Edgard: This door is locked.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "isecondFloorKey",
+        "elementsDestroyed": [
+            "lockedUpperHallwayDoor"
+        ],
+        "elementsCreated": [
+            "dupperHallway2"
+        ],
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "hanger",
+        "room": "nancyRoom",
+        "textNoItem": "Edgard: (I will need this.)",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "hanger"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "ihanger",
+        "teleport": "",
+        "periodChange": ""
     },
     {
         "name": "circlePiece",
-        "room": "lavenderGuestRoom",
-        "textNoItem": "",
+        "room": "lavenderGuestroom",
+        "textNoItem": "Edgard: I picked up the toy.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "circlePiece",
-        "itemSpawned": "circlePiece",
+        "elementsDestroyed": [
+            "circlePiece"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "icirclePiece",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
-        "name": "roseWine",
-        "room": "ivyGuestRoom",
-        "textNoItem": "",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsAffected": "roseWine",
-        "itemSpawned": "roseWine",
-        "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
-    },
-    {
-        "name": "safe1",
-        "room": "ivyGuestRoom",
-        "textNoItem": "Edgard: This safe is open but there's nothing inside it,",
-        "textRightItem": "Nao precisamos escrever nada aqui nem nos triggers por enquanto",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "pendant",
-        "elementsAffected": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
-    },
-    {
-        "name": "string",
-        "room": "lavenderGuestRoom",
+        "name": "puppet1",
+        "room": "lavenderGuestroom",
         "textNoItem": "Edgard: The puppet is being hung by this string.",
-        "textRightItem": "Nao precisamos escrever nada aqui nem nos triggers por enquanto",
+        "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "scissors",
-        "elementsAffected": "",
+        "itemNeeded": "iscissors",
+        "elementsDestroyed": [
+            "string"
+        ],
+        "elementsCreated": [
+            "puppet",
+            "monocle"
+        ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
-        "name": "lavenderWindow",
-        "room": "lavenderGuestRoom",
+        "name": "lockedWindow",
+        "room": "lavenderGuestroom",
         "textNoItem": "Edgard: The lock is very rusty. #lbEdgard: I can't open it.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "oil",
-        "elementsAffected": "",
+        "itemNeeded": "ioil",
+        "elementsDestroyed": [
+            "lavenderWindow"
+        ],
+        "elementsCreated": [
+            "dlavenderGuestroom1"
+        ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
+    },
+    {
+        "name": "chainedCloset",
+        "room": "lavenderGuestroom",
+        "textNoItem": "Edgard: The handles are locked shut with a chain. There must be some way to open it...",
+        "textRightItem": "Edgard: And...There!#pbEdgard: ...#pbEdgard: I found the desk key!",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "ipliers",
+        "elementsDestroyed": [
+            "chainedCloset"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "orchidRoomDrawer",
+        "room": "orchidGuestroom",
+        "textNoItem": "Edgard: It is missing a handle.",
+        "textRightItem": "Edgard: I found a note.",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "idrawerHandle",
+        "elementsDestroyed": [
+            "orchidRoomDrawer"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "firstGear",
+        "room": "orchidGuestroom",
+        "textNoItem": "Edgard: I found a small gear.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "firstGear"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "igear1",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "tinBox",
+        "room": "porch",
+        "textNoItem": "Edgard: (Inside the tin box I found some old toys and drawings, as well as some family pictures belonging to my dad.#pbAmong the toys, there's a beautiful marble. I'll keep it)",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "tinBox"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "imarble",
+        "teleport": "",
+        "periodChange": ""
     },
     {
         "name": "porchWindow2",
@@ -366,103 +516,351 @@
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": [
+        "elementsDestroyed": [
+            "porchWindow1"
+        ],
+        "elementsCreated": [
             "porchWindow2"
         ],
         "itemSpawned": "",
-        "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "teleport": "teleportDay2",
+        "periodChange": "day2"
     },
     {
-        "name": "",
-        "room": "",
-        "textNoItem": "",
+        "name": "lockedCentralHallwayDoor2",
+        "room": "centralHallway",
+        "textNoItem": "Edgard: This door is locked.",
         "textRightItem": "",
-        "textWrongItem": "",
-        "itemNeeded": "",
-        "elementsAffected": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "iivyKey",
+        "elementsDestroyed": [
+            "lockedCentralHallwayDoor2"
+        ],
+        "elementsCreated": [
+            "dcentralHallway2"
+        ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
-        "name": "",
-        "room": "",
-        "textNoItem": "",
+        "name": "nancy2_1",
+        "room": "kitchen",
+        "textNoItem": "(PLACEHOLDER) Nancy diz que a avó está passando mal desde hoje de manhã. pede para fazer um chá. Primeiro ingrediente: peppermint)",
         "textRightItem": "",
-        "textWrongItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": [
+            "nancy2_1"
+        ],
+        "elementsCreated": [
+            "nancy2_2"
+        ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
-        "name": "",
-        "room": "",
-        "textNoItem": "",
-        "textRightItem": "",
-        "textWrongItem": "",
-        "itemNeeded": "",
-        "elementsAffected": "",
+        "name": "nancy2_2",
+        "room": "kitchen",
+        "textNoItem": "(PLACEHOLDER) Nancy pede peppermint)",
+        "textRightItem": "(PLACEHOLDER) Nancy agradece. Segundo ingrediente: gengibre.",
+        "textWrongItem": "Edgard: Nancy asked for peppermint. I should try to find it first.",
+        "itemNeeded": "ipepperMint",
+        "elementsDestroyed": [
+            "nancy2_2"
+        ],
+        "elementsCreated": [
+            "nancy2_3"
+        ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
-        "name": "",
-        "room": "",
-        "textNoItem": "",
-        "textRightItem": "",
-        "textWrongItem": "",
-        "itemNeeded": "",
-        "elementsAffected": "",
+        "name": "nancy2_3",
+        "room": "kitchen",
+        "textNoItem": "(PLACEHOLDER) Nancy pede o segundo ingrediente: ginger",
+        "textRightItem": "(PLACEHOLDER) Nancy agradece. Pede tea infuser",
+        "textWrongItem": "Edgard: Nancy asked for ginger. I should try to find it first.",
+        "itemNeeded": "iginger",
+        "elementsDestroyed": [
+            "nancy2_3"
+        ],
+        "elementsCreated": [
+            "nancy2_4"
+        ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
     },
     {
-        "name": "",
-        "room": "",
-        "textNoItem": "",
-        "textRightItem": "",
-        "textWrongItem": "",
-        "itemNeeded": "",
-        "elementsAffected": "",
+        "name": "nancy2_4",
+        "room": "kitchen",
+        "textNoItem": "(PLACEHOLDER) Nancy pede o tea infuser",
+        "textRightItem": "Nancy: Thank you so much, Edgar. Now I can finally make some tea for your grandmother.#pbEdgard: Will she be alright?#pbNancy: Of course she will. She just needs some rest now. #pb: Speaking of which, look at the time. You should go to bed as well.#pbEdgard: Okay... Good night, Nancy.",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "iinfuser",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
         "itemSpawned": "",
-        "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "teleport": "teleportNight2",
+        "periodChange": "night2"
     },
     {
-        "name": "",
-        "room": "",
-        "textNoItem": "",
+        "name": "grandma2_1",
+        "room": "grandmaRoom",
+        "textNoItem": "(PLACEHOLDER) edgard pergunta sobre o que ouviu a noite. Avó finge não saber. Comenta que está passando mal e pede para edgard não incomodá-la.",
         "textRightItem": "",
-        "textWrongItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": [
+            "grandma2_1"
+        ],
+        "elementsCreated": [
+            "grandma2_2"
+        ],
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
+    },
+    {
+        "name": "grandma2_2",
+        "room": "grandmaRoom",
+        "textNoItem": "(PLACEHOLDER) versão mais curta do diálogo de grandma2_1",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "ivyKey",
+        "room": "kitchen",
+        "textNoItem": "Edgard: I picked up the key.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "ivyKey"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "iivyKey",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "mint2",
+        "room": "porch",
+        "textNoItem": "Edgard: This must be the peppermint. It has a very refreshing smell.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "mint2",
+            "lockedGardenDoor2static"
+        ],
+        "elementsCreated": [
+            "lockedGardenDoor2shaking"
+        ],
+        "itemSpawned": "ipeppermint",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "lockedGardenDoor2shaking",
+        "room": "garden",
+        "textNoItem": "Edgard: ...W-who is there?",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "ginger2",
+        "room": "garden",
+        "textNoItem": "Edgard: What a strong scent! This must be the ginger.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "ginger2"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "iginger",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "scissors1",
+        "room": "foyer",
+        "textNoItem": "Edgard: (If Nancy sees me walking around with one of these, I'll get in trouble...#pbI'd better come back at night.)",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "roseWine",
+        "room": "ivyGuestroom",
+        "textNoItem": "Edgard: The bottle is empty, but I might find some use for it.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "roseWine"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "iroseWine",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "scissors2",
+        "room": "foyer",
+        "textNoItem": "Edgard: I picked up the scissors.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "scissors2"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "iscissors",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "puppet2",
+        "room": "lavenderGuestroom",
+        "textNoItem": "Edgard: Poor puppet...",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "monocle",
+        "room": "lavenderGuestroom",
+        "textNoItem": "Edgard: I picked up the puppet's monocle.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "monocle"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
     },
     {
         "name": "projector3",
         "room": "projectorRoom",
-        "textNoItem": "",
+        "textNoItem": "Edgard: It's much clearer now.",
         "textRightItem": "",
         "textWrongItem": "Edgard: I don't think this would make sense.",
         "itemNeeded": "",
-        "elementsAffected": "",
+        "elementsDestroyed": "",
+        "elementsCreated": "",
         "itemSpawned": "",
         "teleport": "",
-        "periodChange": null,
-        "puzzlesAffected": null
+        "periodChange": ""
+    },
+    {
+        "name": "studyWindow",
+        "room": "study",
+        "textNoItem": "Edgard: This window is right above the locked cellar door.",
+        "textRightItem": "Edgard: Let's hope this works... #pbEdgard: ...#pbEdgard: It sounds like it hit something.",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "ipaperweight",
+        "elementsDestroyed": [
+            "studywindow",
+            "lockedGardenDoor2shaking"
+        ],
+        "elementsCreated": [
+            "dgarden2"
+        ],
+        "itemSpawned": "",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "paperweight",
+        "room": "study",
+        "textNoItem": "Edgard: Heavy!",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "paperweight"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "ipaperweight",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "secondGear",
+        "room": "garden",
+        "textNoItem": "Edgard: I found a small gear.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "secondGear"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "igear2",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "redWine",
+        "room": "wineCellar",
+        "textNoItem": "Edgard: I picked up the wine bottle.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "redWine"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": "iredWine",
+        "teleport": "",
+        "periodChange": ""
+    },
+    {
+        "name": "toolBox",
+        "room": "wineCellar",
+        "textNoItem": "Edgard: Now, let's see...#pbEdgard: ...#pbEdgard: I found a screwdriver and pliers.",
+        "textRightItem": "",
+        "textWrongItem": "Edgard: I don't think this would make sense.",
+        "itemNeeded": "",
+        "elementsDestroyed": [
+            "toolbox"
+        ],
+        "elementsCreated": "",
+        "itemSpawned": [
+            "ipliers",
+            "iscrewdriver"
+        ],
+        "teleport": "teleportDay3",
+        "periodChange": "day3"
     }
 ]

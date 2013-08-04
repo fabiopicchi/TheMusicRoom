@@ -1,0 +1,74 @@
+[
+    {
+        "name": "imap",
+        "text": "House Map",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "irecipeBook",
+        "text": "Recipe Book",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "icupboardKey",
+        "text": "Cupboard Key",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "icupcakeTin",
+        "text": "Cupcake Tin",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "icirclePiece",
+        "text": "Circle Piece",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "itrianglePiece",
+        "text": "Triangle Piece",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "isquarePiece",
+        "text": "Square Piece",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "ihanger",
+        "text": "Hanger",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "iroseWine",
+        "text": "Rosé Wine",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "isecondFloorKey",
+        "text": "Second Floor Key",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "itoyShovel",
+        "text": "Toy Shovel",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    },
+    {
+        "name": "imarble",
+        "text": "Marble",
+        "elementsDestroyed": "",
+        "elementsCreated": ""
+    }
+]

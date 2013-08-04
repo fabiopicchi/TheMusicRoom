@@ -69,9 +69,9 @@ package
 			
 			for (i = 0; i < arSwitches.length; i++)
 			{
-				if (arSwitches[i].name != "b" + name + (i + 1))
+				if (arSwitches[i].name != "s" + name + (i + 1))
 				{
-					switchStatus += "        Error at switch name: " + arSwitches[i].name + ". Should be: " + "b" + name + (i + 1) + "\n";
+					switchStatus += "        Error at switch name: " + arSwitches[i].name + ". Should be: " + "s" + name + (i + 1) + "\n";
 				}
 			}
 			
@@ -140,27 +140,38 @@ package
 					var el : InteractiveElement;
 					var oMidPoint : Point;
 					var h : MovieClip;
-					var s : Light;
+					var light : Light;
 					if ((el = (getChildAt(i) as InteractiveElement)))
 					{
-						el.resetFlag(InteractiveElement.HIDDEN);
-						for (var j : int = 0; j < numChildren; j++)
+						if (_time == "night")
 						{
-							if ((s = getChildAt(j) as Light))
+							el.setFlag(InteractiveElement.HIDDEN);
+							for (var j : int = 0; j < numChildren; j++)
 							{
-								if (s.visible && s.hitTestPoint(el.x, el.y, true) && s.hitTestPoint(el.x + el.width, el.y, true))
+								if ((light = getChildAt(j) as Light))
 								{
-									el.setFlag(InteractiveElement.HIDDEN);
-									break;
+									if (light.visible && light.hitTestPoint(el.x, el.y, true) && light.hitTestPoint(el.x + el.width, el.y, true))
+									{
+										el.resetFlag(InteractiveElement.HIDDEN);
+										break;
+									}
 								}
 							}
 						}
+						else
+						{
+							el.resetFlag(InteractiveElement.HIDDEN);
+						}
+						
 						
 						if (el.visible && !el.testFlag(InteractiveElement.HIDDEN))
 						{
 							if ((h = (getChildByName(el.name + "_h") as MovieClip)))
 							{
-								if (_player.getMidPoint().x <= h.x + h.width && _player.getMidPoint().x >= h.x)
+								trace (h.x);
+								trace (_player.x);
+								trace (h.name);
+								if (h.hitTestPoint(_player.getMidPoint().x, h.y + h.height / 2, false))
 								{
 									el.updateAsset(_time, "over");
 									_player.gameObject = el;
@@ -173,7 +184,7 @@ package
 							}
 							else 
 							{
-								if (_player.getMidPoint().x <= el.x + el.width && _player.getMidPoint().x >= el.x)
+								if (el.hitTestPoint(_player.getMidPoint().x, el.y + el.height / 2, false))
 								{
 									objectSet = true;
 									_player.gameObject = el;
@@ -187,11 +198,11 @@ package
 						}
 					}
 					
-					if ((s = getChildAt(i) as Light))
+					if ((light = getChildAt(i) as Light))
 					{
-						if (s.visible)
+						if (light.visible)
 						{
-							if (_player.isOverlappedBy(s))
+							if (!_player.isOverlappedBy(light))
 							{
 								_player.setFlag(Player.HIDDEN);
 								break;
@@ -267,12 +278,17 @@ package
 			super.destroy(e);
 		}
 		
-		public function updateAssets () : void
+		public function updateAssets (period : int) : void
 		{
-			if (_time == "day")
+			if (period % 2 == 1)
+			{
 				_time = "night";
+			}
 			else
+			{
 				_time = "day";
+			}
+				
 			
 			(getChildByName("back") as MovieClip).gotoAndStop(_time);
 			if (getChildByName("front"))
@@ -280,8 +296,17 @@ package
 				(getChildByName("front") as MovieClip).gotoAndStop(_time);
 			}
 			
+			if (_time == "night")
+			{
+				if (getChildByName("shadow")) getChildByName("shadow").visible = true;
+			}
+			else
+			{
+				if (getChildByName("shadow")) getChildByName("shadow").visible = false;
+			}
+			
 			var el : InteractiveElement;
-			var s : Light;
+			var light : Light;
 			for (var i : int = 0; i < numChildren; i++)
 			{
 				if ((el = (getChildAt(i) as InteractiveElement)))
@@ -289,12 +314,12 @@ package
 					el.updateAsset(_time, "normal");
 				}
 				
-				if ((s = (getChildAt(i) as Light)))
+				if ((light = (getChildAt(i) as Light)))
 				{
 					if (_time == "night")
-						s.resetNightState();
+						light.resetNightState();
 					else
-						s.visible = false;
+						light.visible = false;
 				}
 			}
 		}

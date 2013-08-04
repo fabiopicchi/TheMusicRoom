@@ -1,5 +1,6 @@
 package  
 {
+	import flash.events.Event;
 	/**
 	 * ...
 	 * @author arthur e fabio
@@ -13,8 +14,8 @@ package
 		private var _inventoryItemNeeded : String;
 		
 		//Triggers
-		private var _sceneElementsAffected : Array;
-		private var _puzzleElementAffected : Array;
+		private var _elementsCreated : Array;
+		private var _elementsDestroyed : Array;
 		private var _inventoryItemSpawned : String;
 		private var _teleport : String;
 		private var _periodChange : Boolean;
@@ -30,12 +31,12 @@ package
 			_textRightItem = data.textRightItem;
 			_textWrongItem = data.textWrongItem;
 			_inventoryItemNeeded = data.itemNeeded;
-			_sceneElementsAffected = ((data.elementsAffected is Array) ? data.elementsAffected : [data.elementsAffected]);
-			_puzzleElementAffected = ((data.puzzlesAffected is Array) ? data.puzzlesAffected : [data.puzzlesAffected]);
+			_elementsCreated = ((data.elementsCreated is Array) ? data.elementsCreated : [data.elementsCreated]);
+			_elementsDestroyed = ((data.elementsDestroyed is Array) ? data.elementsDestroyed : [data.elementsDestroyed]);
 			_inventoryItemSpawned = data.itemSpawned;
 			_teleport = data.teleport;
 			
-			_periodChange = (data.periodChange == null ? false : true);
+			_periodChange = (data.periodChange == "" ? false : true);
 		}
 		
 		override public function interact (item : InventoryItem = null) : void
@@ -73,9 +74,13 @@ package
 			{
 				Game.addToInventory(_inventoryItemSpawned);
 			}
-			for (i = 0; i < _sceneElementsAffected.length; i++)
+			for (i = 0; i < _elementsCreated.length; i++)
 			{
-				Game.changeSceneElement(_sceneElementsAffected[i]);
+				Game.changeSceneElement(_elementsCreated[i], true);
+			}
+			for (i = 0; i < _elementsDestroyed.length; i++)
+			{
+				Game.changeSceneElement(_elementsDestroyed[i], false);
 			}
 			if (_teleport)
 			{
@@ -84,10 +89,6 @@ package
 			if (_periodChange)
 			{
 				Game.periodChange();
-			}
-			for (i = 0; i < _puzzleElementAffected.length; i++)
-			{
-				Game.changePuzzleElement(_puzzleElementAffected[i]);
 			}
 		}
 	}
