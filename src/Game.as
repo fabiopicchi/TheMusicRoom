@@ -343,7 +343,7 @@ package
 			_inventory.x = 0;
 			_inventory.y = 768;
 			
-			var myFormat : TextFormat = new TextFormat("Comic Sans MS", 30, 0xFFFFFF);
+			var myFormat : TextFormat = new TextFormat("Bookman Old Style", 30, 0xFFFFFF);
 			_textBox.defaultTextFormat = myFormat;
 			
 			for (var k : String in ROOM_MAP)
@@ -401,7 +401,11 @@ package
 							break;
 						
 						case MainMenu.LOAD:
-							
+							fadeToBlack(function () : void
+							{
+								resetFlag(MAIN_MENU);
+								removeChild(mainMenu);
+							});
 							break;
 						
 						case MainMenu.CREDITS:
