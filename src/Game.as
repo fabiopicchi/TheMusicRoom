@@ -388,6 +388,8 @@ package
 			}
 			
 			_musicChannel1 = (new DayTheme ()).play(0, 999);
+			setFlag(MAIN_MENU);
+			addChild(mainMenu);
 		}
 		
 		public function addElementsCreated (jsonArray : Array) : void
@@ -405,10 +407,6 @@ package
 					}
 				}
 			}
-			
-			setFlag(MAIN_MENU);
-			
-			addChild(mainMenu);
 		}
 		
 		private function run(e:Event):void 

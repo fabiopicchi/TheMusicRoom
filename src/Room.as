@@ -168,9 +168,6 @@ package
 						{
 							if ((h = (getChildByName(el.name + "_h") as MovieClip)))
 							{
-								trace (h.x);
-								trace (_player.x);
-								trace (h.name);
 								if (h.hitTestPoint(_player.getMidPoint().x, h.y + h.height / 2, false))
 								{
 									el.updateAsset(_time, "over");
