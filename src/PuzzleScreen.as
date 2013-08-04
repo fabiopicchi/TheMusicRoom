@@ -71,29 +71,31 @@ package
 			{
 				case INSERT_SLOT:
 					var i : int;
+					var index : int;
 					if (Game.keyJustPressed(Action.RIGHT))
 					{
-						for (i = _selected; i < (_selected + _pElement.nItemsNeeded); i++)
+						for (i = _selected + 1; i < (_selected + _pElement.nItemsNeeded); i++)
 						{
-							if (!_pElement.itemStatus(i % _pElement.nItemsNeeded + 1))
+							index = (i - 1) % _pElement.nItemsNeeded + 1;
+							if (!_pElement.itemStatus(index - 1))
 							{
-								(getChildByName("slot" + (i % _pElement.nItemsNeeded + 1)) as MovieClip).visible = true;
+								(getChildByName("slot" + index) as MovieClip).visible = true;
 								(getChildByName("slot" + _selected) as MovieClip).visible = false;
-								_selected = (i % 3) + 1;
+								_selected = index;
 								break;
 							}
 						}
 					}
 					else if (Game.keyJustPressed(Action.LEFT))
 					{
-						for (i = _selected - 1; i >= (_selected - _pElement.nItemsNeeded); i--)
+						for (i = _selected - 1; i > (_selected - _pElement.nItemsNeeded); i--)
 						{
-							trace (_selected);
-							if (!_pElement.itemStatus(_pElement.nItemsNeeded - Math.abs(i % _pElement.nItemsNeeded)))
+							index = ((i - 1) + _pElement.nItemsNeeded) % _pElement.nItemsNeeded + 1;
+							if (!_pElement.itemStatus(index - 1))
 							{
-								(getChildByName("slot" + (_pElement.nItemsNeeded - Math.abs(i % _pElement.nItemsNeeded))) as MovieClip).visible = true;
+								(getChildByName("slot" + index) as MovieClip).visible = true;
 								(getChildByName("slot" + _selected) as MovieClip).visible = false;
-								_selected = _pElement.nItemsNeeded - Math.abs(i % _pElement.nItemsNeeded);
+								_selected = index;
 								break;
 							}
 						}

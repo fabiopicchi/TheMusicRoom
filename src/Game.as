@@ -13,6 +13,8 @@ package
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
@@ -26,6 +28,13 @@ package
 	 */
 	public class Game extends Sprite 
 	{
+		// Sound channels
+		private var _musicChannel1 : SoundChannel;
+		private var _musicChannel2 : SoundChannel;
+		private static var _playerSfxChannel: SoundChannel;
+		private static var _enemySfxChannel : SoundChannel;
+		private static var _generalSfxChannel : SoundChannel;
+		
 		private static var keyMap : int = 0;
 		private static var keyState : int = 0;
 		private static var pKeyState : int = 0;
@@ -60,7 +69,7 @@ package
 		private static var _nextRoomPosition : Number;
 		private static var _nextRoomCallback : Function;
 		
-		private static var _room : String = "daddyRoom";
+		private static var _room : String = "foyer";
 		public static const ROOM_MAP : Object = {
 			bathroom1 : new Bathroom1,
 			bathroom2 : new Bathroom2,
@@ -78,7 +87,9 @@ package
 			nancyRoom : new NancyRoom,
 			porch : new Porch,
 			projectorRoom : new ProjectorRoom,
-			upperHallway : new UpperHallway
+			upperHallway : new UpperHallway,
+			lavenderGuestroom : new LavenderGuestroom,
+			ivyGuestroom : new IvyGuestroom
 		};
 		
 		private static var _shade : Shape = new Shape();
@@ -87,6 +98,10 @@ package
 		private static var _arDoors : Array = [];
 		private static var _arLightSwitches : Array = [];
 		private static var _arLights : Array = [];
+		private static var _arElementsCreated : Array = [];
+		
+		// Inventory items list
+		private static var _arInventoryItems: Array = [];
 		
 		// Teleport event list
 		private static var _arTeleport : Array = [];
@@ -125,6 +140,11 @@ package
 				fStream.open(file, FileMode.WRITE);
 				fStream.writeUTFBytes("Room code: " + k + "\n");
 				fStream.writeUTFBytes("    Object naming status: \n" + room.checkObjectNames() + "\n");
+				
+				if (room.getChildByName("shadow"))
+					fStream.writeUTFBytes("    Has shadow: Yes\n");
+				else
+					fStream.writeUTFBytes("    Has shadow: No\n");
 				
 				if (room.getChildByName("area"))
 					fStream.writeUTFBytes("    Has area: Yes\n");
@@ -212,6 +232,8 @@ package
 					if (room.getChildByName(obj.name))
 					{
 						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+						if (room.getChildByName(obj.name) is SceneElement)
+							fStream.writeUTFBytes(" -- Class(OK)");
 					}
 					else
 					{
@@ -239,6 +261,8 @@ package
 					if (room.getChildByName(obj.name))
 					{
 						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+						if (room.getChildByName(obj.name) is Door)
+							fStream.writeUTFBytes(" -- Class(OK)");
 					}
 					else
 					{
@@ -265,6 +289,8 @@ package
 					if (room.getChildByName(obj.name))
 					{
 						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+						if (room.getChildByName(obj.name) is LightSwitch)
+							fStream.writeUTFBytes(" -- Class(OK)");
 					}
 					else
 					{
@@ -291,6 +317,8 @@ package
 					if (room.getChildByName(obj.name))
 					{
 						fStream.writeUTFBytes("    Object " + obj.name + " succesfully found at room " + obj.room);
+						if (room.getChildByName(obj.name) is Light)
+							fStream.writeUTFBytes(" -- Class(OK)");
 					}
 					else
 					{
@@ -304,21 +332,7 @@ package
 		
 		private function init(e:Event):void 
 		{
-			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-			
-			loadJSONProperties("sceneElements.json", SceneElement);
-			loadJSONProperties("switches.json", LightSwitch);
-			loadJSONProperties("lights.json", Light);
-			loadJSONProperties("doors.json", Door);
-			loadJSONProperties("puzzleElements.json", PuzzleElement);
-			
-			_arTeleport = (JSONLoader.loadFile("teleports.json") as Array);
-			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			
-			_shade.graphics.beginFill(0x000000);
-			_shade.graphics.drawRect(0, 0, 1024, 768);
-			_shade.graphics.endFill();
 			
 			_time = (new Date()).getTime();
 			
@@ -327,24 +341,65 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
+			loadConfig();
 			debugDump();
+			
+			_shade.graphics.beginFill(0x000000);
+			_shade.graphics.drawRect(0, 0, 1024, 768);
+			_shade.graphics.endFill();
 			
 			ROOM_MAP[_room].addPlayer();
 			addChild(ROOM_MAP[_room]);
 			
 			_textBox = new TextField();
 			addChild(_textBox);
+			_textBox.visible = false;
+			_textBox.width = 924;
+			_textBox.height = 200;
+			_textBox.x = 50;
+			_textBox.y = 518;
+			_textBox.selectable = false;
+			_textBox.multiline = true;
+			_textBox.wordWrap = true;
+			_textBox.mouseEnabled = false;
+			_textBox.border = true;
+			_textBox.borderColor = 0xFFFFFF;
+			var myFormat : TextFormat = new TextFormat("Comic Sans MS", 30, 0xFFFFFF);
+			_textBox.defaultTextFormat = myFormat;
 			
 			addChild(_inventory);
 			_inventory.x = 0;
 			_inventory.y = 768;
 			
-			var myFormat : TextFormat = new TextFormat("Comic Sans MS", 30, 0xFFFFFF);
-			_textBox.defaultTextFormat = myFormat;
-			
 			for (var k : String in ROOM_MAP)
 			{
-				(ROOM_MAP[k] as Room).updateAssets();
+				for (var i : int = 0; i < (ROOM_MAP[k] as Room).numChildren; i++)
+				{
+					if (_arElementsCreated.indexOf((ROOM_MAP[k] as Room).getChildAt(i).name) != -1)
+					{
+						(ROOM_MAP[k] as Room).getChildAt(i).visible = false;
+					}
+				}
+				(ROOM_MAP[k] as Room).updateAssets(_currentPeriod);
+			}
+			
+			_musicChannel1 = (new DayTheme ()).play(0, 999);
+		}
+		
+		public function addElementsCreated (jsonArray : Array) : void
+		{
+			var i : int = 0;
+			var j : int = 0;
+			var ar : Array;
+			for (i = 0; i < jsonArray.length; i++) 
+			{
+				if ((ar = (jsonArray[i].elementsCreated as Array)))
+				{
+					for (j = 0; j < ar.length; j++)
+					{
+						_arElementsCreated.push(ar[j]);
+					}
+				}
 			}
 		}
 		
@@ -391,10 +446,19 @@ package
 				var event : Object = _arPeriod[_currentPeriod++];
 				fadeToBlack(function () : void
 				{
+					_musicChannel1.stop();
+					if (_currentPeriod % 2 == 1)
+					{
+						_musicChannel1 = (new NightTheme ()).play(0, 999);
+					}
+					else
+					{
+						_musicChannel1 = (new DayTheme ()).play(0, 999);
+					}
 					resetFlag(PERIOD_CHANGE);
 					for (var k : String in ROOM_MAP)
 					{
-						ROOM_MAP[k].updateAssets();
+						ROOM_MAP[k].updateAssets(_currentPeriod);
 					}
 				});
 			}
@@ -498,6 +562,7 @@ package
 		
 		public static function addToInventory(id : String) : void
 		{
+			playSfx(ITEM_GOT);
 			_inventory.addItem(new InventoryItem(id));
 		}
 		
@@ -512,16 +577,6 @@ package
 		public static function displayText(arText : Array, callback : Function = null) : void
 		{
 			_textBox.visible = true;
-			_textBox.width = 424;
-			_textBox.height = 100;
-			_textBox.x = 300;
-			_textBox.y = 568;
-			_textBox.selectable = false;
-			_textBox.multiline = true;
-			_textBox.wordWrap = true;
-			_textBox.mouseEnabled = false;
-			_textBox.border = true;
-			_textBox.borderColor = 0xFFFFFF;
 			
 			_textCounter = 0;
 			_pageCounter = 0;
@@ -529,7 +584,7 @@ package
 			_waitingInput = false;
 			_arText = arText;
 			_textCallback = callback;
-			_text = _arText[_pageCounter];
+			_text = _arText[_pageCounter].split("#lb").join('\n');
 			_playerInstance.setFlag(Player.INACTIVE);
 			setFlag(TYPING_TEXT);
 		}
@@ -606,6 +661,7 @@ package
 			_nextRoom = room;
 			_nextRoomPosition = nextRoomPosition;
 			_nextRoomCallback = nextRoomCallback;
+			setFlag(CHANGING_ROOM);
 		}
 		
 		public static function teleport (id : String) : void
@@ -626,7 +682,7 @@ package
 				setTimeout(function () : void
 				{
 					resetFlag(CHANGING_ROOM);
-					Game.displayText(teleport.text.split("\n\r"));
+					Game.displayText((teleport.text as String).split("#pb"));
 				}, 500);
 			});
 		}
@@ -686,7 +742,7 @@ package
 		
 		
 		//SceneElement spawn/destroy
-		public static function changeSceneElement (id : String):Boolean
+		public static function changeSceneElement (id : String, setElement:Boolean):Boolean
 		{
 			var r : Room;
 			var found : Boolean = false;
@@ -700,36 +756,7 @@ package
 					{
 						if (el.name == id)
 						{
-							el.visible = !el.visible;
-							found = true;
-							break;
-						}
-					}
-				}
-				if (found) break;
-			}
-			
-			return found;
-		}
-		
-		
-		
-		//Puzzle spawn/destroy
-		public static function changePuzzleElement (id : String):Boolean
-		{
-			var r : Room;
-			var found : Boolean = false;
-			var el : PuzzleElement;
-			for (var k : String in ROOM_MAP)
-			{
-				r = ROOM_MAP[k] as Room;
-				for (var i : int = 0; i < r.numChildren; i++)
-				{
-					if ((el = (r.getChildAt(i) as PuzzleElement)))
-					{
-						if (el.name == id)
-						{
-							el.visible = !el.visible;
+							el.visible = setElement;
 							found = true;
 							break;
 						}
@@ -775,6 +802,19 @@ package
 		}
 		
 		
+		//load config files
+		private function loadConfig () : void
+		{	
+			loadJSONProperties("sceneElements.json", SceneElement);
+			loadJSONProperties("switches.json", LightSwitch);
+			loadJSONProperties("lights.json", Light);
+			loadJSONProperties("doors.json", Door);
+			loadJSONProperties("puzzleElements.json", PuzzleElement);
+			
+			addElementsCreated(_arTeleport = (JSONLoader.loadFile("teleports.json") as Array));
+			addElementsCreated(_arPeriod = (JSONLoader.loadFile("periods.json") as Array));
+			addElementsCreated(_arInventoryItems = (JSONLoader.loadFile("inventoryItems.json") as Array));
+		}
 		
 		//load JSON properties
 		private function loadJSONProperties (fileName : String, cl : Class) : void
@@ -810,20 +850,66 @@ package
 				{
 					for (var j : int = 0; j < room.numChildren; j++)
 					{
-						if (jsonObject.room == "daddyRoom")
-						{
-							trace (getQualifiedClassName(room.getChildAt(j)));
-						}
 						if ((obj = room.getChildAt(j)) is cl)
 						{
 							if (obj.name == jsonObject.name)
 							{
+								if (jsonObject.elementsCreated)
+								{
+									for (var k : int = 0; k < jsonObject.elementsCreated.length; k++)
+									{
+										_arElementsCreated.push(jsonObject.elementsCreated[k]);
+									}
+								}
 								(obj as cl).loadData(jsonObject);
 							}
 						}
 					}
 				}
 			}
+		}
+		
+		
+		
+		//Sfx API
+		public static const SWITCH_ON : String = "switch_on";
+		public static const SWITCH_OFF : String = "switch_off";
+		public static const ENEMY_ATTACK : String = "en_att";
+		public static const ENEMY_PURSUE : String = "en_psu";
+		public static const ENEMY_SPAWN : String = "en_spw";
+		public static const ITEM_GOT : String = "item_got";
+		public static const INSERT_SLOT : String = "insert_slot";
+		public static function playSfx (code : String) : void
+		{
+			switch (code)
+			{
+				case SWITCH_ON:
+					setChannelSfx (_generalSfxChannel, new SwitchOnSfx);
+					break;
+				case SWITCH_OFF:
+					setChannelSfx (_generalSfxChannel, new SwitchOffSfx);
+					break;
+				case ENEMY_ATTACK:
+					setChannelSfx (_enemySfxChannel, new MonsterAttackSfx);
+					break;
+				case ENEMY_PURSUE:
+					break;
+				case ENEMY_SPAWN:
+					setChannelSfx (_enemySfxChannel, new MonsterSpawnSfx);
+					break;
+				case ITEM_GOT:
+					setChannelSfx (_generalSfxChannel, new ItemGotSfx);
+					break;
+				case INSERT_SLOT:
+					setChannelSfx (_generalSfxChannel, new InsertSlotSfx);
+					break;
+			}
+		}
+		
+		private static function setChannelSfx (channel : SoundChannel, sound : Sound) : void
+		{
+			if (channel) channel.stop();
+			channel = sound.play();
 		}
 	}
 }

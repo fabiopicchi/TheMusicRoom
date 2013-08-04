@@ -2,61 +2,211 @@
     {
         "name": "lbathroom11",
         "room": "bathroom1",
-        "nightInitialState": 1
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lbathroom12",
+        "room": "bathroom1",
+        "nightInitialState": "1"
     },
     {
         "name": "ldinnerRoom1",
         "room": "dinnerRoom",
-        "nightInitialState": 1
+        "nightInitialState": "0"
+    },
+    {
+        "name": "ldinnerRoom2",
+        "room": "dinnerRoom",
+        "nightInitialState": "1"
     },
     {
         "name": "lfoyer1",
         "room": "foyer",
-        "nightInitialState": 1
+        "nightInitialState": "1"
     },
     {
         "name": "lfoyer2",
         "room": "foyer",
-        "nightInitialState": 1
+        "nightInitialState": "0"
     },
     {
         "name": "lfoyer3",
         "room": "foyer",
-        "nightInitialState": 1
+        "nightInitialState": "0"
     },
     {
         "name": "lfoyer4",
         "room": "foyer",
-        "nightInitialState": 1
+        "nightInitialState": "1"
     },
     {
-        "name": "lbathroom21",
-        "room": "bathroom2",
-        "nightInitialState": 1
+        "name": "lgarden1",
+        "room": "garden",
+        "nightInitialState": "1"
     },
     {
         "name": "lgrandmaRoom1",
         "room": "grandmaRoom",
-        "nightInitialState": 1
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lgrandmaRoom2",
+        "room": "grandmaRoom",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lhallway1",
+        "room": "hallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lhallway2",
+        "room": "hallway",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lhallway3",
+        "room": "hallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lkitchen1",
+        "room": "kitchen",
+        "nightInitialState": "1"
     },
     {
         "name": "llivingRoom1",
         "room": "livingRoom",
-        "nightInitialState": 1
+        "nightInitialState": "1"
+    },
+    {
+        "name": "llivingRoom2",
+        "room": "livingRoom",
+        "nightInitialState": "1"
     },
     {
         "name": "lmainHallway1",
         "room": "mainHallway",
-        "nightInitialState": 1
+        "nightInitialState": "1"
     },
     {
         "name": "lmainHallway2",
         "room": "mainHallway",
-        "nightInitialState": 1
+        "nightInitialState": "0"
     },
     {
         "name": "lmainHallway3",
         "room": "mainHallway",
-        "nightInitialState": 1
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lmainHallway4",
+        "room": "mainHallway",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lmainHallway5",
+        "room": "mainHallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lmusicHallway1",
+        "room": "musicHallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lmusicHallway2",
+        "room": "musicHallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lmusicHallway3",
+        "room": "musicHallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lnancyRoom1",
+        "room": "nancyRoom",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lnancyRoom2",
+        "room": "nancyRoom",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lporch1",
+        "room": "porch",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lporch2",
+        "room": "porch",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lprojectorRoom1",
+        "room": "projectorRoom",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lprojectorRoom2",
+        "room": "projectorRoom",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lbathroom21",
+        "room": "bathroom2",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lbathroom22",
+        "room": "bathroom2",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lcentralHallway1",
+        "room": "centralHallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "ldaddyRoom1",
+        "room": "daddyRoom",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "ldaddyRoom2",
+        "room": "daddyRoom",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lupperHallway1",
+        "room": "upperHallway",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "livyGuestroom1",
+        "room": "ivyGuestroom",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "livyGuestroom2",
+        "room": "ivyGuestroom",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "llavenderGuestroom1",
+        "room": "lavenderGuestroom",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "llavenderGuestroom2",
+        "room": "lavenderGuestroom",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "llavenderGuestroom3",
+        "room": "lavenderGuestroom",
+        "nightInitialState": "0"
     }
 ]

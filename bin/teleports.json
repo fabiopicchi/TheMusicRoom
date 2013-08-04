@@ -1,26 +1,26 @@
 [
-    {
-        "name": "teleportArrival1",
-        "room": "foyer",
-        "position": 50,
-        "text": "Edgard: Thanks...Uh, where is she?\n\rNancy:Your grandmother will be here soon. But please, "
-    },
-    {
-        "name": "teleportArrival2",
-        "room": "daddysRoom",
-        "position": 50,
-        "text": "Edgard: So this is the room where I'll be staying.\n\rHard to believe it once belonged to dad.\n\rWell, I'm going to check if grandmother needs something."
-    },
-    {
-        "name": "teleportNight1",
-        "room": "daddysRoom",
-        "position": 50,
-        "text": "Edgard: I guess it won't be a problem if I explore the house at night."
-    },
-    {
-        "name": "teleportKitchenFakeFadeOut",
-        "room": "kitchen",
-        "position": 50,
-        "text": "//GAMBS PARA FAZER FADE IN/FADE OUT - TELEPORTE PRO MESMO LUGAR Edgard: That was delicious!\n\rGrandma: I am glad you enjoyed, sweetie!."
-    }
+  {
+    "name":"teleportArrival1",
+    "room":"foyer",
+    "position":2110,
+    "text":"Edgard: Thanks...Uh, where is she?#lbNancy:Your grandmother will be here soon. But please, "
+  },
+  {
+    "name":"teleportArrival2",
+    "room":"daddyRoom",
+    "position":50,
+    "text":"Edgard: So this is the room where I'll be staying.#lbHard to believe it once belonged to dad.#lbWell, I'm going to check if grandmother needs something."
+  },
+  {
+    "name":"teleportNight1",
+    "room":"daddyRoom",
+    "position":50,
+    "text":"Edgard: I guess it won't be a problem if I explore the house at night."
+  },
+  {
+    "name":"teleportKitchenFakeFadeOut",
+    "room":"kitchen",
+    "position":50,
+    "text":"//GAMBS PARA FAZER FADE IN/FADE OUT - TELEPORTE PRO MESMO LUGAR Edgard: That was delicious!#lbGrandma: I am glad you enjoyed, sweetie!."
+  }
 ]

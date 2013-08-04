@@ -60,6 +60,11 @@ package
 			return hitbox.height;
 		}
 		
+		override public function getMidPoint():Point 
+		{
+			return new Point (x + hitbox.width / 2, y + hitbox.height / 2);
+		}
+		
 		override protected function init(e:Event):void 
 		{
 			super.init(e);

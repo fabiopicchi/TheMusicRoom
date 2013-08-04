@@ -28,7 +28,7 @@ package
 			
 			spacing = (1024 - 2 * X_0 - ITEM_WIDTH) / ITEMS_DISPLAYED;
 			
-			for (var i : int = 0; i < 4; i++)
+			for (var i : int = 0; i < 20; i++)
 				addItem(new InventoryItem);
 			
 		}

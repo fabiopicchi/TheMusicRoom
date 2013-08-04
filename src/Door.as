@@ -26,7 +26,6 @@ package
 			var roomPosition : Number;
 			var found : Boolean = false;
 			
-			
 			if (r)
 			{
 				for (var i : int = 0; i <  r.numChildren; i++)
@@ -44,7 +43,9 @@ package
 			}
 			
 			if (found)
+			{
 				Game.setNextRoom(_destiny, roomPosition);
+			}
 		}
 		
 		public function get destiny():String 
