@@ -2,6 +2,7 @@ package
 {
 	import com.greensock.easing.Quad;
 	import com.greensock.TweenLite;
+	import flash.desktop.NativeApplication;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Scene;
@@ -39,11 +40,14 @@ package
 		public static const PUZZLESCREEN_OPEN : int = 1 << 3;
 		public static const CHANGING_ROOM : int = 1 << 4;
 		public static const PERIOD_CHANGE : int = 1 << 5;
+		public static const MAIN_MENU : int = 1 << 6;
 		
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
 		
 		private static var _playerInstance: Player = new Player();
+		
+		private var mainMenu : MainMenuClass = new MainMenuClass();
 		
 		private static var _text : String;
 		private static var _textBox : TextField;
@@ -346,6 +350,10 @@ package
 			{
 				(ROOM_MAP[k] as Room).updateAssets();
 			}
+			
+			setFlag(MAIN_MENU);
+			
+			addChild(mainMenu);
 		}
 		
 		private function run(e:Event):void 
@@ -369,6 +377,46 @@ package
 				changedStatus = (_status ^ _pStatus);
 				_pStatus = _status;
 			}
+			
+			if ((_status & MAIN_MENU) == MAIN_MENU)
+			{
+				if (keyJustPressed(Action.DOWN))
+				{
+					mainMenu.nextItem();
+				}
+				else if (keyJustPressed(Action.UP))
+				{
+					mainMenu.previousItem();
+				}
+				else if (keyJustPressed(Action.INTERACT))
+				{
+					switch (mainMenu.select())
+					{
+						case MainMenu.ENTER:
+							fadeToBlack(function () : void
+							{
+								resetFlag(MAIN_MENU);
+								removeChild(mainMenu);
+							});
+							break;
+						
+						case MainMenu.LOAD:
+							
+							break;
+						
+						case MainMenu.CREDITS:
+							
+							break;
+						
+						case MainMenu.RUN_AWAY:
+							NativeApplication.nativeApplication.exit();
+							break;
+					}
+				}
+				
+				return;
+			}
+			
 			if ((changedStatus & CHANGING_ROOM) == CHANGING_ROOM && (_status & CHANGING_ROOM) == CHANGING_ROOM)
 			{
 				fadeToBlack(function () : void

@@ -109,11 +109,11 @@ package
 					}
 				}
 				
-				if (Game.keyJustPressed(Action.CROUCH))
+				if (Game.keyJustPressed(Action.DOWN))
 				{
 					setFlag(CROUCH);
 				}
-				else if (Game.keyJustReleased(Action.CROUCH))
+				else if (Game.keyJustReleased(Action.DOWN))
 				{
 					resetFlag(CROUCH);
 				}
