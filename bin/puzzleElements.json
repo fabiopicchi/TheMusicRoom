@@ -1,15 +1,112 @@
 [
     {
         "name": "toyBoxPuzzle",
+        "room": "daddyRoom",
         "puzzleScreen": "toyBoxScreen",
         "itemsNeeded": [
-            "circlePiece",
-            "trianglePiece",
-            "squarePiece"
+            "icirclePiece",
+            "isquarePiece",
+            "itrianglePiece"
         ],
-        "elementsDestroyed": "chest",
+        "elementsDestroyed": [
+            "toyBoxPuzzle"
+        ],
         "elementsCreated": "",
-        "inventoryItemReward": "toyShovel",
-		"room": "daddyRoom"
+        "inventoryItemReward": [
+            "itoyShovel"
+        ],
+        "upDownStep": "0"
+    },
+    {
+        "name": "teaChestPuzzle",
+        "room": "ivyGuestroom",
+        "puzzleScreen": "teaChestScreen",
+        "itemsNeeded": "",
+        "elementsDestroyed": [
+            "teaChestPuzzle"
+        ],
+        "elementsCreated": "",
+        "inventoryItemReward": [
+            "iinfuser"
+        ],
+        "upDownStep": ""
+    },
+    {
+        "name": "lockedGuestHallwayDoor1",
+        "room": "guestHallway",
+        "puzzleScreen": "libraryDoorScreen",
+        "itemsNeeded": "",
+        "elementsDestroyed": [
+            "lockedGuestHallwayDoor1"
+        ],
+        "elementsCreated": [
+            "dguestHallway1"
+        ],
+        "inventoryItemReward": "",
+        "upDownStep": ""
+    },
+    {
+        "name": "lockedWineCellarDoor2",
+        "room": "guestHallway",
+        "puzzleScreen": "moonPuzzleScreen",
+        "itemsNeeded": [
+            "imarble",
+            "ipearl"
+        ],
+        "elementsDestroyed": [
+            "lockedWineCellarDoor2"
+        ],
+        "elementsCreated": [
+            "dwineCellar2"
+        ],
+        "inventoryItemReward": "",
+        "upDownStep": ""
+    },
+    {
+        "name": "safePuzzle",
+        "room": "storage",
+        "puzzleScreen": "safePuzzleScreen",
+        "itemsNeeded": "",
+        "elementsDestroyed": [
+            "safePuzzle"
+        ],
+        "elementsCreated": "",
+        "inventoryItemReward": [
+            "ipendant"
+        ],
+        "upDownStep": ""
+    },
+    {
+        "name": "zodiacChestPuzzle",
+        "room": "grandmasRoom",
+        "puzzleScreen": "zodiacChestScreen",
+        "itemsNeeded": "",
+        "elementsDestroyed": [
+            "zodiacChestPuzzle"
+        ],
+        "elementsCreated": "",
+        "inventoryItemReward": [
+            "imusicKey",
+            "icassette"
+        ],
+        "upDownStep": ""
+    },
+    {
+        "name": "winePuzzle",
+        "room": "wineCellar",
+        "puzzleScreen": "winePuzzleScreen",
+        "itemsNeeded": [
+            "iwhiteWine",
+            "iroseWine",
+            "iredWine"
+        ],
+        "elementsDestroyed": [
+            "winePuzzle"
+        ],
+        "elementsCreated": [
+            "dwineCellar1"
+        ],
+        "inventoryItemReward": "",
+        "upDownStep": ""
     }
 ]

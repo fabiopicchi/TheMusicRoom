@@ -73,5 +73,15 @@
     "name":"sdaddyRoom1",
     "room":"daddyRoom",
     "lights":["ldaddyRoom1"]
+  },
+  {
+    "name":"sivyGuestroom1",
+    "room":"ivyGuestroom",
+    "lights":["livyGuestroom2"]
+  },
+  {
+    "name":"slavenderGuestroom1",
+    "room":"lavenderGuestroom",
+    "lights":["llavenderGuestroom1","llavenderGuestroom3"]
   }
 ]

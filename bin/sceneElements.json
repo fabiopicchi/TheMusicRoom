@@ -1,866 +1,1185 @@
 [
-    {
-        "name": "introDoor",
-        "room": "porch",
-        "textNoItem": "*knock knock*#lbEdgard: Hello?#lb???: Hold on just a minute...",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "introDoor"
-        ],
-        "elementsCreated": [
-            "dPorch1",
-            "porchWindow"
-        ],
-        "itemSpawned": "",
-        "teleport": "teleportArrival1",
-        "periodChange": ""
-    },
-    {
-        "name": "nancy1_1",
-        "room": "foyer",
-        "textNoItem": "Edgard: Good Morning. I’m Edgard. #lb???: I am your grandmother's nurse, you can call me Nancy#lbEdgard: Pleased to meet you.#lbNancy: You will be staying in your dad's room upstairs. Let me guide you.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "nancy1_1"
-        ],
-        "elementsCreated": [
-            "nancy1_2",
-            "grandma1_1"
-        ],
-        "itemSpawned": "",
-        "teleport": "teleportArrival2",
-        "periodChange": ""
-    },
-    {
-        "name": "nancy1_2",
-        "room": "daddyRoom",
-        "textNoItem": "Nancy: Please enjoy your stay.",
-        "textRightItem": "Nancy: I believe this belonged to your dad.",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "grandma1_1",
-        "room": "kitchen",
-        "textNoItem": "(PLACEHOLDER) Grandma: Ed! Look at you! You’ve grown so much! You’re looking just like your father! How was the trip, dear?#pbEdgard: It was alright, grandma... Just a bit long.#pbGrandma: Yes, yes, I know....But now we are going to take good care of you, dear.#pbGrandma: For starters, today we will have a very special dessert just for you. Your mother told me you are very fond of cupcakes, is that right?#pbEdgard: Yes, they're my favorite dessert.#pbGrandma: I've got a recipe book in my room. Could you be a dear and bring it to your grandmother?#pbEdgard: Sure, grandma!",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "grandma1_1"
-        ],
-        "elementsCreated": [
-            "grandma1_2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "grandma1_2",
-        "room": "kitchen",
-        "textNoItem": "Grandma: Could you bring me my recipe book? I think I left it in my room.",
-        "textRightItem": "Grandma: Thank you, dear.#pbGrandma: Now let's see...#pbGrandma: Oh my, I just remembered we will need a special cupcake tin to make this recipe... I used to have one, but I haven't seen it in ages. Could you help me find it, dear?",
-        "textWrongItem": "Edgard: Grandma asked for a recipe book. I should try to find it first.",
-        "itemNeeded": "irecipeBook",
-        "elementsDestroyed": [
-            "grandma1_2"
-        ],
-        "elementsCreated": [
-            "grandma1_3"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "grandma1_3",
-        "room": "kitchen",
-        "textNoItem": "Grandma: Now where did I leave that cupcake tin...",
-        "textRightItem": "Grandma: Now let's make some cupcakes!",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "icupcakeTin",
-        "elementsDestroyed": [
-            "grandma1_3"
-        ],
-        "elementsCreated": [
-            "grandma1_4"
-        ],
-        "itemSpawned": "",
-        "teleport": "teleportKitchenFakeFadeOut",
-        "periodChange": ""
-    },
-    {
-        "name": "grandma1_4",
-        "room": "kitchen",
-        "textNoItem": "Grandma: Time passes so fast when you are having fun, isn’t it dear? I think I’m ready to retire to bed. You should get some rest too.#lbEdgard: Thanks, grandma. I will. #lbGrandma: But first, let me give you a little something for helping me.#lbEdgard: What is this?#lbGrandma: I found this the other day. I think it was one of your dad's toys when he was your age.#lbEdgard: Uh, thanks...#lbGrandma: Now, good night, dear. Old ladies need their beauty sleep. #lbEdgard: Good night, grandma!",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "grandma1_4"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "isquarePiece",
-        "teleport": "teleportNight1",
-        "periodChange": "night1"
-    },
-    {
-        "name": "map",
-        "room": "daddyRoom",
-        "textNoItem": "Edgard: What is this? A map?",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "map"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "imap",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "recipeBook",
-        "room": "grandmaRoom",
-        "textNoItem": "Edgard: I found a recipe book.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "recipeBook"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "irecipeBook",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "cupboardKey",
-        "room": "projectorRoom",
-        "textNoItem": "Edgard: I found a key.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "cupboardKey"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "icupboardKey",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "cupboard",
-        "room": "dinnerRoom",
-        "textNoItem": "Edgard: It's locked. I need to find a key.",
-        "textRightItem": "Edgard: I found a cupcake tin!",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "icupboardKey",
-        "elementsDestroyed": [
-            "cupboard"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "icupcakeTin",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "trianglePiece",
-        "room": "bathroom2",
-        "textNoItem": "Edgard: I picked up the toy.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "trianglePiece"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "itrianglePiece",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "nancysClothes",
-        "room": "nancyRoom",
-        "textNoItem": "Edgard: Nancy's sleeping clothes.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "porchWindow1",
-        "room": "porch",
-        "textNoItem": "Edgard: This window leads to the music room. The curtains are closed shut, so I can't see inside.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "vase",
-        "room": "porch",
-        "textNoItem": "Edgard: There's some soft soil in this vase.",
-        "textRightItem": "Edgard: There's something buried here!",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "itoyShovel",
-        "elementsDestroyed": [
-            "vase"
-        ],
-        "elementsCreated": [
-            "tinBox"
-        ],
-        "itemSpawned": "imarble",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "mint",
-        "room": "porch",
-        "textNoItem": "Edgard: The leaves have a very refreshing smell.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "wineBook",
-        "room": "kitchen",
-        "textNoItem": "Edgard: I can't reach it.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "projector1",
-        "room": "projectorRoom",
-        "textNoItem": "Edgard: There's a a switch.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "projector1"
-        ],
-        "elementsCreated": [
-            "projector2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "projector2",
-        "room": "projectorRoom",
-        "textNoItem": "Edgard: I can barely understand what's going on.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "imonocle",
-        "elementsDestroyed": [
-            "projector2"
-        ],
-        "elementsCreated": [
-            "projector3"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "secondFloorKey",
-        "room": "foyer",
-        "textNoItem": "Edgard: I can't reach it with my bare hands.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "secondFloorKey"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "isecondFloorKey",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "ginger1",
-        "room": "garden",
-        "textNoItem": "Edgard: This plant has a very strong smell.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "lockedMusicHallwayDoor4",
-        "room": "musicHallway",
-        "textNoItem": "Edgard: It seems to be the door to the Music Room.#pbEdgard: It is locked.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "imusicRoomKey",
-        "elementsDestroyed": [
-            "lockedMusicHallwayDoor"
-        ],
-        "elementsCreated": [
-            "dmusicHallway4"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "lockedGardenDoor2static",
-        "room": "garden",
-        "textNoItem": "Edgard: The door to the cellar is locked.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "lockedUpperHallwayDoor1",
-        "room": "upperHallway",
-        "textNoItem": "Edgard: It is missing the dook knob.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "lockedUpperHallwayDoor"
-        ],
-        "elementsCreated": [
-            "dupperHallway2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "lockedUpperHallwayDoor2",
-        "room": "upperHallway",
-        "textNoItem": "Edgard: This door is locked.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "isecondFloorKey",
-        "elementsDestroyed": [
-            "lockedUpperHallwayDoor"
-        ],
-        "elementsCreated": [
-            "dupperHallway2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "hanger",
-        "room": "nancyRoom",
-        "textNoItem": "Edgard: (I will need this.)",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "hanger"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "ihanger",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "circlePiece",
-        "room": "lavenderGuestroom",
-        "textNoItem": "Edgard: I picked up the toy.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "circlePiece"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "icirclePiece",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "puppet1",
-        "room": "lavenderGuestroom",
-        "textNoItem": "Edgard: The puppet is being hung by this string.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "iscissors",
-        "elementsDestroyed": [
-            "string"
-        ],
-        "elementsCreated": [
-            "puppet",
-            "monocle"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "lockedWindow",
-        "room": "lavenderGuestroom",
-        "textNoItem": "Edgard: The lock is very rusty. #lbEdgard: I can't open it.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "ioil",
-        "elementsDestroyed": [
-            "lavenderWindow"
-        ],
-        "elementsCreated": [
-            "dlavenderGuestroom1"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "chainedCloset",
-        "room": "lavenderGuestroom",
-        "textNoItem": "Edgard: The handles are locked shut with a chain. There must be some way to open it...",
-        "textRightItem": "Edgard: And...There!#pbEdgard: ...#pbEdgard: I found the desk key!",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "ipliers",
-        "elementsDestroyed": [
-            "chainedCloset"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "orchidRoomDrawer",
-        "room": "orchidGuestroom",
-        "textNoItem": "Edgard: It is missing a handle.",
-        "textRightItem": "Edgard: I found a note.",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "idrawerHandle",
-        "elementsDestroyed": [
-            "orchidRoomDrawer"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "firstGear",
-        "room": "orchidGuestroom",
-        "textNoItem": "Edgard: I found a small gear.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "firstGear"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "igear1",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "tinBox",
-        "room": "porch",
-        "textNoItem": "Edgard: (Inside the tin box I found some old toys and drawings, as well as some family pictures belonging to my dad.#pbAmong the toys, there's a beautiful marble. I'll keep it)",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "tinBox"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "imarble",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "porchWindow2",
-        "room": "porch",
-        "textNoItem": "Edgard: I can hear something coming from the music room#pb???: ...I need something in return...#pb???:...his parents are going to die...#pb???:...it’s a deal then!#pbEdgard: (...I feel I shouldn't be around here...)#lbEdgard: (I will go back to my room.)",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "porchWindow1"
-        ],
-        "elementsCreated": [
-            "porchWindow2"
-        ],
-        "itemSpawned": "",
-        "teleport": "teleportDay2",
-        "periodChange": "day2"
-    },
-    {
-        "name": "lockedCentralHallwayDoor2",
-        "room": "centralHallway",
-        "textNoItem": "Edgard: This door is locked.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "iivyKey",
-        "elementsDestroyed": [
-            "lockedCentralHallwayDoor2"
-        ],
-        "elementsCreated": [
-            "dcentralHallway2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "nancy2_1",
-        "room": "kitchen",
-        "textNoItem": "(PLACEHOLDER) Nancy diz que a avó está passando mal desde hoje de manhã. pede para fazer um chá. Primeiro ingrediente: peppermint)",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "nancy2_1"
-        ],
-        "elementsCreated": [
-            "nancy2_2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "nancy2_2",
-        "room": "kitchen",
-        "textNoItem": "(PLACEHOLDER) Nancy pede peppermint)",
-        "textRightItem": "(PLACEHOLDER) Nancy agradece. Segundo ingrediente: gengibre.",
-        "textWrongItem": "Edgard: Nancy asked for peppermint. I should try to find it first.",
-        "itemNeeded": "ipepperMint",
-        "elementsDestroyed": [
-            "nancy2_2"
-        ],
-        "elementsCreated": [
-            "nancy2_3"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "nancy2_3",
-        "room": "kitchen",
-        "textNoItem": "(PLACEHOLDER) Nancy pede o segundo ingrediente: ginger",
-        "textRightItem": "(PLACEHOLDER) Nancy agradece. Pede tea infuser",
-        "textWrongItem": "Edgard: Nancy asked for ginger. I should try to find it first.",
-        "itemNeeded": "iginger",
-        "elementsDestroyed": [
-            "nancy2_3"
-        ],
-        "elementsCreated": [
-            "nancy2_4"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "nancy2_4",
-        "room": "kitchen",
-        "textNoItem": "(PLACEHOLDER) Nancy pede o tea infuser",
-        "textRightItem": "Nancy: Thank you so much, Edgar. Now I can finally make some tea for your grandmother.#pbEdgard: Will she be alright?#pbNancy: Of course she will. She just needs some rest now. #pb: Speaking of which, look at the time. You should go to bed as well.#pbEdgard: Okay... Good night, Nancy.",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "iinfuser",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "teleportNight2",
-        "periodChange": "night2"
-    },
-    {
-        "name": "grandma2_1",
-        "room": "grandmaRoom",
-        "textNoItem": "(PLACEHOLDER) edgard pergunta sobre o que ouviu a noite. Avó finge não saber. Comenta que está passando mal e pede para edgard não incomodá-la.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "grandma2_1"
-        ],
-        "elementsCreated": [
-            "grandma2_2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "grandma2_2",
-        "room": "grandmaRoom",
-        "textNoItem": "(PLACEHOLDER) versão mais curta do diálogo de grandma2_1",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "ivyKey",
-        "room": "kitchen",
-        "textNoItem": "Edgard: I picked up the key.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "ivyKey"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "iivyKey",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "mint2",
-        "room": "porch",
-        "textNoItem": "Edgard: This must be the peppermint. It has a very refreshing smell.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "mint2",
-            "lockedGardenDoor2static"
-        ],
-        "elementsCreated": [
-            "lockedGardenDoor2shaking"
-        ],
-        "itemSpawned": "ipeppermint",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "lockedGardenDoor2shaking",
-        "room": "garden",
-        "textNoItem": "Edgard: ...W-who is there?",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "ginger2",
-        "room": "garden",
-        "textNoItem": "Edgard: What a strong scent! This must be the ginger.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "ginger2"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "iginger",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "scissors1",
-        "room": "foyer",
-        "textNoItem": "Edgard: (If Nancy sees me walking around with one of these, I'll get in trouble...#pbI'd better come back at night.)",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "roseWine",
-        "room": "ivyGuestroom",
-        "textNoItem": "Edgard: The bottle is empty, but I might find some use for it.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "roseWine"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "iroseWine",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "scissors2",
-        "room": "foyer",
-        "textNoItem": "Edgard: I picked up the scissors.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "scissors2"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "iscissors",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "puppet2",
-        "room": "lavenderGuestroom",
-        "textNoItem": "Edgard: Poor puppet...",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "monocle",
-        "room": "lavenderGuestroom",
-        "textNoItem": "Edgard: I picked up the puppet's monocle.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "monocle"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "projector3",
-        "room": "projectorRoom",
-        "textNoItem": "Edgard: It's much clearer now.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": "",
-        "elementsCreated": "",
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "studyWindow",
-        "room": "study",
-        "textNoItem": "Edgard: This window is right above the locked cellar door.",
-        "textRightItem": "Edgard: Let's hope this works... #pbEdgard: ...#pbEdgard: It sounds like it hit something.",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "ipaperweight",
-        "elementsDestroyed": [
-            "studywindow",
-            "lockedGardenDoor2shaking"
-        ],
-        "elementsCreated": [
-            "dgarden2"
-        ],
-        "itemSpawned": "",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "paperweight",
-        "room": "study",
-        "textNoItem": "Edgard: Heavy!",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "paperweight"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "ipaperweight",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "secondGear",
-        "room": "garden",
-        "textNoItem": "Edgard: I found a small gear.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "secondGear"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "igear2",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "redWine",
-        "room": "wineCellar",
-        "textNoItem": "Edgard: I picked up the wine bottle.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "redWine"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": "iredWine",
-        "teleport": "",
-        "periodChange": ""
-    },
-    {
-        "name": "toolBox",
-        "room": "wineCellar",
-        "textNoItem": "Edgard: Now, let's see...#pbEdgard: ...#pbEdgard: I found a screwdriver and pliers.",
-        "textRightItem": "",
-        "textWrongItem": "Edgard: I don't think this would make sense.",
-        "itemNeeded": "",
-        "elementsDestroyed": [
-            "toolbox"
-        ],
-        "elementsCreated": "",
-        "itemSpawned": [
-            "ipliers",
-            "iscrewdriver"
-        ],
-        "teleport": "teleportDay3",
-        "periodChange": "day3"
-    }
+  {
+    "name":"introDoor",
+    "room":"porch",
+    "textNoItem":"*knock knock*#lbEdgard: Hello?#lb???: Hold on just a minute...",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["introDoor"],
+    "elementsCreated":["dPorch1","porchWindow"],
+    "itemSpawned":"",
+    "teleport":"teleportArrival1",
+    "periodChange":""
+  },
+  {
+    "name":"nancy1_1",
+    "room":"foyer",
+    "textNoItem":"Edgard: Good Morning. I’m Edgard.#pb???: I am your grandmother's nurse, you can call me Nancy.#pbEdgard: Pleased to meet you.#pbNancy: You will be staying in your dad's room upstairs. Let me guide you.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["nancy1_1"],
+    "elementsCreated":["nancy1_2", "grandma1_1"],
+    "itemSpawned":"",
+    "teleport":"teleportArrival2",
+    "periodChange":""
+  },
+  {
+    "name":"nancy1_2",
+    "room":"daddyRoom",
+    "textNoItem":"Nancy: Please enjoy your stay.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"grandma1_1",
+    "room":"kitchen",
+    "textNoItem":"Grandma: Ed! Look at you! You’ve grown so much! You’re looking just like your father!#pbEdgard: Thank you...#pbGrandma: Your father used to love cupcakes! Do you like cupcakes?#pbEdgard: ...#pbGrandma: I've got a recipe book in my room. Could you be a dear and bring it to your grandmother?#pbEdgard: Ok!",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["grandma1_1"],
+    "elementsCreated":["grandma1_2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"grandma1_2",
+    "room":"kitchen",
+    "textNoItem":"Grandma: Could you bring me my recipe book? I think I left it in my room.",
+    "textRightItem":"Grandma: Thank you, dear.#pbGrandma: Now let's see...#pbGrandma: Oh my, I just remembered we will need a special cupcake tin to make this recipe... I used to have one, but I haven't seen it in ages. Could you help me find it, dear?",
+    "textWrongItem":"Edgard: Grandma asked for a recipe book. I should try to find it first.",
+    "itemNeeded":"irecipeBook",
+    "elementsDestroyed":["grandma1_2"],
+    "elementsCreated":["grandma1_3"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"grandma1_3",
+    "room":"kitchen",
+    "textNoItem":"Grandma: Now where did I leave that cupcake tin...",
+    "textRightItem":"Grandma: Now let's make some cupcakes!",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"icupcakeTin",
+    "elementsDestroyed":["grandma1_3"],
+    "elementsCreated":["grandma1_4"],
+    "itemSpawned":"",
+    "teleport":"teleportKitchenFakeFadeOut",
+    "periodChange":""
+  },
+  {
+    "name":"grandma1_4",
+    "room":"kitchen",
+    "textNoItem":"Grandma: Time passes so fast when you are having fun, isn’t it dear? I think I’m ready to go to bed. You should get some rest too.#pbEdgard: Thanks, grandma. I will. #pbGrandma: But first, let me give you a little something for helping me.#pbEdgard: What is this?#pbGrandma: I found this the other day. I think it was one of your dad's toys when he was your age.#pbEdgard: Uh, thanks...#pbGrandma: Now, good night, dear!",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["grandma1_4"],
+    "elementsCreated":"",
+    "itemSpawned":"isquarePiece",
+    "teleport":"teleportNight1",
+    "periodChange":"night1"
+  },
+  {
+    "name":"telephone1_1",
+    "room":"foyer",
+    "textNoItem":"Edgard: It's an old telephone.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"map",
+    "room":"daddyRoom",
+    "textNoItem":"Edgard: What is this? A map?",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["map"],
+    "elementsCreated":"",
+    "itemSpawned":"imap",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"recipeBook",
+    "room":"grandmaRoom",
+    "textNoItem":"Edgard: I found a recipe book.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["recipeBook"],
+    "elementsCreated":"",
+    "itemSpawned":"irecipeBook",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"cupboardKey",
+    "room":"projectorRoom",
+    "textNoItem":"Edgard: I found a key.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["cupboardKey"],
+    "elementsCreated":"",
+    "itemSpawned":"icupboardKey",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"cupboard",
+    "room":"dinnerRoom",
+    "textNoItem":"Edgard: It's locked. I need to find a key.",
+    "textRightItem":"Edgard: I found a cupcake tin!",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"icupboardKey",
+    "elementsDestroyed":["cupboard"],
+    "elementsCreated":"",
+    "itemSpawned":"icupcakeTin",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"trianglePiece",
+    "room":"bathroom2",
+    "textNoItem":"Edgard: Nice! It's a toy.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["trianglePiece"],
+    "elementsCreated":"",
+    "itemSpawned":"itrianglePiece",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancysClothes",
+    "room":"nancyRoom",
+    "textNoItem":"Edgard: Nancy's sleeping clothes.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"porchWindow1",
+    "room":"porch",
+    "textNoItem":"Edgard: This window leads to the music room. The curtains are closed shut, so I can't see inside.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"vase",
+    "room":"porch",
+    "textNoItem":"Edgard: There's some soft soil in this vase.",
+    "textRightItem":"Edgard: There's something buried here!",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"itoyShovel",
+    "elementsDestroyed":["vase"],
+    "elementsCreated":["tinBox"],
+    "itemSpawned":"imarble",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"wineBook",
+    "room":"kitchen",
+    "textNoItem":"Edgard: I can't reach it.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"projector1",
+    "room":"projectorRoom",
+    "textNoItem":"Edgard: There's a a switch.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["projector1"],
+    "elementsCreated":["projector2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"projector2",
+    "room":"projectorRoom",
+    "textNoItem":"Edgard: I can barely understand what's going on.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"imonocle",
+    "elementsDestroyed":["projector2"],
+    "elementsCreated":["projector3"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"secondFloorKey",
+    "room":"foyer",
+    "textNoItem":"Edgard: I can't reach it with my bare hands.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"ihanger",
+    "elementsDestroyed":["secondFloorKey"],
+    "elementsCreated":"",
+    "itemSpawned":"isecondFloorKey",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lockedMusicHallwayDoor4",
+    "room":"musicHallway",
+    "textNoItem":"Edgard: It seems to be the door to the Music Room.#pbEdgard: It is locked.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"imusicRoomKey",
+    "elementsDestroyed":["lockedMusicHallwayDoor"],
+    "elementsCreated":["dmusicHallway4"],
+    "itemSpawned":"",
+    "teleport":"teleportDay4",
+    "periodChange":"day4"
+  },
+  {
+    "name":"lockedGardenDoor21",
+    "room":"garden",
+    "textNoItem":"Edgard: The door to the cellar is locked.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lockedUpperHallwayDoor1",
+    "room":"upperHallway",
+    "textNoItem":"Edgard: It is missing the dook knob.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["lockedUpperHallwayDoor"],
+    "elementsCreated":["dupperHallway2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lockedUpperHallwayDoor2",
+    "room":"upperHallway",
+    "textNoItem":"Edgard: This door is locked.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"isecondFloorKey",
+    "elementsDestroyed":["lockedUpperHallwayDoor"],
+    "elementsCreated":["dupperHallway2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"hanger",
+    "room":"nancyRoom",
+    "textNoItem":"Edgard: (I will need this.)",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["hanger"],
+    "elementsCreated":"",
+    "itemSpawned":"ihanger",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"circlePiece",
+    "room":"lavenderGuestroom",
+    "textNoItem":"Edgard: I picked up the toy.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["circlePiece"],
+    "elementsCreated":"",
+    "itemSpawned":"icirclePiece",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"puppet1",
+    "room":"lavenderGuestroom",
+    "textNoItem":"Edgard: The puppet is being hung by this string.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"iscissors",
+    "elementsDestroyed":["puppet1"],
+    "elementsCreated":["puppet2", "monocle"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lockedWindow",
+    "room":"lavenderGuestroom",
+    "textNoItem":"Edgard: The lock is very rusty. #lbEdgard: I can't open it.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"ioil",
+    "elementsDestroyed":["lavenderWindow"],
+    "elementsCreated":["dlavenderGuestroom1"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"chainedCloset",
+    "room":"lavenderGuestroom",
+    "textNoItem":"Edgard: The handles are locked shut with a chain. There must be some way to open it...",
+    "textRightItem":"Edgard: And...There!#pbEdgard: ...#pbEdgard: I found the desk key!",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"ipliers",
+    "elementsDestroyed":["chainedCloset"],
+    "elementsCreated":"",
+    "itemSpawned":"ideskKey",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"orchidRoomDrawer",
+    "room":"orchidGuestroom",
+    "textNoItem":"Edgard: It is missing a handle.",
+    "textRightItem":"Edgard: I found a note.",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"idrawerHandle",
+    "elementsDestroyed":["orchidRoomDrawer"],
+    "elementsCreated":"",
+    "itemSpawned":"ipassword",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"firstGear",
+    "room":"orchidGuestroom",
+    "textNoItem":"Edgard: I found a small gear.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["firstGear"],
+    "elementsCreated":"",
+    "itemSpawned":"igear1",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"tinBox",
+    "room":"porch",
+    "textNoItem":"Edgard: (Inside the tin box I found some old toys and drawings, as well as some family pictures belonging to my dad.#pbAmong the toys, there's a beautiful marble. I'll keep it)",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["tinBox","porchWindow1"],
+    "elementsCreated":["porchWindow2"],
+    "itemSpawned":"imarble",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"porchWindow2",
+    "room":"porch",
+    "textNoItem":"Edgard: I can hear something coming from the music room#pb???: ...I need something in return...#pb???:...yes, his parents are going to die...#pb???:...it’s a deal then!#pbEdgard: (...I feel I shouldn't be around here...)#lbEdgard: (I will go back to my room.)",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["porchWindow2"],
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"teleportDay2",
+    "periodChange":"day2"
+  },
+  {
+    "name":"lockedCentralHallwayDoor2",
+    "room":"centralHallway",
+    "textNoItem":"Edgard: This door is locked.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"iivyKey",
+    "elementsDestroyed":["lockedCentralHallwayDoor2"],
+    "elementsCreated":["dcentralHallway2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancy2_1",
+    "room":"kitchen",
+    "textNoItem":"Edgard: Good Morning. Nancy: Good morning. Edgard: Did anyone stay up till late yesterday? I heard people talking in the Music Room... Nancy: Yesterday me and your grandma were fast asleep. I’m sure it was just a dream.#pbEdgard: I'm not sure... Maybe I did imagine it...#pbNancy: In any case, today your grandmother is a little feverish, so I'm making her some tea. #pbEdgard: Is there anything I can do to help? #pbNancy: As a matter of fact, yes. Could you bring me a few ingredients while I heat up the water?#pb:Edgard: Sure. #pb:Nancy: Thank you, dear. So first, I will need some peppermint.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["nancy2_1"],
+    "elementsCreated":["nancy2_2","mint"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancy2_2",
+    "room":"kitchen",
+    "textNoItem":"Nancy: The first thing I will need is peppermint. Could you bring me some?",
+    "textRightItem":"Nancy: Thank you , Edgard. Now, to reduce her fever, the next ingredient we will need is some ginger.",
+    "textWrongItem":"Edgard: Nancy asked for peppermint. I should try to find it first.",
+    "itemNeeded":"ipepperMint",
+    "elementsDestroyed":["nancy2_2"],
+    "elementsCreated":["nancy2_3","ginger"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancy2_3",
+    "room":"kitchen",
+    "textNoItem":"Nancy: We've got ginger planted in the garden over there. Could you bring me some?",
+    "textRightItem":"Nancy: Now we have all ingredients we need.#pbEdgard: So we can finally make the tea?#Nancy: We are going to need a tea infuser for that. I was looking for it right now, but I can't find it anywhere.",
+    "textWrongItem":"Edgard: Nancy asked for ginger. I should try to find it first.",
+    "itemNeeded":"iginger",
+    "elementsDestroyed":["nancy2_3"],
+    "elementsCreated":["nancy2_4"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancy2_4",
+    "room":"kitchen",
+    "textNoItem":"Nancy: I know there are some old tea utensils upstairs, maybe we can find a tea infuser there.",
+    "textRightItem":"Nancy: Thank you so much, Edgar. Now I can finally make some tea for your grandmother.#pbEdgard: Will she be alright?#pbNancy: Of course she will. She just needs some rest now. #pb: Speaking of which, look at the time. You should go to bed as well.#pbEdgard: Okay... Good night, Nancy.",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"iinfuser",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"teleportNight2",
+    "periodChange":"night2"
+  },
+  {
+    "name":"grandma2_1",
+    "room":"grandmaRoom",
+    "textNoItem":"Edgard: Good Morning, grandma.#pbGrandma: G-good Morning, dear... #pbEdgard: Grandma, I need to talk to you... I think I heard a scary voice last night... #pbGrandma: Oh dear, you must be imagining things... There's no one in this house except for us. #pbEdgard: But I'm pretty sure I heard something!#pbGrandma: Now, grandma is not f-feeling very well today. Could you please spend the day with Nancy? Grandma needs some time alone...",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["grandma2_1"],
+    "elementsCreated":["grandma2_2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"grandma2_2",
+    "room":"grandmaRoom",
+    "textNoItem":"Grandma: Could you please spend the day with Nancy? Granny needs some time alone...",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"telephone2_1",
+    "room":"foyer",
+    "textNoItem":"Edgard: (I'm a little bit worried, I guess I should call mom and dad.)#pbEdgard: ...#pbDad: Hello?#pbEdgard: Dad? It's me, Edgard#pbDad: Oh, h-hi, Edgard! Did you arrive well? #pbEdgard: Yes. Is everything alright over there? How is the cruise?#pbDad: It's fine... just, the vacation has just been a little bit rainy, that's all...#pbEdgard: It's good to know that. I had a feeling something could be wrong.#pbDad: Don't worry Ed, it will just be four days. #pbDad: W-whoa!#pbDad: I have to turn off the phone now, the ship is starting to shake again.#pbEdgard: Okay. Bye, dad. #pbDad: Bye, son! Behave well!",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["telephone2_1"],
+    "elementsCreated":["telephone2_2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"telephone2_2",
+    "room":"foyer",
+    "textNoItem":"Edgard: I have already called my parents today.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"ivyKey",
+    "room":"kitchen",
+    "textNoItem":"Edgard: I picked up the key.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["ivyKey"],
+    "elementsCreated":"",
+    "itemSpawned":"iivyKey",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"mint",
+    "room":"porch",
+    "textNoItem":"Edgard: This must be the peppermint. It has a very refreshing smell.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["mint","lockedGardenDoor21"],
+    "elementsCreated":["lockedGardenDoor22"],
+    "itemSpawned":"ipeppermint",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"ginger",
+    "room":"garden",
+    "textNoItem":"Edgard: What a strong scent! This must be the ginger.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["ginger"],
+    "elementsCreated":"",
+    "itemSpawned":"iginger",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"roseWine",
+    "room":"ivyGuestroom",
+    "textNoItem":"Edgard: The bottle is empty, but I might find some use for it.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["roseWine"],
+    "elementsCreated":"",
+    "itemSpawned":"iroseWine",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"airDuct",
+    "room":"ivyGuestroom",
+    "textNoItem":"Edgard: It's an air duct.",
+    "textRightItem":"Edgard: I found a note inside.",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"ipiledriver",
+    "elementsDestroyed":["airDuct"],
+    "elementsCreated":"",
+    "itemSpawned":"inote",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"scissors1",
+    "room":"foyer",
+    "textNoItem":"Edgard: (If Nancy sees me walking around with one of these, I'll get in trouble...#pbI'd better come back at night.)",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lockedGardenDoor22",
+    "room":"garden",
+    "textNoItem":"Edgard: ...W-who is there?",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"scissors2",
+    "room":"foyer",
+    "textNoItem":"Edgard: I picked up the scissors.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["scissors2"],
+    "elementsCreated":"",
+    "itemSpawned":"iscissors",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"puppet2",
+    "room":"lavenderGuestroom",
+    "textNoItem":"Edgard: Poor puppet...",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"monocle",
+    "room":"lavenderGuestroom",
+    "textNoItem":"Edgard: I picked up the puppet's monocle.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["monocle"],
+    "elementsCreated":"",
+    "itemSpawned":"imonocle",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"projector3",
+    "room":"projectorRoom",
+    "textNoItem":"Edgard: It's much clearer now.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"studyWindow",
+    "room":"study",
+    "textNoItem":"Edgard: This window is right above the locked cellar door.",
+    "textRightItem":"Edgard: Let's hope this works... #pbEdgard: ...#pbEdgard: It sounds like it hit something.",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"ipaperweight",
+    "elementsDestroyed":["studywindow","lockedGardenDoor22"],
+    "elementsCreated":["dgarden2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"paperweight",
+    "room":"study",
+    "textNoItem":"Edgard: Heavy!",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["paperweight"],
+    "elementsCreated":"",
+    "itemSpawned":"ipaperweight",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"desk1",
+    "room":"study",
+    "textNoItem":"It's a study desk. There's a keyhole on the lid.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"ideskKey",
+    "elementsDestroyed":["desk1"],
+    "elementsCreated":["desk2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"secondGear",
+    "room":"garden",
+    "textNoItem":"Edgard: I found a small gear.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["secondGear"],
+    "elementsCreated":"",
+    "itemSpawned":"igear2",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"redWine",
+    "room":"wineCellar",
+    "textNoItem":"Edgard: I picked up the wine bottle.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["redWine"],
+    "elementsCreated":"",
+    "itemSpawned":"iredWine",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"toolBox",
+    "room":"wineCellar",
+    "textNoItem":"Edgard: Now, let's see...#pbEdgard: ...#pbEdgard: I found a screwdriver and pliers.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["toolbox"],
+    "elementsCreated":"",
+    "itemSpawned":["ipliers","iscrewdriver"],
+    "teleport":"teleportDay3",
+    "periodChange":"day3"
+  },
+  {
+    "name":"grandma3_1",
+    "room":"grandmaRoom",
+    "textNoItem":"Edgard: Grandma, are you feeling better? #pbGrandma: Oh, most certainly, my boy... I'm feeling better than ever. #pbEdgard: That is good to know. Anyway, I really need to talk to you this time. There's something wrong with this house. Something wants to get me... I'm scared. I want to go home...#pbGrandma: Maybe you are just scared of an old lady’s house, full of dusty things. But everything is just as it should be. Soon our time together will be over and you will be back at your house with your parents.#pbEdgard: ...but, grandma!#pbGrandma: See that pendant I placed on the drawer over there? #pbEdgard: Yes... #pbGrandma: I want you to be a good boy and take it away from this room. Please hide it somewhere no one will be able to find it. #pbEdgard: But wh...#pbGrandma: Just go and hide it, boy. After that, I promise we'll be able to fully enjoy these holidays...",
+    "textRightItem":"(PLACEHOLDER): Avo agindo estranhamente, entrega o pingente para o menino.",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["grandma3_1"],
+    "elementsCreated":["grandma3_2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"grandma3_2",
+    "room":"grandmaRoom",
+    "textNoItem":"Grandma: Please hide that pendant somewhere safe, where no one will be able to find it... Be a good boy.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancy3_1",
+    "room":"kitchen",
+    "textNoItem":"Edgard: Nancy, something is going on! There are some strange shadows in the house at night!#pbNancy: Edgard, I’ve been here for 20 years. I’m sure this is all in your imagination, nothing ever happens here. In 10 years, you’ll remember how silly you are being right now.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["nancy3_1"],
+    "elementsCreated":["nancy3_2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancy3_2",
+    "room":"kitchen",
+    "textNoItem":"Nancy: Now please, let me do my work.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"telephone3_1",
+    "room":"foyer",
+    "textNoItem":"Edgard: I'll try to call my parents.#pbEdgard: ... #pbEdgard: No one is answering.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"pendant",
+    "room":"grandmaRoom",
+    "textNoItem":"Edgard: I picked up the mysterious-looking pendant.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["pendant"],
+    "elementsCreated":"",
+    "itemSpawned":"ipendant",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"desk2",
+    "room":"study",
+    "textNoItem":"Edgard: I found a pearl inside.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["desk2"],
+    "elementsCreated":"",
+    "itemSpawned":"ipearl",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"broom",
+    "room":"darkPassage",
+    "textNoItem":"Edgard: I picked up the broom.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["broom"],
+    "elementsCreated":"",
+    "itemSpawned":"ibroom",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"wineBook",
+    "room":"kitchen",
+    "textNoItem":"Edgard: ...And there! #pbEdgard: I picked up the wine book.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"iwineBook",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"socket",
+    "room":"storage",
+    "textNoItem":"Edgard: It's missing a lightbulb.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"iLightbulb",
+    "elementsDestroyed":["socket"],
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"puttyKnife",
+    "room":"storage",
+    "textNoItem":"Edgard: I picked up a putty knife.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["puttyKnife"],
+    "elementsCreated":"",
+    "itemSpawned":"iputtyKnife",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"safe1",
+    "room":"storage",
+    "textNoItem":"Edgard: It is a safe. Looks like a nice place for hiding something.",
+    "textRightItem":"(PLACEHOLDER) Edgard coloca o pingente no cofre, vai dormir",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["safe1"],
+    "elementsCreated":["safePuzzle"],
+    "itemSpawned":"",
+    "teleport":"teleportNight3",
+    "periodChange":"night3"
+  },
+  {
+    "name":"leak1",
+    "room":"library",
+    "textNoItem":"Edgard: Some water is leaking from the ceiling.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lockedBasementHallwayDoor2",
+    "room":"basementHallway",
+    "textNoItem":"Edgard: It's locked.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"iBoilerKey",
+    "elementsDestroyed":["lockedBasementHallwayDoor2"],
+    "elementsCreated":["dbasementHallway2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancyCorpse1",
+    "room":"nancyRoom",
+    "textNoItem":"Edgard: !!!#pbEdgard: What in the world happened here?#pbEdgard: Poor Nancy...#pbEdgard: There's something near her body...#pbEdgard: I picked up the Boiler Room key... #pbEdgard: Wait, there's something else. #pbEdgard: I picked up a mysterious-looking jewel.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["nancyCorpse1"],
+    "elementsCreated":["nancyCorpse2"],
+    "itemSpawned":["iboilerKey","isapphyre"],
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"nancyCorpse2",
+    "room":"nancyRoom",
+    "textNoItem":"Edgard: Poor Nancy...",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"oil",
+    "room":"boilerRoom",
+    "textNoItem":"Edgard: I picked up an oil can.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["oil"],
+    "elementsCreated":"",
+    "itemSpawned":"ioil",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lightbulb",
+    "room":"bathroom3",
+    "textNoItem":"Edgard: I picked up a lightbulb.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["lightbulb"],
+    "elementsCreated":"",
+    "itemSpawned":"ilightbulb",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"notebook",
+    "room":"masterSuite",
+    "textNoItem":"Edgard: I picked up a notebook.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["notebook"],
+    "elementsCreated":"",
+    "itemSpawned":"inotebook",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"firePoker",
+    "room":"masterSuite",
+    "textNoItem":"Edgard: I picked up a fire poker.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["firePoker"],
+    "elementsCreated":"",
+    "itemSpawned":"ifirePoker",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"doorknob",
+    "room":"masterSuite",
+    "textNoItem":"Edgard: I picked up a loose doorknob.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["doorknob"],
+    "elementsCreated":"",
+    "itemSpawned":"idoorknob",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"oldPaper",
+    "room":"masterSuite",
+    "textNoItem":"Edgard: I picked up an old paper.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["oldPaper"],
+    "elementsCreated":"",
+    "itemSpawned":"ioldPaper",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"leak2",
+    "room":"library",
+    "textNoItem":"Edgard: Some water is leaking from the ceiling.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lockedMasterSuiteDoor3",
+    "room":"masterSuite",
+    "textNoItem":"Edgard: It is missing the dook knob.",
+    "textRightItem":"Edgard: It fits!",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"idoorknob",
+    "elementsDestroyed":["lockedMasterSuiteDoor3","lockedCentralHallwayDoor2"],
+    "elementsCreated":["dmasterSuite3","dcentralHallway2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"whiteWine",
+    "room":"musicRoom",
+    "textNoItem":"Edgard: I found a bottle of white wine!",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["whiteWine"],
+    "elementsCreated":"",
+    "itemSpawned":"iwhiteWine",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"secretNote",
+    "room":"secretStudy",
+    "textNoItem":"Edgard: I picked up a strange note.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["secretNote"],
+    "elementsCreated":"",
+    "itemSpawned":"isecretNote",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"gear3",
+    "room":"secretStudy",
+    "textNoItem":"Edgard: I picked up a small gear.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["gear3"],
+    "elementsCreated":"",
+    "itemSpawned":"igear3",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"tapePlayer1",
+    "room":"secretStudy",
+    "textNoItem":"Edgard: It's a tape player.",
+    "textRightItem":"Edgard: I inserted the tape I found.",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"icassette",
+    "elementsDestroyed":["tapePlayer"],
+    "elementsCreated":["tapePlayer2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"tapePlayer2",
+    "room":"secretStudy",
+    "textNoItem":"(PLACEHOLDER)Dialogo completo do demônio com a aví",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":"",
+    "elementsCreated":"",
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"drawerHandle",
+    "room":"secretStorage",
+    "textNoItem":"Edgard: I picked up a drawer handle.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["drawerHandle"],
+    "elementsCreated":"",
+    "itemSpawned":"idrawerHandle",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"lever",
+    "room":"secretStorage",
+    "textNoItem":"Edgard: I pulled the lever.",
+    "textRightItem":"",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["lever"],
+    "elementsCreated":["dsecretStorage1"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  },
+  {
+    "name":"leak3",
+    "room":"library",
+    "textNoItem":"Edgard: The wallpaper is soaked. Perhaps I can scrape it away somehow.",
+    "textRightItem":"Edgard: There was a passage behind it all along!",
+    "textWrongItem":"Edgard: I don't think this would make sense.",
+    "itemNeeded":"",
+    "elementsDestroyed":["leak3"],
+    "elementsCreated":["dlibrary2"],
+    "itemSpawned":"",
+    "teleport":"",
+    "periodChange":""
+  }
 ]

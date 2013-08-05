@@ -21,31 +21,36 @@ package
 		
 		override public function interact(item : InventoryItem = null) : void
 		{
-			super.interact();
-			
-			if (_lights)
+			if (item == null)
 			{
-				if ((parent as Room).time == "night")
+				if (_lights)
 				{
-					var l : Light;
-					for (var i : int = 0; i < _lights.length; i++)
-					{	
-						l = parent.getChildByName(_lights[i]) as Light;
-						l.toggle();
-						if (l.visible)
-						{
-							Game.playSfx(Game.SWITCH_ON);
-						}
-						else
-						{
-							Game.playSfx(Game.SWITCH_OFF);
+					if ((parent as Room).time == "night")
+					{
+						var l : Light;
+						for (var i : int = 0; i < _lights.length; i++)
+						{	
+							l = parent.getChildByName(_lights[i]) as Light;
+							l.toggle();
+							if (l.visible)
+							{
+								Game.playSfx(Game.SWITCH_ON);
+							}
+							else
+							{
+								Game.playSfx(Game.SWITCH_OFF);
+							}
 						}
 					}
+				}
+				else
+				{
+					trace (this.name + " has no lights associated with it.");
 				}
 			}
 			else
 			{
-				trace (this.name + " has no lights associated with it.");
+				Game.displayText(["Edgard: I don't think this would make sense."]);
 			}
 		}
 	}

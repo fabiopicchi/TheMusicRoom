@@ -71,9 +71,8 @@ package
 		
 		private static var _nextRoom:String = "";
 		private static var _nextRoomPosition : Number;
-		private static var _nextRoomCallback : Function;
 		
-		private static var _room : String = "foyer";
+		private static var _room : String = "daddyRoom";
 		public static const ROOM_MAP : Object = {
 			bathroom1 : new Bathroom1,
 			bathroom2 : new Bathroom2,
@@ -93,7 +92,8 @@ package
 			projectorRoom : new ProjectorRoom,
 			upperHallway : new UpperHallway,
 			lavenderGuestroom : new LavenderGuestroom,
-			ivyGuestroom : new IvyGuestroom
+			ivyGuestroom : new IvyGuestroom,
+			guestHallway : new GuestHallway
 		};
 		
 		private static var _shade : Shape = new Shape();
@@ -117,6 +117,7 @@ package
 		private static var _inventory : Inventory = new Inventory ();
 		
 		private static var _puzzleScreen : PuzzleScreen = null;
+		private static var _fadeCallback : Function;
 		
 		public function Game():void 
 		{
@@ -470,6 +471,17 @@ package
 				return;
 			}
 			
+			
+			if ((changedStatus & PUZZLESCREEN_OPEN) == PUZZLESCREEN_OPEN && (_status & PUZZLESCREEN_OPEN) != PUZZLESCREEN_OPEN)
+			{
+				fadeToBlack(function () : void
+				{
+					removeChild(_puzzleScreen);
+					_puzzleScreen = null;
+					if (_fadeCallback != null) _fadeCallback();
+				});
+			}
+			
 			if ((changedStatus & CHANGING_ROOM) == CHANGING_ROOM && (_status & CHANGING_ROOM) == CHANGING_ROOM)
 			{
 				fadeToBlack(function () : void
@@ -483,7 +495,7 @@ package
 					_nextRoom = "";
 					ROOM_MAP[_room].addPlayer();
 					addChildAt(ROOM_MAP[_room], 0);
-					if (_nextRoomCallback != null) _nextRoomCallback();
+					if (_fadeCallback != null) _fadeCallback();
 				});
 			}
 			
@@ -511,18 +523,6 @@ package
 			
 			if ((_status & PERIOD_CHANGE) != PERIOD_CHANGE && (_status & CHANGING_ROOM) != CHANGING_ROOM)
 			{
-				if ((_status & INVENTORY_OPEN) == INVENTORY_OPEN)
-				{
-					if (keyJustPressed(Action.LEFT))
-					{
-						_inventory.nextLeft();
-					}
-					else if (keyJustPressed(Action.RIGHT))
-					{
-						_inventory.nextRight();
-					}
-				}
-				
 				if ((_status & TYPING_TEXT) == TYPING_TEXT)
 				{
 					typeText();
@@ -533,12 +533,26 @@ package
 					{
 						fadeToBlack(function () : void
 						{
-							addChild (_puzzleScreen);
+							addChildAt (_puzzleScreen, getChildIndex(_textBox));
+							if (_puzzleScreen.type == PuzzleScreen.INSERT_SLOT)
+							{
+								showInventory();
+							}
 						});
 					}
+					
 					if (contains(_puzzleScreen))
 					{
-						_puzzleScreen.update();
+						if ((_status & INVENTORY_OPEN) != INVENTORY_OPEN)
+						{
+							_puzzleScreen.update();
+						}
+					}
+					
+					if (Game.keyJustPressed(Action.BACK))
+					{
+						Game.hideInventory();
+						Game.removePuzzleScreen();
 					}
 				}
 				else
@@ -548,14 +562,10 @@ package
 						if ((_status & INVENTORY_OPEN) != INVENTORY_OPEN)
 						{
 							showInventory();
-							_status |= INVENTORY_OPEN;
-							_playerInstance.setFlag(Player.INACTIVE);
 						}
 						else
 						{
 							hideInventory();
-							_status &= ~INVENTORY_OPEN;
-							_playerInstance.resetFlag(Player.INACTIVE);
 						}
 					}
 					
@@ -564,18 +574,48 @@ package
 						periodChange();
 					}
 					
-					for (var i : int = 0; i < numChildren; i++)
-					{
-						var e : Entity;
-						if ((e = (getChildAt(i) as Entity)) && !(e is Room))
-						{
-							e.update();
-						}
-					}
-					
 					for (var k : String in ROOM_MAP)
 					{
 						ROOM_MAP[k].update();
+					}
+				}
+				
+				if ((_pStatus & INVENTORY_OPEN) == INVENTORY_OPEN)
+				{
+					if (keyJustPressed(Action.LEFT))
+					{
+						_inventory.nextLeft();
+					}
+					else if (keyJustPressed(Action.RIGHT))
+					{
+						_inventory.nextRight();
+					}
+					
+					if ((_status & PUZZLESCREEN_OPEN) != PUZZLESCREEN_OPEN)
+					{
+						if (keyJustPressed(Action.INTERACT))
+						{
+							if (_playerInstance.gameObject as SceneElement)
+							{
+								var item : InventoryItem;
+								if (!_playerInstance.gameObject.interact(item = removeFromInventory(true)))
+								{
+									addToInventory(item.id);
+								}
+							}
+							else
+							{
+								hideInventory();
+								displayText(["Edgard: I don't think this would make sense."]);
+							}
+						}
+					}
+					else
+					{
+						if (keyJustPressed(Action.INTERACT))
+						{
+							_puzzleScreen.item = removeFromInventory(true);
+						}
 					}
 				}
 			}
@@ -596,25 +636,38 @@ package
 		
 		
 		//Inventory control methods
-		private function showInventory():void 
+		public static function showInventory():void 
 		{
 			TweenLite.to(_inventory, 0.5, { y : 668 } );
+			_status |= INVENTORY_OPEN;
+			_playerInstance.setFlag(Player.INACTIVE);
 		}
 		
-		private function hideInventory():void 
+		public static function hideInventory():void 
 		{
 			TweenLite.to(_inventory, 0.5, { y : 768 } );
+			_status &= ~INVENTORY_OPEN;
+			_playerInstance.resetFlag(Player.INACTIVE);
 		}
 		
 		public static function addToInventory(id : String) : void
 		{
 			playSfx(ITEM_GOT);
-			_inventory.addItem(new InventoryItem(id));
+			for (var i : int = 0; i < _arInventoryItems.length; i++)
+			{
+				if (_arInventoryItems[i].name == id)
+				{
+					_inventory.addItem(new InventoryItem(_arInventoryItems[i]));
+					break;
+				}
+			}
 		}
 		
-		public static function removeFromInventory(id : String) : void
+		public static function removeFromInventory(hide : Boolean) : InventoryItem
 		{
-			_inventory.removeItem(id);
+			if (hide)
+				hideInventory();
+			return _inventory.removeItem();
 		}
 		
 		
@@ -706,7 +759,7 @@ package
 		{
 			_nextRoom = room;
 			_nextRoomPosition = nextRoomPosition;
-			_nextRoomCallback = nextRoomCallback;
+			_fadeCallback = nextRoomCallback;
 			setFlag(CHANGING_ROOM);
 		}
 		
@@ -788,17 +841,17 @@ package
 		
 		
 		//SceneElement spawn/destroy
-		public static function changeSceneElement (id : String, setElement:Boolean):Boolean
+		public static function changeElement (id : String, setElement:Boolean):Boolean
 		{
 			var r : Room;
 			var found : Boolean = false;
-			var el : SceneElement;
+			var el : InteractiveElement;
 			for (var k : String in ROOM_MAP)
 			{
 				r = ROOM_MAP[k] as Room;
 				for (var i : int = 0; i < r.numChildren; i++)
 				{
-					if ((el = (r.getChildAt(i) as SceneElement)))
+					if ((el = (r.getChildAt(i) as InteractiveElement)))
 					{
 						if (el.name == id)
 						{
@@ -847,6 +900,12 @@ package
 			setFlag(PUZZLESCREEN_OPEN);
 		}
 		
+		public static function removePuzzleScreen (fadeCallback : Function = null) : void
+		{
+			resetFlag(PUZZLESCREEN_OPEN);
+			_fadeCallback = fadeCallback;
+		}
+		
 		
 		//load config files
 		private function loadConfig () : void
@@ -860,6 +919,10 @@ package
 			addElementsCreated(_arTeleport = (JSONLoader.loadFile("teleports.json") as Array));
 			addElementsCreated(_arPeriod = (JSONLoader.loadFile("periods.json") as Array));
 			addElementsCreated(_arInventoryItems = (JSONLoader.loadFile("inventoryItems.json") as Array));
+			
+			addToInventory("icirclePiece");
+			addToInventory("isquarePiece");
+			addToInventory("itrianglePiece");
 		}
 		
 		//load JSON properties

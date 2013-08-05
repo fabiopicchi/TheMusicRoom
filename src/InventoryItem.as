@@ -12,10 +12,16 @@ package
 	{
 		
 		private var _id : String;
+		private var _text : String;
+		private var _arElementsCreated : Array;
+		private var _arElementsDestroyed : Array;
 		
-		public function InventoryItem(id : String = "") 
+		public function InventoryItem(objData : Object) 
 		{
-			_id = id;
+			_id = objData.name;
+			_text = objData.text;
+			_arElementsCreated = (objData.elementsCreated == "" ? [] : objData.elementsCreated);
+			_arElementsDestroyed = (objData.elementsDestroyed == "" ? [] : objData.elementsDestroyed);
 			
 			var s : Shape = new Shape;
 			s.graphics.beginFill(0xAA900F);

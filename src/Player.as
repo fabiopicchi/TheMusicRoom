@@ -4,6 +4,7 @@ package
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.setTimeout;
 	/**
 	 * ...
 	 * @author arthur e fabio
@@ -13,10 +14,12 @@ package
 		private var _gameObject : InteractiveElement;
 		private var _keyPoints : Array = [];
 		
+		public static const MAX_HEALTH : int = 3;
 		public static const NONE : int = 0;
 		public static const HIDDEN : int = 1 << 0;
 		public static const INACTIVE : int = 1 << 1;
 		public static const CROUCH : int = 1 << 2;
+		public static const INVINCIBLE : int = 1 << 3;
 		private var _speed : Number = 256;
 		
 		private var _animationData : Object = {
@@ -30,6 +33,7 @@ package
 		private var b:Boy;
 		private var hitbox : Rectangle = new Rectangle(0, 0, 110, 290);
 		private var _looped : Boolean = false;
+		private var _health : int = MAX_HEALTH;
 		
 		public function Player() 
 		{
@@ -191,6 +195,37 @@ package
 		public function set speed(value:Number):void 
 		{
 			_speed = value;
+		}
+		
+		public function get gameObject():InteractiveElement 
+		{
+			return _gameObject;
+		}
+		
+		public function get health():int 
+		{
+			return _health;
+		}
+		
+		public function damage (val : int) : void
+		{
+			if (testFlag(INVINCIBLE))
+			{
+				_health -= val;
+				if (_health < 0) _health = 0;
+				setFlag (INVINCIBLE);
+				setTimeout(function () : void
+				{
+					resetFlag(INVINCIBLE);
+				}, 1000);
+			}
+		}
+		
+		public function heal (val : int) : void
+		{
+			_health += val;
+			if (_health > MAX_HEALTH)
+				_health = MAX_HEALTH;
 		}
 		
 		override public function setFlag(flag:int):void 

@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.Shape;
 	/**
 	 * ...
 	 * @author 
@@ -21,30 +22,37 @@ package
 		
 		override public function interact(item : InventoryItem = null) : void
 		{
-			var r : Room = Game.ROOM_MAP[_destiny];
-			var door : Door;
-			var roomPosition : Number;
-			var found : Boolean = false;
-			
-			if (r)
+			if (item == null)
 			{
-				for (var i : int = 0; i <  r.numChildren; i++)
+				var r : Room = Game.ROOM_MAP[_destiny];
+				var door : Door;
+				var roomPosition : Number;
+				var found : Boolean = false;
+				
+				if (r)
 				{
-					if ((door = r.getChildAt(i) as Door))
+					for (var i : int = 0; i <  r.numChildren; i++)
 					{
-						if (door.destiny == parent.name)
+						if ((door = r.getChildAt(i) as Door))
 						{
-							roomPosition = door.x;
-							found = true;
-							break;
+							if (door.destiny == parent.name)
+							{
+								roomPosition = door.x;
+								found = true;
+								break;
+							}
 						}
 					}
 				}
+				
+				if (found)
+				{
+					Game.setNextRoom(_destiny, roomPosition);
+				}
 			}
-			
-			if (found)
+			else
 			{
-				Game.setNextRoom(_destiny, roomPosition);
+				Game.displayText(["Edgard: I don't think this would make sense."]);
 			}
 		}
 		

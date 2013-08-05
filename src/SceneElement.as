@@ -40,8 +40,7 @@ package
 		}
 		
 		override public function interact (item : InventoryItem = null) : void
-		{			
-			super.interact();
+		{	
 			if (item)
 			{
 				if (item.id == _inventoryItemNeeded)
@@ -66,7 +65,7 @@ package
 			}
 		}
 		
-		public function interactionCallback () : void
+		private function interactionCallback () : void
 		{
 			var i : int = 0;
 			
@@ -76,11 +75,11 @@ package
 			}
 			for (i = 0; i < _elementsCreated.length; i++)
 			{
-				Game.changeSceneElement(_elementsCreated[i], true);
+				Game.changeElement(_elementsCreated[i], true);
 			}
 			for (i = 0; i < _elementsDestroyed.length; i++)
 			{
-				Game.changeSceneElement(_elementsDestroyed[i], false);
+				Game.changeElement(_elementsDestroyed[i], false);
 			}
 			if (_teleport)
 			{

@@ -180,6 +180,11 @@
         "destiny": "bathroom2"
     },
     {
+        "name": "dupperHallway5",
+        "room": "upperHallway",
+        "destiny": "mainHallway"
+    },
+    {
         "name": "dcentralHallway1",
         "room": "centralHallway",
         "destiny": "upperHallway"
