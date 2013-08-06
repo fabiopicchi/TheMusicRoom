@@ -14,6 +14,7 @@ package
 		public static const INTERACT:int = 1 << 4;
 		public static const INVENTORY:int = 1 << 5;
 		public static const BACK:int = 1 << 6;
+		public static const CONFIRM:int = 1 << 7;
 		
 		public function Action() 
 		{
@@ -24,29 +25,29 @@ package
 		{
 			switch (keyCode)
 			{
-				case 65:
+				//case 65:
 				case 37:
 					return LEFT;
 					
-				case 68:
+				//case 68:
 				case 39:
 					return RIGHT;
 				
-				case 87:
+				//case 87:
 				case 38:
 					return UP;
 				
-				case 83:
+				//case 83:
 				case 40:
 					return DOWN;
 					
-				case 32:
+				case 67:
 					return INTERACT;
 				
-				case 88:
+				case 90:
 					return BACK;
 				
-				case 73:
+				case 88:
 					return INVENTORY;
 				
 				default:

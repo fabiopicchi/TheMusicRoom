@@ -1,85 +1,37 @@
 [
-    {
-        "name": "night1",
-        "elementsDestroyed": [
-            "nancysClothes",
-            "nancy1_1",
-            "nancy1_2",
-            "grandma1_2",
-            "grandma1_3",
-            "grandma1_4"
-        ],
-        "elementsCreated": [
-            "hanger"
-        ]
-    },
-    {
-        "name": "day2",
-        "elementsDestroyed": [
-            "telephone1_1"
-        ],
-        "elementsCreated": [
-            "scissors1",
-            "ivyKey",
-            "nancy2_1",
-            "grandma2_1",
-            "telephone2_1"
-        ]
-    },
-    {
-        "name": "night2",
-        "elementsDestroyed": [
-            "scissors1",
-            "nancy2_1",
-            "nancy2_2",
-            "nancy2_3",
-            "nancy2_4",
-            "grandma2_1",
-            "grandma2_2",
-            "telephone2_1",
-            "telephone2_2"
-        ],
-        "elementsCreated": [
-            "scissors2"
-        ]
-    },
-    {
-        "name": "day3",
-        "elementsDestroyed": [
-            "telephone2_1",
-            "telephone2_2"
-        ],
-        "elementsCreated": [
-            "pendant",
-            "nancy3_1",
-            "grandma3_1",
-            "leak1",
-            "telephone3_1"
-        ]
-    },
-    {
-        "name": "night3",
-        "elementsDestroyed": [
-            "grandma3_1",
-            "grandma3_2",
-            "nancy3_1",
-            "nancy3_2"
-        ],
-        "elementsCreated": [
-            "nancy_corpse1",
-            "leak2"
-        ]
-    },
-    {
-        "name": "day4",
-        "elementsDestroyed": "",
-        "elementsCreated": [
-            "leak3"
-        ]
-    },
-    {
-        "name": "night4",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    }
+  {
+    "name":"night1",
+    "elementsDestroyed":["nancysClothes","nancy1_1","nancy1_2", "grandma1_2","grandma1_3","grandma1_4"],
+    "elementsCreated":["hanger"]
+  },
+  {
+    "name":"day2",
+    "elementsDestroyed":["telephone1_1"],
+    "elementsCreated":["scissors1", "ivyKey", "nancy2_1", "grandma2_1","telephone2_1"]
+  },
+  {
+    "name":"night2",
+    "elementsDestroyed":["scissors1","nancy2_1","nancy2_2","nancy2_3","nancy2_4","grandma2_1","grandma2_2","telephone2_1","telephone2_2"],
+    "elementsCreated":["scissors2"]
+  },
+  {
+    "name":"day3",
+    "elementsDestroyed":["telephone2_1","telephone2_2"],
+    "elementsCreated":["pendant","nancy3_1","grandma3_1", "leak1","telephone3_1"]
+  },
+  {
+    "name":"night3",
+    "elementsDestroyed":["grandma3_1","grandma3_2","nancy3_1","nancy3_2"],
+    "elementsCreated":["nancy_corpse1","leak2"]
+  },
+  {
+    "name":"day4",
+    "elementsDestroyed":"",
+    "elementsCreated":["leak3"]
+  },
+  {
+    "name":"night4",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  }
 ]

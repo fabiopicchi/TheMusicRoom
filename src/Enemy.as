@@ -39,7 +39,7 @@ package
 		private var _waitingTimeout : int;
 		
 		private var _room : String = "";
-		private var _speed : Number = 512;
+		private var _speed : Number = 240;
 		private var _facing : int;
 		
 		private var _target : Number;
@@ -48,17 +48,19 @@ package
 		private var _currentAnim : String = "idle";
 		private var _pAnim : String = "";
 		private var _looped : Boolean = false;
-		private var hitbox : Rectangle = new Rectangle(0, 0, 110, 290);
+		private var hitbox : Rectangle = new Rectangle(0, 0, 110, 290); 
+		
+		private var _enemyType : int;
 		
 		public function Enemy() 
 		{
-			_arRoute = [500, 600, 800, 700, 900];
-			_arWait = [1000, 1000, 1000, 1000, 1000];
-			
 			setFlag(PATROL);
 			_routePosition = 0;
-			_target = _arRoute[_routePosition + 1]; 
-			this.x = _arRoute[_routePosition];
+			if (_arRoute.length > 0)
+			{
+				if (_arRoute.length > 1) _target = _arRoute[_routePosition + 1]; 
+				this.x = _arRoute[_routePosition];
+			}
 			addEventListener(Event.COMPLETE, animationCompleted);
 		}
 		
@@ -79,6 +81,7 @@ package
 				{
 					resetFlag(ATTACKING);
 					_pAnim = "";
+					Game.playSfx(Game.ENEMY_ATTACK);
 				}
 			}
 		}
@@ -87,11 +90,20 @@ package
 		{
 			super.init(e);
 			
+			Game.playSfx(Game.ENEMY_SPAWN);
+			
 			if (!_patrolRoom) _patrolRoom = (parent as Room);
 			
 			addChild(_body = new Monster1);
 			_body.x = hitbox.width / 2;
 			_body.y = hitbox.height / 2;
+			
+			if (_arRoute.length == 0)
+			{
+				var area : DisplayObject = parent.getChildByName("area");
+				x = area.x + Math.random() * (area.width - width);
+				_target = x;
+			}
 			
 			y = 300;
 		}
@@ -108,7 +120,7 @@ package
 			{
 				if (x == _target)
 				{
-					if (!_waiting)
+					if (!_waiting && _arWait.length > 0)
 					{
 						_waiting = true
 						_waitingTimeout = setTimeout(function () : void
@@ -320,7 +332,8 @@ package
 						}, 500);
 					}
 				}
-				
+				var dist : Number = x - Game.playerInstance.x;
+				Game.tuneMonsterSfx(Math.abs(dist), (dist < 0));
 				if (_lookingTimeout > 0) _lookingTimeout -= Game.dt;
 			}
 			
@@ -432,6 +445,8 @@ package
 				if (Game.playerInstance.getMidPoint().x < x && isFacing(LEFT) || Game.playerInstance.getMidPoint().x > x && isFacing(RIGHT))
 				{
 					_status = 0;
+					Game.playMonsterSfx();
+					Game.muteMusic();
 					setFlag(PURSUE);
 					_waiting = false;
 					clearTimeout(_waitingTimeout);

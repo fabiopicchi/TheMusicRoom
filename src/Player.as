@@ -121,10 +121,12 @@ package
 				if (Game.keyJustPressed(Action.DOWN))
 				{
 					setFlag(CROUCH);
+					Game.closeEyes();
 				}
 				else if (Game.keyJustReleased(Action.DOWN))
 				{
 					resetFlag(CROUCH);
+					Game.openEyes();
 				}
 			}
 			

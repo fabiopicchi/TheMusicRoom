@@ -55,7 +55,7 @@ package
 			{
 				Game.displayText(["Edgard: I don't think this would make sense."], function () : void
 				{
-					Game.addToInventory(item.id);
+					Game.addToInventory(item.id, false);
 					Game.showInventory();
 				});
 			}
@@ -75,7 +75,7 @@ package
 				{
 					for (var j : int = 0; j < _arItems.length; j++)
 					{
-						Game.addToInventory(_arItems[j].id);
+						Game.addToInventory(_arItems[j].id, false);
 					}
 					
 					Game.removePuzzleScreen(function () : void
@@ -149,6 +149,11 @@ package
 		{
 			_item = value;
 			slotSelectMode = true;
+		}
+		
+		public function get arItems():Array 
+		{
+			return _arItems;
 		}
 		
 		private function selectNextRight (hideCurrent : Boolean = true) : void

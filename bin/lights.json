@@ -208,5 +208,40 @@
         "name": "llavenderGuestroom3",
         "room": "lavenderGuestroom",
         "nightInitialState": "0"
+    },
+    {
+        "name": "llibrary1",
+        "room": "library",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "llibrary2",
+        "room": "library",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "llibrary3",
+        "room": "library",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lstudy1",
+        "room": "study",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lstudy2",
+        "room": "study",
+        "nightInitialState": "0"
+    },
+    {
+        "name": "lstudy3",
+        "room": "study",
+        "nightInitialState": "1"
+    },
+    {
+        "name": "lstudy4",
+        "room": "study",
+        "nightInitialState": "0"
     }
 ]

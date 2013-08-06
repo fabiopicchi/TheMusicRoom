@@ -39,7 +39,6 @@ package
 							{
 								roomPosition = door.x;
 								found = true;
-								break;
 							}
 						}
 					}

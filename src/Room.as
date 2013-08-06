@@ -150,7 +150,7 @@ package
 							{
 								if ((light = getChildAt(j) as Light))
 								{
-									if (light.visible && light.hitTestPoint(el.x, el.y, true) && light.hitTestPoint(el.x + el.width, el.y, true))
+									if (light.visible && light.hitTestPoint(el.x + el.width / 2, el.y + el.height / 2, true))
 									{
 										el.resetFlag(InteractiveElement.HIDDEN);
 										break;
@@ -217,13 +217,10 @@ package
 				var scrollX : Number = 0;
 				if (_player.x >= 724 && _scrollAcc > -(getChildByName("back").width - 1024))
 				{
-					if (_scrollAcc - Game.playerInstance.speed * Game.dt < -(getChildByName("back").width - 1024))
+					scrollX = -(_player.x - 724);
+					if (_scrollAcc + scrollX < -(getChildByName("back").width - 1024))
 					{
 						scrollX = -Math.round((_scrollAcc + (getChildByName("back").width - 1024)));
-					}
-					else
-					{
-						scrollX = -(_player.x - 724);
 					}
 					
 					for (i = 0; i < numChildren; i++)
@@ -241,13 +238,10 @@ package
 				
 				if (_player.x <= 300 && _scrollAcc < 0)
 				{
-					if ((_scrollAcc + Game.playerInstance.speed * Game.dt) > 0)
+					scrollX = 300 - _player.x;
+					if ((_scrollAcc + scrollX) > 0)
 					{
 						scrollX = -Math.round(_scrollAcc);
-					}
-					else
-					{
-						scrollX = 300 - _player.x;
 					}
 					for (i = 0; i < numChildren; i++)
 					{
@@ -263,6 +257,22 @@ package
 				}
 				_scrollAcc += scrollX;
 			}
+		}
+		
+		public function resetScroll () : void
+		{
+			for (var i : int = 0; i < numChildren; i++)
+			{
+				if (getChildAt(i).name != "front")
+				{
+					getChildAt(i).x -= _scrollAcc;
+				}
+				else
+				{
+					getChildAt(i).x -= _scrollAcc * _frontScrollFactor;
+				}
+			}
+			_scrollAcc = 0;
 		}
 		
 		override public function draw():void 

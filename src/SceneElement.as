@@ -50,6 +50,7 @@ package
 				else
 				{
 					Game.displayText(_textWrongItem.split("#pb"));
+					Game.addToInventory(item.id, false);
 				}
 			}
 			else
@@ -67,12 +68,44 @@ package
 		
 		private function interactionCallback () : void
 		{
-			var i : int = 0;
-			
 			if (_inventoryItemSpawned)
 			{
 				Game.addToInventory(_inventoryItemSpawned);
 			}
+			
+			if (_periodChange || _teleport)
+			{
+				if (_teleport)
+				{
+					Game.teleport(_teleport, function () : void
+					{
+						affectElements();
+					});
+				}
+				if (_periodChange)
+				{
+					if (_teleport)
+					{
+						Game.periodChange();
+					}
+					else
+					{
+						Game.periodChange(function () : void
+						{
+							affectElements();
+						});
+					}
+				}
+			}
+			else
+			{
+				affectElements();
+			}
+		}
+		
+		private function affectElements () : void
+		{
+			var i : int;
 			for (i = 0; i < _elementsCreated.length; i++)
 			{
 				Game.changeElement(_elementsCreated[i], true);
@@ -80,14 +113,6 @@ package
 			for (i = 0; i < _elementsDestroyed.length; i++)
 			{
 				Game.changeElement(_elementsDestroyed[i], false);
-			}
-			if (_teleport)
-			{
-				Game.teleport(_teleport);
-			}
-			if (_periodChange)
-			{
-				Game.periodChange();
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 package 
 {
 	import com.greensock.easing.Quad;
+	import com.greensock.plugins.SoundTransformPlugin;
+	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.TweenLite;
 	import flash.desktop.NativeApplication;
 	import flash.display.DisplayObject;
@@ -16,6 +18,7 @@ package
 	import flash.filesystem.FileStream;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
@@ -30,10 +33,11 @@ package
 	public class Game extends Sprite 
 	{
 		// Sound channels
-		private var _musicChannel1 : SoundChannel;
-		private var _musicChannel2 : SoundChannel;
+		private static var _musicChannel1 : SoundChannel;
+		private static var _musicChannel2 : SoundChannel;
 		private static var _playerSfxChannel: SoundChannel;
 		private static var _enemySfxChannel : SoundChannel;
+		private static var _enemySfxChannel2 : SoundChannel;
 		private static var _generalSfxChannel : SoundChannel;
 		
 		private static var keyMap : int = 0;
@@ -55,11 +59,12 @@ package
 		private static var _time : Number = 0;
 		
 		private static var _playerInstance: Player = new Player();
+		private static var _closingEyes : ClosingEyes = new ClosingEyes ();
 		
 		private var mainMenu : MainMenuClass = new MainMenuClass();
 		
 		private static var _text : String;
-		private static var _textBox : TextField;
+		private static var _textBox : TextBox;
 		private static var _textTime : Number = 0;
 		private static var _textCounter : int = 0;
 		private static var _pageCounter : int = 0;
@@ -72,7 +77,7 @@ package
 		private static var _nextRoom:String = "";
 		private static var _nextRoomPosition : Number;
 		
-		private static var _room : String = "daddyRoom";
+		private static var _room : String = "porch";
 		public static const ROOM_MAP : Object = {
 			bathroom1 : new Bathroom1,
 			bathroom2 : new Bathroom2,
@@ -93,7 +98,9 @@ package
 			upperHallway : new UpperHallway,
 			lavenderGuestroom : new LavenderGuestroom,
 			ivyGuestroom : new IvyGuestroom,
-			guestHallway : new GuestHallway
+			guestHallway : new GuestHallway,
+			study : new Study,
+			library : new Library
 		};
 		
 		private static var _shade : Shape = new Shape();
@@ -118,11 +125,12 @@ package
 		
 		private static var _puzzleScreen : PuzzleScreen = null;
 		private static var _fadeCallback : Function;
+		private static var _periodChangeCallback : Function;
 		
 		public function Game():void 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
-			
+			TweenPlugin.activate([SoundTransformPlugin]);
 			for (var k : String in ROOM_MAP)
 			{
 				ROOM_MAP[k].name = k;
@@ -356,25 +364,18 @@ package
 			ROOM_MAP[_room].addPlayer();
 			addChild(ROOM_MAP[_room]);
 			
-			_textBox = new TextField();
-			addChild(_textBox);
-			_textBox.visible = false;
-			_textBox.width = 924;
-			_textBox.height = 200;
-			_textBox.x = 50;
-			_textBox.y = 518;
-			_textBox.selectable = false;
-			_textBox.multiline = true;
-			_textBox.wordWrap = true;
-			_textBox.mouseEnabled = false;
-			_textBox.border = true;
-			_textBox.borderColor = 0xFFFFFF;
-			var myFormat : TextFormat = new TextFormat("Comic Sans MS", 30, 0xFFFFFF);
-			_textBox.defaultTextFormat = myFormat;
-			
 			addChild(_inventory);
 			_inventory.x = 0;
-			_inventory.y = 768;
+			_inventory.y = 705;
+			
+			_textBox = new TextBox();
+			_textBox.visible = false;
+			_textBox.y = 518;
+			_textBox.x = 58;
+			addChild(_textBox);
+			
+			addChild(_closingEyes);
+			_closingEyes.gotoAndStop("opened");
 			
 			for (var k : String in ROOM_MAP)
 			{
@@ -488,36 +489,29 @@ package
 				{
 					resetFlag(CHANGING_ROOM);
 					ROOM_MAP[_room].removePlayer();
+					(ROOM_MAP[_room] as Room).resetScroll();
 					removeChild(ROOM_MAP[_room]);
 					
 					_playerInstance.x = _nextRoomPosition;
 					_room = _nextRoom;
 					_nextRoom = "";
 					ROOM_MAP[_room].addPlayer();
+					ROOM_MAP[_room].update();
 					addChildAt(ROOM_MAP[_room], 0);
 					if (_fadeCallback != null) _fadeCallback();
+					
+					if ((_status & PERIOD_CHANGE) == PERIOD_CHANGE)
+					{
+						onPeriodChange();
+					}
 				});
 			}
 			
 			else if ((changedStatus & PERIOD_CHANGE) == PERIOD_CHANGE && (_status & PERIOD_CHANGE) == PERIOD_CHANGE)
 			{
-				var event : Object = _arPeriod[_currentPeriod++];
 				fadeToBlack(function () : void
 				{
-					_musicChannel1.stop();
-					if (_currentPeriod % 2 == 1)
-					{
-						_musicChannel1 = (new NightTheme ()).play(0, 999);
-					}
-					else
-					{
-						_musicChannel1 = (new DayTheme ()).play(0, 999);
-					}
-					resetFlag(PERIOD_CHANGE);
-					for (var k : String in ROOM_MAP)
-					{
-						ROOM_MAP[k].updateAssets(_currentPeriod);
-					}
+					onPeriodChange();
 				});
 			}
 			
@@ -533,7 +527,7 @@ package
 					{
 						fadeToBlack(function () : void
 						{
-							addChildAt (_puzzleScreen, getChildIndex(_textBox));
+							addChildAt (_puzzleScreen, getChildIndex(_inventory));
 							if (_puzzleScreen.type == PuzzleScreen.INSERT_SLOT)
 							{
 								showInventory();
@@ -597,11 +591,7 @@ package
 						{
 							if (_playerInstance.gameObject as SceneElement)
 							{
-								var item : InventoryItem;
-								if (!_playerInstance.gameObject.interact(item = removeFromInventory(true)))
-								{
-									addToInventory(item.id);
-								}
+								_playerInstance.gameObject.interact(removeFromInventory(true));
 							}
 							else
 							{
@@ -638,21 +628,21 @@ package
 		//Inventory control methods
 		public static function showInventory():void 
 		{
-			TweenLite.to(_inventory, 0.5, { y : 668 } );
+			TweenLite.to(_inventory, 0.5, { y : 563 } );
 			_status |= INVENTORY_OPEN;
 			_playerInstance.setFlag(Player.INACTIVE);
 		}
 		
 		public static function hideInventory():void 
 		{
-			TweenLite.to(_inventory, 0.5, { y : 768 } );
+			TweenLite.to(_inventory, 0.5, { y : 705 } );
 			_status &= ~INVENTORY_OPEN;
 			_playerInstance.resetFlag(Player.INACTIVE);
 		}
 		
-		public static function addToInventory(id : String) : void
+		public static function addToInventory(id : String, playSound : Boolean = true) : void
 		{
-			playSfx(ITEM_GOT);
+			if (playSound) playSfx(ITEM_GOT);
 			for (var i : int = 0; i < _arInventoryItems.length; i++)
 			{
 				if (_arInventoryItems[i].name == id)
@@ -753,6 +743,18 @@ package
 		}
 		
 		
+		//Closing eyes effect
+		public static function closeEyes () : void 
+		{
+			_closingEyes.gotoAndPlay("close");
+		}
+		
+		public static function openEyes () : void 
+		{
+			_closingEyes.gotoAndPlay("open");
+		}
+		
+		
 		
 		//Room control
 		public static function setNextRoom (room : String, nextRoomPosition : Number, nextRoomCallback : Function = null) : void
@@ -763,7 +765,7 @@ package
 			setFlag(CHANGING_ROOM);
 		}
 		
-		public static function teleport (id : String) : void
+		public static function teleport (id : String, callback : Function = null) : void
 		{
 			var teleport : Object;
 			for (var i : int = 0; i < _arTeleport.length; i++)
@@ -778,10 +780,17 @@ package
 			setNextRoom (teleport.room, teleport.position, function () : void
 			{
 				setFlag(CHANGING_ROOM);
-				setTimeout(function () : void
+				if (callback != null)
 				{
+					callback();
+				}
+				setTimeout(function () : void
+				{					
 					resetFlag(CHANGING_ROOM);
-					Game.displayText((teleport.text as String).split("#pb"));
+					if ((teleport.text as String) != "")
+					{
+						Game.displayText((teleport.text as String).split("#pb"));
+					}
 				}, 500);
 			});
 		}
@@ -870,9 +879,45 @@ package
 		
 		
 		//Period change
-		public static function periodChange () : void
+		public static function periodChange (callback : Function = null) : void
 		{
 			setFlag(PERIOD_CHANGE);
+			if (callback != null)
+			{
+				_fadeCallback = function () : void
+				{
+					_fadeCallback();
+					callback();
+				}
+			}
+		}
+		
+		private function onPeriodChange () : void
+		{
+			var event : Object = _arPeriod[_currentPeriod++];
+			var i : int = 0;
+			for (i = 0; i < event.elementsCreated.length; i++)
+			{
+				Game.changeElement(event.elementsCreated[i], true);
+			}
+			for (i = 0; i < event.elementsDestroyed.length; i++)
+			{
+				Game.changeElement(event.elementsDestroyed[i], false);
+			}
+			_musicChannel1.stop();
+			if (_currentPeriod % 2 == 1)
+			{
+				_musicChannel1 = (new NightTheme ()).play(0, 999);
+			}
+			else
+			{
+				_musicChannel1 = (new DayTheme ()).play(0, 999);
+			}
+			resetFlag(PERIOD_CHANGE);
+			for (var k : String in ROOM_MAP)
+			{
+				ROOM_MAP[k].updateAssets(_currentPeriod);
+			}
 		}
 		
 		
@@ -902,6 +947,14 @@ package
 		
 		public static function removePuzzleScreen (fadeCallback : Function = null) : void
 		{
+			for (var i : int = 0; i < _puzzleScreen.arItems.length; i++)
+			{
+				addToInventory(_puzzleScreen.arItems[i], false);
+			}
+			if (_puzzleScreen.item)
+			{
+				addToInventory(_puzzleScreen.item.id, false);
+			}
 			resetFlag(PUZZLESCREEN_OPEN);
 			_fadeCallback = fadeCallback;
 		}
@@ -919,10 +972,6 @@ package
 			addElementsCreated(_arTeleport = (JSONLoader.loadFile("teleports.json") as Array));
 			addElementsCreated(_arPeriod = (JSONLoader.loadFile("periods.json") as Array));
 			addElementsCreated(_arInventoryItems = (JSONLoader.loadFile("inventoryItems.json") as Array));
-			
-			addToInventory("icirclePiece");
-			addToInventory("isquarePiece");
-			addToInventory("itrianglePiece");
 		}
 		
 		//load JSON properties
@@ -984,7 +1033,6 @@ package
 		public static const SWITCH_ON : String = "switch_on";
 		public static const SWITCH_OFF : String = "switch_off";
 		public static const ENEMY_ATTACK : String = "en_att";
-		public static const ENEMY_PURSUE : String = "en_psu";
 		public static const ENEMY_SPAWN : String = "en_spw";
 		public static const ITEM_GOT : String = "item_got";
 		public static const INSERT_SLOT : String = "insert_slot";
@@ -1001,8 +1049,6 @@ package
 				case ENEMY_ATTACK:
 					setChannelSfx (_enemySfxChannel, new MonsterAttackSfx);
 					break;
-				case ENEMY_PURSUE:
-					break;
 				case ENEMY_SPAWN:
 					setChannelSfx (_enemySfxChannel, new MonsterSpawnSfx);
 					break;
@@ -1015,10 +1061,62 @@ package
 			}
 		}
 		
-		private static function setChannelSfx (channel : SoundChannel, sound : Sound) : void
+		private static function setChannelSfx (channel : SoundChannel, sound : Sound, loop : Boolean = false) : void
 		{
 			if (channel) channel.stop();
 			channel = sound.play();
+		}
+		
+		public static function playMonsterSfx () : void
+		{
+			var sound : Sound = new MonsterFollowingSfx();
+			_enemySfxChannel2 = sound.play(0, 999);
+			_enemySfxChannel2.soundTransform = new SoundTransform(0.5, 0);
+			TweenLite.from(_enemySfxChannel2 , 1, { soundTransform: { volume:0 }} );
+		}
+		
+		private static const MIN_DIST : Number = 150;
+		private static const MAX_DIST : Number = 450;
+		private static const MIN_VOL : Number = 0.2;
+		private static const MAX_VOL : Number = 1.0;
+		public static function tuneMonsterSfx (dist : Number, left : Boolean) : void
+		{
+			var s : SoundTransform = new SoundTransform();
+			if (dist < MIN_DIST)
+			{
+				s.volume = 1;
+				s.pan = 0;
+			}
+			else if (dist > MAX_DIST)
+			{
+				s.volume = 0.2;
+				if (left)
+				{
+					s.pan = -1;
+				}
+				else
+				{
+					s.pan = 1;
+				}
+			}
+			else
+			{
+				s.volume = MAX_VOL - (dist - MIN_DIST) / (MAX_DIST - MIN_DIST) * (MAX_VOL - MIN_VOL);
+				s.pan = (left ? 1 : -1) * (dist - MIN_DIST) / (MAX_DIST - MIN_DIST);
+			}
+			_enemySfxChannel2.soundTransform = s;
+		}
+		
+		public static function muteMusic () : void
+		{
+			if (_musicChannel1) TweenLite.to(_musicChannel1, 1, { soundTransform: { volume:0 }} );
+			if (_musicChannel2) TweenLite.to(_musicChannel2, 1, { soundTransform: { volume:0 }} );
+		}
+		
+		public static function unmuteMusic () : void
+		{
+			if (_musicChannel1) TweenLite.to(_musicChannel1, 1, { soundTransform: { volume:1 }} );
+			if (_musicChannel2) TweenLite.to(_musicChannel2, 1, { soundTransform: { volume:1 }} );
 		}
 	}
 }

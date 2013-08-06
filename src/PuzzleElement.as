@@ -84,7 +84,6 @@ package
 		{
 			for (var i : int = 0; i < arAnswer.length; i++)
 			{
-				trace (arAnswer[i] + " - " + _itemsNeeded[i]);
 				if (arAnswer[i] != _itemsNeeded[i])
 				{
 					return false;

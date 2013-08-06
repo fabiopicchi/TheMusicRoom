@@ -1,87 +1,138 @@
 [
-  {
-    "name":"sbathroom11",
-    "room":"bathroom1",
-    "lights":["lbathroom11"]
-  },
-  {
-    "name":"sdinnerRoom1",
-    "room":"dinnerRoom",
-    "lights":["ldinnerRoom1"]
-  },
-  {
-    "name":"sfoyer1",
-    "room":"foyer",
-    "lights":["lfoyer2","lfoyer3"]
-  },
-  {
-    "name":"sgrandmaRoom1",
-    "room":"grandmaRoom",
-    "lights":["lgrandmaRoom1"]
-  },
-  {
-    "name":"shallway1",
-    "room":"hallway",
-    "lights":["lhallway2"]
-  },
-  {
-    "name":"shallway2",
-    "room":"hallway",
-    "lights":["lhallway2"]
-  },
-  {
-    "name":"slivingRoom1",
-    "room":"livingRoom",
-    "lights":["llivingRoom1"]
-  },
-  {
-    "name":"smainHallway1",
-    "room":"mainHallway",
-    "lights":["lmainHallway2"]
-  },
-  {
-    "name":"smainHallway2",
-    "room":"mainHallway",
-    "lights":["lmainHallway3"]
-  },
-  {
-    "name":"smainHallway3",
-    "room":"mainHallway",
-    "lights":["lmainHallway4"]
-  },
-  {
-    "name":"snancyRoom1",
-    "room":"nancyRoom",
-    "lights":["lnancyRoom1"]
-  },
-  {
-    "name":"sporch1",
-    "room":"porch",
-    "lights":["lporch1"]
-  },
-  {
-    "name":"sprojectorRoom1",
-    "room":"projectorRoom",
-    "lights":["lprojectorRoom1"]
-  },
-  {
-    "name":"sbathroom21",
-    "room":"bathroom2",
-    "lights":["lbathroom21"]
-  },
-  {
-    "name":"sdaddyRoom1",
-    "room":"daddyRoom",
-    "lights":["ldaddyRoom1"]
-  },
-  {
-    "name":"sivyGuestroom1",
-    "room":"ivyGuestroom",
-    "lights":["livyGuestroom2"]
-  },
-  {
-    "name":"slavenderGuestroom1",
-    "room":"lavenderGuestroom",
-    "lights":["llavenderGuestroom1","llavenderGuestroom3"]
-  }
+    {
+        "name": "sbathroom11",
+        "room": "bathroom1",
+        "lights": [
+            "lbathroom11"
+        ]
+    },
+    {
+        "name": "sdinnerRoom1",
+        "room": "dinnerRoom",
+        "lights": [
+            "ldinnerRoom1"
+        ]
+    },
+    {
+        "name": "sfoyer1",
+        "room": "foyer",
+        "lights": [
+            "lfoyer2",
+            "lfoyer3"
+        ]
+    },
+    {
+        "name": "sgrandmaRoom1",
+        "room": "grandmaRoom",
+        "lights": [
+            "lgrandmaRoom1"
+        ]
+    },
+    {
+        "name": "shallway1",
+        "room": "hallway",
+        "lights": [
+            "lhallway2"
+        ]
+    },
+    {
+        "name": "shallway2",
+        "room": "hallway",
+        "lights": [
+            "lhallway2"
+        ]
+    },
+    {
+        "name": "slivingRoom1",
+        "room": "livingRoom",
+        "lights": [
+            "llivingRoom1"
+        ]
+    },
+    {
+        "name": "smainHallway1",
+        "room": "mainHallway",
+        "lights": [
+            "lmainHallway2"
+        ]
+    },
+    {
+        "name": "smainHallway2",
+        "room": "mainHallway",
+        "lights": [
+            "lmainHallway3"
+        ]
+    },
+    {
+        "name": "smainHallway3",
+        "room": "mainHallway",
+        "lights": [
+            "lmainHallway4"
+        ]
+    },
+    {
+        "name": "snancyRoom1",
+        "room": "nancyRoom",
+        "lights": [
+            "lnancyRoom1"
+        ]
+    },
+    {
+        "name": "sporch1",
+        "room": "porch",
+        "lights": [
+            "lporch1"
+        ]
+    },
+    {
+        "name": "sprojectorRoom1",
+        "room": "projectorRoom",
+        "lights": [
+            "lprojectorRoom1"
+        ]
+    },
+    {
+        "name": "sbathroom21",
+        "room": "bathroom2",
+        "lights": [
+            "lbathroom21"
+        ]
+    },
+    {
+        "name": "sdaddyRoom1",
+        "room": "daddyRoom",
+        "lights": [
+            "ldaddyRoom1"
+        ]
+    },
+    {
+        "name": "sivyGuestroom1",
+        "room": "ivyGuestroom",
+        "lights": [
+            "livyGuestroom2"
+        ]
+    },
+    {
+        "name": "slavenderGuestroom1",
+        "room": "lavenderGuestroom",
+        "lights": [
+            "llavenderGuestroom1",
+            "llavenderGuestroom3"
+        ]
+    },
+    {
+        "name": "slibrary1",
+        "room": "library",
+        "lights": [
+            "llibrary2"
+        ]
+    },
+    {
+        "name": "sstudy1",
+        "room": "study",
+        "lights": [
+            "lstudy2",
+            "lstudy4"
+        ]
+    }
 ]

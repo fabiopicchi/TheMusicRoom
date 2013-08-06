@@ -1,284 +1,284 @@
 [
-    {
-        "name": "imap",
-        "text": "House Map",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "irecipeBook",
-        "text": "Recipe Book",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "icupboardKey",
-        "text": "Cupboard Key",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "icupcakeTin",
-        "text": "Cupcake Tin",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "icirclePiece",
-        "text": "Circle Piece",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "itrianglePiece",
-        "text": "Triangle Piece",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "isquarePiece",
-        "text": "Square Piece",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ihanger",
-        "text": "Hanger",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "isecondFloorKey",
-        "text": "Second Floor Key",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "itoyShovel",
-        "text": "Toy Shovel",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "imarble",
-        "text": "Marble",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "igear1",
-        "text": "Gear",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iivyKey",
-        "text": "Ivy Key",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ipeppermint",
-        "text": "Peppermint",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iginger",
-        "text": "Ginger",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iinfuser",
-        "text": "Tea Infuser",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iroseWine",
-        "text": "Rosé Wine",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iscissors",
-        "text": "Scissors",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "imonocle",
-        "text": "Monocle",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ipaperweight",
-        "text": "Paperweight",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "igear2",
-        "text": "Gear",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iscrewdriver",
-        "text": "Screwdriver",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ipliers",
-        "text": "Pliers",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iredWine",
-        "text": "Red Wine",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ipendant",
-        "text": "Pendant",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "inote",
-        "text": "Note",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ideskKey",
-        "text": "Desk Key",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ipearl",
-        "text": "Pearl",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ibroom",
-        "text": "Broom",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iwineBook",
-        "text": "Wine Book",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iboilerKey",
-        "text": "Boiler Key",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "isapphyre",
-        "text": "Sapphyre",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ioil",
-        "text": "Oil",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ilightbulb",
-        "text": "Lightbulb",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iputtyKnife",
-        "text": "Putty Knife",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "inotebook",
-        "text": "Notebook",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ifirePoker",
-        "text": "Fire Poker",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iruby",
-        "text": "Ruby",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ioldPaper",
-        "text": "Old Paper",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "idoorknob",
-        "text": "Door Knob",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "icassette",
-        "text": "Cassette",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "imusicRoomKey",
-        "text": "Music Room Key",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "iwhiteWine",
-        "text": "White Wine",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "isecretNote",
-        "text": "Secret Note",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "igear3",
-        "text": "Gear",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "idrawerHandle",
-        "text": "Drawer Handle",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    },
-    {
-        "name": "ipassword",
-        "text": "Password",
-        "elementsDestroyed": "",
-        "elementsCreated": ""
-    }
+  {
+    "name":"imap",
+    "text":"House Map",
+    "elementsDestroyed":"",
+    "elementsCreated":["porchWindow1"]
+  },
+  {
+    "name":"irecipeBook",
+    "text":"Recipe Book",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"icupboardKey",
+    "text":"Cupboard Key",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"icupcakeTin",
+    "text":"Cupcake Tin",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"icirclePiece",
+    "text":"Circle Piece",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"itrianglePiece",
+    "text":"Triangle Piece",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"isquarePiece",
+    "text":"Square Piece",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ihanger",
+    "text":"Hanger",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"isecondFloorKey",
+    "text":"Second Floor Key",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"itoyShovel",
+    "text":"Toy Shovel",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"imarble",
+    "text":"Marble",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ifirstGear",
+    "text":"Gear",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iivyKey",
+    "text":"Ivy Key",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ipeppermint",
+    "text":"Peppermint",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iginger",
+    "text":"Ginger",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iinfuser",
+    "text":"Tea Infuser",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iroseWine",
+    "text":"Rosé Wine",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iscissors",
+    "text":"Scissors",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"imonocle",
+    "text":"Monocle",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ipaperweight",
+    "text":"Paperweight",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"isecondGear",
+    "text":"Gear",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iscrewdriver",
+    "text":"Screwdriver",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ipliers",
+    "text":"Pliers",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iredWine",
+    "text":"Red Wine",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ipendant",
+    "text":"Pendant",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"inote",
+    "text":"Note",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ideskKey",
+    "text":"Desk Key",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ipearl",
+    "text":"Pearl",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ibroom",
+    "text":"Broom",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iwineBook",
+    "text":"Wine Book",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iboilerKey",
+    "text":"Boiler Key",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"isapphire",
+    "text":"Sapphire",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ioil",
+    "text":"Oil",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ilightbulb",
+    "text":"Lightbulb",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iputtyKnife",
+    "text":"Putty Knife",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"inotebook",
+    "text":"Notebook",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ifirePoker",
+    "text":"Fire Poker",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iruby",
+    "text":"Ruby",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ioldPaper",
+    "text":"Old Paper",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"idoorknob",
+    "text":"Door Knob",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"icassette",
+    "text":"Cassette",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"imusicRoomKey",
+    "text":"Music Room Key",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"iwhiteWine",
+    "text":"White Wine",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"isecretNote",
+    "text":"Secret Note",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ithirdGear",
+    "text":"Gear",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"idrawerHandle",
+    "text":"Drawer Handle",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  },
+  {
+    "name":"ipassword",
+    "text":"Password",
+    "elementsDestroyed":"",
+    "elementsCreated":""
+  }
 ]
