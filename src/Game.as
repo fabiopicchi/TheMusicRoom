@@ -399,7 +399,7 @@ package
 			var i : int = 0;
 			var j : int = 0;
 			var ar : Array;
-			for (i = 0; i < jsonArray.length; i++) 
+			for (i = 0; i < jsonArray.length; i++)
 			{
 				if ((ar = (jsonArray[i].elementsCreated as Array)))
 				{
@@ -456,7 +456,11 @@ package
 							break;
 						
 						case MainMenu.LOAD:
-							
+							fadeToBlack(function () : void
+							{
+								resetFlag(MAIN_MENU);
+								removeChild(mainMenu);
+							});
 							break;
 						
 						case MainMenu.CREDITS:
