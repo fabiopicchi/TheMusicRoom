@@ -8,7 +8,7 @@ package
 	public class Light extends Entity 
 	{
 		
-		private var _nightInitialState : Boolean;
+		private var _nightInitialState : Boolean = true;
 		
 		public function Light() 
 		{

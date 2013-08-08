@@ -20,7 +20,7 @@ package
 		public static const INACTIVE : int = 1 << 1;
 		public static const CROUCH : int = 1 << 2;
 		public static const INVINCIBLE : int = 1 << 3;
-		private var _speed : Number = 256;
+		private var _speed : Number = 330;
 		
 		private var _animationData : Object = {
 			idle : {looped : false},

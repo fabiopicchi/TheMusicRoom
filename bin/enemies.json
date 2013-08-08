@@ -1,0 +1,18 @@
+[
+  {
+    "room":"kitchen",
+    "type":1
+  },
+  {
+    "room":"mainHallway",
+    "type":2
+  },
+  {
+    "room":"masterSuite",
+    "type":2
+  },
+  {
+    "room":"basementHallway",
+    "type":1
+  }
+]

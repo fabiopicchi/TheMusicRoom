@@ -2,6 +2,7 @@ package
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Scene;
 	import flash.events.Event;
 	import flash.geom.Point;
 	/**
@@ -13,12 +14,32 @@ package
 	{
 		private var _player:Player;
 		private var _frontScrollFactor : Number;
-		private var _time : String = "night";
+		private var _time : String = "day";
 		private var _scrollAcc : Number = 0;
+		private var _displayName : String;
+		private var _enemySpawnChance : Number;
+		private var _enemy : Enemy;
+		private var _hasDay : Boolean = true;
+		private var _enemiesUnleashed : Boolean = false;
 		
 		public function Room() 
 		{
 			
+		}
+		
+		public function loadData (data : Object) : void
+		{
+			_displayName = data.displayname;
+			_enemySpawnChance = data.enemySpawnChance;
+			_hasDay = (Number(data.hasDay) ? true : false);
+		}
+		
+		public function addEnemy (en : Enemy) : void
+		{
+			_enemy = en;
+			addChild(_enemy);
+			_enemy.setFlag(Enemy.RESTING);
+			_enemy.visible = false;
 		}
 		
 		public function checkObjectNames () : String
@@ -124,15 +145,6 @@ package
 			
 			if (_player)
 			{
-				if (_player.x < getChildByName("area").x)
-				{
-					_player.x = getChildByName("area").x;
-				}
-				else if (_player.x + _player.width > getChildByName("area").x + getChildByName("area").width)
-				{
-					_player.x = getChildByName("area").x + getChildByName("area").width - _player.width;
-				}
-				
 				_player.resetFlag(Player.HIDDEN);
 				var objectSet : Boolean = false;
 				for (var i : int = 0; i < numChildren; i++)
@@ -141,6 +153,7 @@ package
 					var oMidPoint : Point;
 					var h : MovieClip;
 					var light : Light;
+					var en : Enemy;
 					if ((el = (getChildAt(i) as InteractiveElement)))
 					{
 						if (_time == "night")
@@ -195,7 +208,7 @@ package
 						}
 					}
 					
-					if ((light = getChildAt(i) as Light))
+					else if ((light = getChildAt(i) as Light))
 					{
 						if (light.visible)
 						{
@@ -207,7 +220,6 @@ package
 						}
 					}
 				}
-				
 				if (!objectSet)
 				{
 					_player.gameObject = null;
@@ -256,6 +268,52 @@ package
 					}
 				}
 				_scrollAcc += scrollX;
+				
+				for (i = 0; i < numChildren; i++)
+				{
+					if ((en = getChildAt(i) as Enemy))
+					{
+						if (en.x < Math.floor(getChildByName("area").x))
+						{
+							en.x = Math.ceil(getChildByName("area").x);
+							en.onCollision();				
+						}
+						else if (en.x + en.width > Math.ceil(getChildByName("area").x + getChildByName("area").width))
+						{
+							en.x = Math.floor(getChildByName("area").x + getChildByName("area").width - en.width);
+							en.onCollision();
+						}
+					}
+				}
+				
+				if (_player.x < getChildByName("area").x)
+				{
+					_player.x = getChildByName("area").x;
+				}
+				else if (_player.x + _player.width > getChildByName("area").x + getChildByName("area").width)
+				{
+					_player.x = getChildByName("area").x + getChildByName("area").width - _player.width;
+				}
+			}
+		}
+		
+		public function onEnter () : void
+		{
+			for (var i : int = 0; i < numChildren; i++)
+			{
+				if (getChildAt(i) is SceneElement)
+				{
+					(getChildAt(i) as SceneElement).onEnterRoom();
+				}
+			}
+			
+			if ((_enemy && !_enemy.testFlag(Enemy.PURSUE)) && (_enemiesUnleashed || time == "night"))
+			{
+				var chance : Number = Math.random ();
+				if (chance < _enemySpawnChance)
+				{
+					_enemy.spawn();
+				}
 			}
 		}
 		
@@ -287,6 +345,11 @@ package
 		
 		public function updateAssets (period : int) : void
 		{
+			if (period > 3)
+			{
+				_enemiesUnleashed = true;
+			}
+			
 			if (period % 2 == 1)
 			{
 				_time = "night";
@@ -389,6 +452,16 @@ package
 		public function get time():String 
 		{
 			return _time;
+		}
+		
+		public function get scrollAcc():Number 
+		{
+			return _scrollAcc;
+		}
+		
+		public function get displayName():String 
+		{
+			return _displayName;
 		}
 	}
 

@@ -26,19 +26,22 @@ package
 		public function initPuzzleScreen (p : PuzzleElement) : void
 		{
 			_pElement = p;
-			_type = INSERT_SLOT;
-			_selected = 1;
-			for (var i : int = 0; i < p.nItemsNeeded; i++)
+			if (_pElement.nItemsNeeded > 0)
 			{
-				if (i == _selected -  1) 
+				_type = INSERT_SLOT;
+				_selected = 1;
+				for (var i : int = 0; i < p.nItemsNeeded; i++)
 				{
-					(getChildByName("slot" + (i + 1)) as MovieClip).visible = true;
+					if (i == _selected -  1) 
+					{
+						(getChildByName("slot" + (i + 1)) as MovieClip).visible = true;
+					}
+					else
+					{
+						(getChildByName("slot" + (i + 1)) as MovieClip).visible = false;
+					}
+					(getChildByName("slot" + (i + 1)) as MovieClip).gotoAndStop(1);
 				}
-				else
-				{
-					(getChildByName("slot" + (i + 1)) as MovieClip).visible = false;
-				}
-				(getChildByName("slot" + (i + 1)) as MovieClip).gotoAndStop(1);
 			}
 		}
 		
@@ -50,13 +53,15 @@ package
 				(getChildByName("slot" + _selected) as MovieClip).gotoAndStop(item.id);
 				selectNextRight(false);
 				Game.showInventory();
+				Game.playSfx(Game.FIT_SLOT);
 			}
 			else
 			{
-				Game.displayText(["Edgard: I don't think this would make sense."], function () : void
+				Game.displayText([Game.DEFAULT_TEXT_NO_SENSE], function () : void
 				{
 					Game.addToInventory(item.id, false);
 					Game.showInventory();
+					_item = null;
 				});
 			}
 			if (_arItems.length == _pElement.nItemsNeeded)

@@ -2,7 +2,7 @@
   {
     "name":"introDoor",
     "room":"porch",
-    "textNoItem":"*knock knock*#lbEdgar: Hello?#lb???: Hold on just a minute...",
+    "textNoItem":"*knock knock*#lbEdgar: Hello?#pb???: Hold on, just a second...",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -10,12 +10,14 @@
     "elementsCreated":["dporch1","porchWindow"],
     "itemSpawned":"",
     "teleport":"teleportArrival1",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy1_1",
     "room":"foyer",
-    "textNoItem":"Edgar: Good Morning. I'm Edgar.#pb???: I am your grandmother's nurse, you can call me Nancy.#pbEdgar: Pleased to meet you.#pbNancy: You will be staying in your dad's room upstairs. Let me guide you.",
+    "textNoItem":"Edgar: Good Morning, I'm Edgar.#pb???: I'm your grandmother's nurse, you can call me Nancy.#pbEdgar: Pleased to meet you.#pbNancy: You will be staying in your dad's room upstairs. Let me guide you.",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -23,7 +25,9 @@
     "elementsCreated":["nancy1_2", "grandma1_1"],
     "itemSpawned":"",
     "teleport":"teleportArrival2",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy1_2",
@@ -36,12 +40,14 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma1_1",
     "room":"kitchen",
-    "textNoItem":"Grandma: Ed! Look at you! You've grown so much! You're looking just like your father!#pbEdgar: Thank you...#pbGrandma: Your father used to love cupcakes! Do you like cupcakes?#pbEdgar: ...#pbGrandma: I've got a recipe book in my room. Could you be a dear and bring it to your grandmother?#pbEdgar: Ok!",
+    "textNoItem":"Grandma: Ed! Look at you, you've grown so much! You're looking just like your father!#pbEdgar: Thank you...#pbGrandma: Your father used to love cupcakes! Do you like cupcakes?#pbEdgar: ...#pbGrandma: I've got a recipe book in my room. Could you be a dear and bring it to your grandmother?#pbEdgar: Ok!",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -49,7 +55,9 @@
     "elementsCreated":["grandma1_2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma1_2",
@@ -62,7 +70,9 @@
     "elementsCreated":["grandma1_3"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma1_3",
@@ -75,12 +85,14 @@
     "elementsCreated":["grandma1_4"],
     "itemSpawned":"",
     "teleport":"teleportKitchenFakeFadeOut",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma1_4",
     "room":"kitchen",
-    "textNoItem":"Grandma: Time passes so fast when you are having fun, isn't it dear? I think I'm ready to go to bed. You should get some rest too.#pbEdgar: Thanks, grandma. I will. #pbGrandma: But first, let me give you a little something for helping me.#pbEdgar: What is this?#pbGrandma: I found this the other day. I think it was one of your dad's toys when he was your age.#pbEdgar: Uh, thanks...#pbGrandma: Now, good night, dear!",
+    "textNoItem":"Grandma: Time passes so fast when you are having fun, doesn't it dear? I think I'm ready to go to bed. You should get some rest too.#pbEdgar: Thanks, grandma. I will. #pbGrandma: But first, let me give you a little something for helping me.#pbEdgar: What is this?#pbGrandma: I found this the other day. I think it was one of your dad's toys when he was your age.#pbEdgar: Uh, thanks...",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -88,7 +100,9 @@
     "elementsCreated":"",
     "itemSpawned":"isquarePiece",
     "teleport":"teleportNight1",
-    "periodChange":"night1"
+    "periodChange":"night1",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"map",
@@ -101,7 +115,9 @@
     "elementsCreated":"",
     "itemSpawned":"imap",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"recipeBook",
@@ -114,7 +130,9 @@
     "elementsCreated":"",
     "itemSpawned":"irecipeBook",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"cupboardKey",
@@ -127,7 +145,9 @@
     "elementsCreated":"",
     "itemSpawned":"icupboardKey",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"cupboard",
@@ -140,7 +160,9 @@
     "elementsCreated":"",
     "itemSpawned":"icupcakeTin",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"trianglePiece",
@@ -153,7 +175,9 @@
     "elementsCreated":"",
     "itemSpawned":"itrianglePiece",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancysClothes",
@@ -166,12 +190,14 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"porchWindow1",
     "room":"porch",
-    "textNoItem":"This window leads to the music room. The curtains are closed shut, so I can't see inside.",
+    "textNoItem":"This window leads to the music room. The curtains are closed, so I can't see inside.",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -179,7 +205,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"vase",
@@ -192,20 +220,24 @@
     "elementsCreated":["tinBox"],
     "itemSpawned":"imarble",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"wineBook",
     "room":"kitchen",
     "textNoItem":"I can't reach it.",
-    "textRightItem":"I picked up the wine book",
+    "textRightItem":"I picked up the wine book.",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"ibroom",
     "elementsDestroyed":["wineBook"],
     "elementsCreated":"",
     "itemSpawned":"iwineBook",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"projector1",
@@ -218,46 +250,54 @@
     "elementsCreated":["projector2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"projector2",
     "room":"projectorRoom",
     "textNoItem":"I can barely understand what's going on.",
-    "textRightItem":"",
+    "textRightItem":"Let's see...",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"imonocle",
     "elementsDestroyed":["projector2"],
     "elementsCreated":["projector3"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"projector",
+    "soundEffectType":"1"
   },
   {
     "name":"secondFloorKey",
     "room":"foyer",
-    "textNoItem":"I can't reach it with my bare hands.",
-    "textRightItem":"",
+    "textNoItem":"I can't reach it.",
+    "textRightItem":"...I picked up the 2nd floor key!",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"ihanger",
     "elementsDestroyed":["secondFloorKey"],
     "elementsCreated":"",
     "itemSpawned":"isecondFloorKey",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedMusicHallwayDoor4",
     "room":"musicHallway",
     "textNoItem":"It seems to be the door to the Music Room... It's locked.",
-    "textRightItem":"",
+    "textRightItem":"Now I can enter the Music Room...",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"imusicRoomKey",
     "elementsDestroyed":["lockedMusicHallwayDoor"],
     "elementsCreated":["dmusicHallway4"],
     "itemSpawned":"",
     "teleport":"teleportDay4",
-    "periodChange":"day4"
+    "periodChange":"day4",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedGardenDoor21",
@@ -270,12 +310,14 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedUpperHallwayDoor1",
     "room":"upperHallway",
-    "textNoItem":"It's missing the dook knob.",
+    "textNoItem":"It's missing the door knob.",
     "textRightItem":"It fits!",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"idoorknob",
@@ -283,20 +325,24 @@
     "elementsCreated":["dupperHallway1","dmasterSuite3"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedUpperHallwayDoor2",
     "room":"upperHallway",
     "textNoItem":"This door is locked.",
-    "textRightItem":"",
+    "textRightItem":"Now it's unlocked.",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"isecondFloorKey",
     "elementsDestroyed":["lockedUpperHallwayDoor2"],
     "elementsCreated":["dupperHallway2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"hanger",
@@ -309,7 +355,9 @@
     "elementsCreated":"",
     "itemSpawned":"ihanger",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"circlePiece",
@@ -322,38 +370,44 @@
     "elementsCreated":"",
     "itemSpawned":"icirclePiece",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"puppet1",
     "room":"lavenderGuestroom",
     "textNoItem":"The puppet is being hung by this string.",
-    "textRightItem":"",
+    "textRightItem":"I'll try to cut it...",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"iscissors",
     "elementsDestroyed":["puppet1"],
     "elementsCreated":["puppet2", "monocle"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedWindow",
     "room":"lavenderGuestroom",
     "textNoItem":"The lock is very rusty... I can't open it.",
-    "textRightItem":"",
+    "textRightItem":"Ok, opened the window...",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"ioil",
     "elementsDestroyed":["lavenderWindow"],
     "elementsCreated":["dlavenderGuestroom1"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"chainedCloset",
     "room":"lavenderGuestroom",
-    "textNoItem":"The handles are locked shut with a chain. There must be some way to open it...",
+    "textNoItem":"The handles are locked with a chain. There must be some way to open it...",
     "textRightItem":"And...There!#pb...#pbI found the desk key!",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"ipliers",
@@ -361,7 +415,9 @@
     "elementsCreated":"",
     "itemSpawned":"ideskKey",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"orchidRoomDrawer",
@@ -374,7 +430,9 @@
     "elementsCreated":"",
     "itemSpawned":"ipassword",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"firstGear",
@@ -387,7 +445,9 @@
     "elementsCreated":"",
     "itemSpawned":"ifirstGear",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"tinBox",
@@ -400,12 +460,14 @@
     "elementsCreated":["porchWindow2"],
     "itemSpawned":"imarble",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"porchWindow2",
     "room":"porch",
-    "textNoItem":"Edgar: I can hear something coming from the music room#pb???: ...I need something in return...#pb???:...yes, his parents are going to die...#pb???:...it's a deal then!#pbEdgar: ...I feel I shouldn't be around here...#lbEdgar: I will go back to my room.",
+    "textNoItem":"Edgar: I can hear something coming from the music room#pbUncanny voice: ...I need something in return...#pbUncanny voice:...yes, his parents are going to die...#pbUncanny voice:...it's a deal then!#pbEdgar: ...I feel I shouldn't be around here...#lbEdgar: I will go back to my room.",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -413,20 +475,24 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"teleportDay2",
-    "periodChange":"day2"
+    "periodChange":"day2",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedCentralHallwayDoor2",
     "room":"centralHallway",
     "textNoItem":"This door is locked.",
-    "textRightItem":"",
+    "textRightItem":"Now it's unlocked!",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"iivyKey",
     "elementsDestroyed":["lockedCentralHallwayDoor2"],
     "elementsCreated":["dcentralHallway2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy2_1",
@@ -439,7 +505,9 @@
     "elementsCreated":["nancy2_2","mint"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy2_2",
@@ -447,12 +515,14 @@
     "textNoItem":"Nancy: The first thing I will need is peppermint. Could you bring me some?",
     "textRightItem":"Nancy: Thank you , Edgar. Now, to reduce her fever, the next ingredient we will need is some ginger.",
     "textWrongItem":"Nancy asked for peppermint. I should try to find it first.",
-    "itemNeeded":"ipepperMint",
+    "itemNeeded":"imint",
     "elementsDestroyed":["nancy2_2"],
     "elementsCreated":["nancy2_3","ginger"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy2_3",
@@ -465,7 +535,9 @@
     "elementsCreated":["nancy2_4"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy2_4",
@@ -478,7 +550,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"teleportNight2",
-    "periodChange":"night2"
+    "periodChange":"night2",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma2_1",
@@ -491,7 +565,9 @@
     "elementsCreated":["grandma2_2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma2_2",
@@ -504,7 +580,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"telephone2_1",
@@ -517,7 +595,9 @@
     "elementsCreated":["telephone2_2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"telephone2_2",
@@ -530,7 +610,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"ivyKey",
@@ -543,7 +625,9 @@
     "elementsCreated":"",
     "itemSpawned":"iivyKey",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"mint",
@@ -554,9 +638,11 @@
     "itemNeeded":"",
     "elementsDestroyed":["mint","lockEdgarenDoor21"],
     "elementsCreated":["lockedGardenDoor22"],
-    "itemSpawned":"ipeppermint",
+    "itemSpawned":"imint",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"ginger",
@@ -569,7 +655,9 @@
     "elementsCreated":"",
     "itemSpawned":"iginger",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"roseWine",
@@ -582,7 +670,9 @@
     "elementsCreated":"",
     "itemSpawned":"iroseWine",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"airDuct",
@@ -595,7 +685,9 @@
     "elementsCreated":"",
     "itemSpawned":"inote",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"scissors1",
@@ -608,7 +700,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedGardenDoor22",
@@ -621,7 +715,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"scissors2",
@@ -634,7 +730,9 @@
     "elementsCreated":"",
     "itemSpawned":"iscissors",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"puppet2",
@@ -647,7 +745,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"monocle",
@@ -660,7 +760,9 @@
     "elementsCreated":"",
     "itemSpawned":"imonocle",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"projector3",
@@ -673,7 +775,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"studyWindow",
@@ -686,7 +790,9 @@
     "elementsCreated":["dgarden2","paperweight2","secondGear"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"paperweight1",
@@ -699,7 +805,9 @@
     "elementsCreated":"",
     "itemSpawned":"ipaperweight",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"desk",
@@ -712,7 +820,9 @@
     "elementsCreated":"",
     "itemSpawned":"ipearl",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"secondGear",
@@ -725,7 +835,9 @@
     "elementsCreated":"",
     "itemSpawned":"isecondGear",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"paperweight2",
@@ -738,7 +850,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"redWine",
@@ -751,7 +865,9 @@
     "elementsCreated":"",
     "itemSpawned":"iredWine",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"toolBox",
@@ -764,12 +880,14 @@
     "elementsCreated":"",
     "itemSpawned":["ipliers","iscrewdriver"],
     "teleport":"teleportDay3",
-    "periodChange":"day3"
+    "periodChange":"day3",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma3_1",
     "room":"grandmaRoom",
-    "textNoItem":"Edgar: Grandma, are you feeling better? #pbGrandma: Oh, most certainly, my boy... I'm feeling better than ever. #pbEdgar: That is good to know. Anyway, I really need to talk to you this time. There's something wrong with this house. I'm scared. I want to go home...#pbGrandma: Maybe you are just scared of an old lady's house, full of dusty things.#pbEdgar: ...but, grandma!#pbGrandma: See that pendant I placed on the drawer over there? #pbEdgar: Yes... #pbGrandma: I want you to be a good boy and take it away from this room. Please hide it somewhere no one will be able to find it. #pbEdgar: But wh...#pbGrandma: Just go and hide it, boy. After that, I promise we'll be able to fully enjoy these holidays...",
+    "textNoItem":"Edgar: Grandma, are you feeling better? #pbGrandma: Oh, most certainly, my boy... I'm feeling better than ever. #pbEdgar: That is good to know... I really need to talk to you. There's something wrong with this house. I'm scared. I want to go home...#pbGrandma: Maybe you are just scared of an old lady's house, full of dusty things.#pbEdgar: ...but, grandma!#pbGrandma: See that pendant I placed on the drawer over there? #pbEdgar: Yes... #pbGrandma: I want you to be a good boy and take it away from this room. Please hide it somewhere no one will be able to find it. #pbEdgar: But wh...#pbGrandma: Just go and hide it, boy. After that, I promise we'll be able to fully enjoy these holidays...",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -777,7 +895,9 @@
     "elementsCreated":["grandma3_2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"grandma3_2",
@@ -790,7 +910,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy3_1",
@@ -803,7 +925,9 @@
     "elementsCreated":["nancy3_2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancy3_2",
@@ -816,7 +940,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"telephone3_1",
@@ -829,7 +955,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"pendant",
@@ -842,7 +970,9 @@
     "elementsCreated":"",
     "itemSpawned":"ipendant",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"broom",
@@ -855,20 +985,24 @@
     "elementsCreated":"",
     "itemSpawned":"ibroom",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"socket",
     "room":"storage",
     "textNoItem":"It's missing a lightbulb.",
-    "textRightItem":"",
+    "textRightItem":"Let's light things up",
     "textWrongItem":"I don't think this would make sense.",
-    "itemNeeded":"iLightbulb",
+    "itemNeeded":"ilightbulb",
     "elementsDestroyed":["socket"],
-    "elementsCreated":"",
+    "elementsCreated":["lstorage2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"puttyKnife",
@@ -881,20 +1015,24 @@
     "elementsCreated":"",
     "itemSpawned":"iputtyKnife",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"safe1",
     "room":"storage",
     "textNoItem":"It's a safe. Looks like a nice place for hiding something.",
-    "textRightItem":"(PLACEHOLDER) Edgar coloca o pingente no cofre, vai dormir",
+    "textRightItem":"Ok, I hid the pendant just like grandma told me to. I think now I should go to bed...",
     "textWrongItem":"I don't think this would make sense.",
-    "itemNeeded":"",
+    "itemNeeded":"ipendant",
     "elementsDestroyed":["safe1"],
     "elementsCreated":["safePuzzle"],
     "itemSpawned":"",
     "teleport":"teleportNight3",
-    "periodChange":"night3"
+    "periodChange":"night3",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"leak1",
@@ -907,20 +1045,24 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedBasementHallwayDoor2",
     "room":"basementHallway",
     "textNoItem":"It's locked.",
-    "textRightItem":"",
+    "textRightItem":"Now it's unlocked",
     "textWrongItem":"I don't think this would make sense.",
-    "itemNeeded":"iBoilerKey",
+    "itemNeeded":"iboilerKey",
     "elementsDestroyed":["lockedBasementHallwayDoor2"],
     "elementsCreated":["dbasementHallway2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancyCorpse1",
@@ -933,7 +1075,9 @@
     "elementsCreated":["nancyCorpse2"],
     "itemSpawned":["iboilerKey","isapphire"],
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"nancyCorpse2",
@@ -946,7 +1090,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"oil",
@@ -959,7 +1105,24 @@
     "elementsCreated":"",
     "itemSpawned":"ioil",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
+  },
+  {
+    "name":"boiler",
+    "room":"boilerRoom",
+    "textNoItem":"I see something shiny inside, but the coal is hot. I can't put my hands in there.",
+    "textRightItem":"It looks like a ruby",
+    "textWrongItem":"I don't think this would make sense.",
+    "itemNeeded":["ifirePoker"],
+    "elementsDestroyed":["boiler"],
+    "elementsCreated":"",
+    "itemSpawned":["iruby"],
+    "teleport":"",
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lightbulb",
@@ -972,7 +1135,9 @@
     "elementsCreated":"",
     "itemSpawned":"ilightbulb",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"notebook",
@@ -985,7 +1150,9 @@
     "elementsCreated":"",
     "itemSpawned":"inotebook",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"firePoker",
@@ -998,7 +1165,9 @@
     "elementsCreated":"",
     "itemSpawned":"ifirePoker",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"doorknob",
@@ -1011,7 +1180,9 @@
     "elementsCreated":"",
     "itemSpawned":"idoorknob",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"oldPaper",
@@ -1024,7 +1195,9 @@
     "elementsCreated":"",
     "itemSpawned":"ioldPaper",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"leak2",
@@ -1037,12 +1210,14 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lockedMasterSuiteDoor3",
     "room":"masterSuite",
-    "textNoItem":"It's missing the dook knob.",
+    "textNoItem":"It's missing the doorknob.",
     "textRightItem":"It fits!",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"idoorknob",
@@ -1050,7 +1225,9 @@
     "elementsCreated":["dmasterSuite3","dupperHallway1"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"whiteWine",
@@ -1063,7 +1240,9 @@
     "elementsCreated":"",
     "itemSpawned":"iwhiteWine",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"secretNote",
@@ -1076,7 +1255,9 @@
     "elementsCreated":"",
     "itemSpawned":"isecretNote",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"thirdGear",
@@ -1089,25 +1270,29 @@
     "elementsCreated":"",
     "itemSpawned":"ithirdGear",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"tapePlayer1",
     "room":"secretStudy",
     "textNoItem":"It's a tape player.",
-    "textRightItem":"Let's play this tape...",
+    "textRightItem":"Let's put this tape...",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"icassette",
     "elementsDestroyed":["tapePlayer"],
     "elementsCreated":["tapePlayer2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"tapePlayer2",
     "room":"secretStudy",
-    "textNoItem":"(PLACEHOLDER)Dialogo completo do demônio com a avó",
+    "textNoItem":"Grandma: I need your help, I think Edgar’s parents are\nreally in danger!#pbUncanny voice: I know what you want, but you can’t save\nthem all... #pbGrandma: ...I can’t orphan the boy. I must save his parents...#pbUncanny\nvoice: I need something in return...#pbGrandma: But what could an old lady\noffer you? I don’t have valuables to sacrifice.#pbUncanny voice: You know what\nI want.#pbGrandma: No! Anything but him, he’s just a child! He’s still got his\nwhole life to live!#pbUncanny voice: Well, you know what’s going to happen...#pbGrandma:\nAre you sure about that?#pbUncanny voice: Yes, his parents are going to die...#pbGrandma:\nIs there no other way to save them?#pbUncanny voice: Perhaps. Let’s make a pact...#pbGrandma:\nA pact? So you’ll have me in his place? If this saves them, I accept.#pbUncanny\nvoice: It's a deal then!",
     "textRightItem":"",
     "textWrongItem":"I don't think this would make sense.",
     "itemNeeded":"",
@@ -1115,7 +1300,9 @@
     "elementsCreated":"",
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"drawerHandle",
@@ -1128,7 +1315,9 @@
     "elementsCreated":"",
     "itemSpawned":"idrawerHandle",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"lever",
@@ -1141,7 +1330,9 @@
     "elementsCreated":["dsecretStorage1"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   },
   {
     "name":"leak3",
@@ -1154,6 +1345,8 @@
     "elementsCreated":["dlibrary2"],
     "itemSpawned":"",
     "teleport":"",
-    "periodChange":""
+    "periodChange":"",
+    "soundEffect":"",
+    "soundEffectType":""
   }
 ]

@@ -12,6 +12,7 @@ package
 		private var _elementsDestroyed : Array;
 		private var _textRight : String;
 		private var _textWrong : String;
+		private var _nItemsNeeded : int;
 		
 		public function PuzzleElement() 
 		{
@@ -36,7 +37,7 @@ package
 			}
 			else
 			{
-				Game.displayText(["Edgard: I don't think this would make sense."]);
+				Game.displayText([Game.DEFAULT_TEXT_NO_SENSE]);
 			}
 		}
 		
@@ -47,7 +48,21 @@ package
 		
 		public function get nItemsNeeded () : int
 		{
-			return _itemsNeeded.length;
+			if (_itemsNeeded.length > 0)
+			{
+				if (_nItemsNeeded == 0)
+				{
+					for (var i : int = 0; i < _itemsNeeded.length; i++)
+					{
+						if (_itemsNeeded[i] != "")
+						{
+							_nItemsNeeded++;
+						}
+					}
+				}
+				return _nItemsNeeded;
+			}
+			return 0;
 		}
 		
 		public function get inventoryItemReward():String 

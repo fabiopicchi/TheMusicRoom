@@ -27,7 +27,7 @@ package
 		imarble
 		ifirstGear
 		iivyKey
-		ipeppermint
+		imint
 		iginger
 		iinfuser
 		iroseWine
@@ -62,10 +62,16 @@ package
 		idrawerHandle
 		ipassword
 		
+		imapScreen
+		
 		private var _id:String;
 		private var _text:String;
 		private var _arElementsCreated:Array;
 		private var _arElementsDestroyed:Array;
+		private var _itemType : int = 0;
+		
+		public static const READABLE : int = 0;
+		public static const USABLE : int = 1;
 		
 		public function InventoryItem(objData:Object)
 		{
@@ -73,6 +79,7 @@ package
 			_text = objData.text;
 			_arElementsCreated = (objData.elementsCreated == "" ? [] : objData.elementsCreated);
 			_arElementsDestroyed = (objData.elementsDestroyed == "" ? [] : objData.elementsDestroyed);
+			_itemType = objData.type;
 			
 			addChild(getAsset());
 		}
@@ -90,6 +97,11 @@ package
 		public function get id():String
 		{
 			return _id;
+		}
+		
+		public function get itemType():int 
+		{
+			return _itemType;
 		}
 		
 		private function getAsset():MovieClip

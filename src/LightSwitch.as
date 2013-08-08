@@ -50,7 +50,7 @@ package
 			}
 			else
 			{
-				Game.displayText(["Edgard: I don't think this would make sense."]);
+				Game.displayText([Game.DEFAULT_TEXT_NO_SENSE]);
 			}
 		}
 	}

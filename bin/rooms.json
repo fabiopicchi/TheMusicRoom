@@ -1,0 +1,206 @@
+[
+  {
+    "name":"porch",
+    "displayname":"Porch",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"foyer",
+    "displayname":"Foyer",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"livingRoom",
+    "displayname":"Living Room",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"dinnerRoom",
+    "displayname":"Dinner Room",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"kitchen",
+    "displayname":"Kitchen",
+    "hasDay":"1",
+    "enemySpawnChance":0.5
+  },
+  {
+    "name":"nancyRoom",
+    "displayname":"Nancy's Room",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"bathroom1",
+    "displayname":"1st Floor Bathroom",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"mainHallway",
+    "displayname":"Main Hallway",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"garden",
+    "displayname":"Garden",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"hallway",
+    "displayname":"Hallway",
+    "hasDay":"1",
+    "enemySpawnChance":0.25
+  },
+  {
+    "name":"musicHallway",
+    "displayname":"Music Hallway",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"grandmaRoom",
+    "displayname":"Grandma's Room",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"projectorRoom",
+    "displayname":"Projector Room",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"upperHallway",
+    "displayname":"Upper Hallway",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"bathroom2",
+    "displayname":"2nd Floor Bathroom",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"daddyRoom",
+    "displayname":"Daddy's Room",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"centralHallway",
+    "displayname":"Central Hallway",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"guestHallway",
+    "displayname":"Guest Hallway",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"library",
+    "displayname":"Library",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"study",
+    "displayname":"Study",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"secretStudy",
+    "displayname":"Secret Study",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"balcony",
+    "displayname":"Balcony",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"masterSuite",
+    "displayname":"Master Suite",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"bathroom3",
+    "displayname":"Suite Bathroom",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"ivyGuestroom",
+    "displayname":"Ivy Guestroom",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"orchidGuestroom",
+    "displayname":"Orchid Guestroom",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"lavenderGuestroom",
+    "displayname":"Lavender Guestroom",
+    "hasDay":"1",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"basement",
+    "displayname":"Basement",
+    "hasDay":"0",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"wineCellar",
+    "displayname":"Wine Cellar",
+    "hasDay":"0",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"darkPassage",
+    "displayname":"Dark Passage",
+    "hasDay":"0",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"basementHallway",
+    "displayname":"Basement Hallway",
+    "hasDay":"0",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"boilerRoom",
+    "displayname":"Boiler Room",
+    "hasDay":"0",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"storage",
+    "displayname":"Storage",
+    "hasDay":"0",
+    "enemySpawnChance":0
+  },
+  {
+    "name":"secretStorage",
+    "displayname":"Secret Storage",
+    "hasDay":"0",
+    "enemySpawnChance":0
+  }
+]

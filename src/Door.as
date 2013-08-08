@@ -7,8 +7,8 @@ package
 	 */
 	public class Door extends InteractiveElement 
 	{
-		
 		private var _destiny : String;
+		private var _soundCode : int = 1;
 		
 		public function Door() 
 		{
@@ -18,6 +18,7 @@ package
 		public function loadData (data : Object) : void
 		{
 			_destiny = data.destiny;
+			_soundCode = data.sound;
 		}
 		
 		override public function interact(item : InventoryItem = null) : void
@@ -46,12 +47,23 @@ package
 				
 				if (found)
 				{
+					switch (_soundCode)
+					{
+						case 0:
+							break;
+						case 1:
+							Game.playSfx(Game.DOOR);
+							break;
+						case 2:
+							Game.playSfx(Game.STAIRS);
+							break;
+					}
 					Game.setNextRoom(_destiny, roomPosition);
 				}
 			}
 			else
 			{
-				Game.displayText(["Edgard: I don't think this would make sense."]);
+				Game.displayText([Game.DEFAULT_TEXT_NO_SENSE]);
 			}
 		}
 		

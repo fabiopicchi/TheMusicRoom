@@ -3,282 +3,329 @@
     "name":"imap",
     "text":"House Map",
     "elementsDestroyed":"",
-    "elementsCreated":["porchWindow1"]
+    "elementsCreated":["porchWindow1"],
+    "type":"0"
   },
   {
     "name":"irecipeBook",
     "text":"Recipe Book",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"icupboardKey",
     "text":"Cupboard Key",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"icupcakeTin",
     "text":"Cupcake Tin",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"icirclePiece",
     "text":"Circle Piece",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"itrianglePiece",
     "text":"Triangle Piece",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"isquarePiece",
     "text":"Square Piece",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ihanger",
     "text":"Hanger",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"isecondFloorKey",
     "text":"Second Floor Key",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"itoyShovel",
     "text":"Toy Shovel",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"imarble",
     "text":"Marble",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ifirstGear",
     "text":"Gear",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iivyKey",
     "text":"Ivy Key",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
-    "name":"ipeppermint",
+    "name":"imint",
     "text":"Peppermint",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iginger",
     "text":"Ginger",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iinfuser",
     "text":"Tea Infuser",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iroseWine",
     "text":"Rosé Wine",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iscissors",
     "text":"Scissors",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"imonocle",
     "text":"Monocle",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ipaperweight",
     "text":"Paperweight",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"isecondGear",
     "text":"Gear",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iscrewdriver",
     "text":"Screwdriver",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ipliers",
     "text":"Pliers",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iredWine",
     "text":"Red Wine",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ipendant",
     "text":"Pendant",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"inote",
     "text":"Note",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"0"
   },
   {
     "name":"ideskKey",
     "text":"Desk Key",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ipearl",
     "text":"Pearl",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ibroom",
     "text":"Broom",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iwineBook",
     "text":"Wine Book",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"0"
   },
   {
     "name":"iboilerKey",
     "text":"Boiler Key",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"isapphire",
     "text":"Sapphire",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ioil",
     "text":"Oil",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ilightbulb",
     "text":"Lightbulb",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iputtyKnife",
     "text":"Putty Knife",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"inotebook",
     "text":"Notebook",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"0"
   },
   {
     "name":"ifirePoker",
     "text":"Fire Poker",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iruby",
     "text":"Ruby",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ioldPaper",
     "text":"Old Paper",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"0"
   },
   {
     "name":"idoorknob",
     "text":"Door Knob",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"icassette",
     "text":"Cassette",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"imusicRoomKey",
     "text":"Music Room Key",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"iwhiteWine",
     "text":"White Wine",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"isecretNote",
     "text":"Secret Note",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"0"
   },
   {
     "name":"ithirdGear",
     "text":"Gear",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"idrawerHandle",
     "text":"Drawer Handle",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"1"
   },
   {
     "name":"ipassword",
     "text":"Password",
     "elementsDestroyed":"",
-    "elementsCreated":""
+    "elementsCreated":"",
+    "type":"0"
   }
 ]

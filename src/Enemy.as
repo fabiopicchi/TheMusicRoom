@@ -18,6 +18,8 @@ package
 		public static const LOOKING:int = 1 << 2;
 		public static const LOOKING_CROUCH:int = 1 << 3;
 		public static const ATTACKING:int = 1 << 4;
+		public static const RESTING:int = 1 << 5;
+		public static const FADING:int = 1 << 6;
 		
 		private var _attackRange : Number = 10;
 		private var _patrolRoom : Room;
@@ -25,12 +27,17 @@ package
 		private var _animationData : Object = {
 			idle : {looped : true},
 			walking : { looped : true },
-			attack : {looped : false}
+			attack : {looped : false},
+			fade : {looped : false}
 		};
 		
 		private var _arRoute : Array = [];
 		private var _arWait : Array = [];
 		private var _routePosition : int = 0;
+		private var _minX : int = int.MAX_VALUE;
+		private var _maxX : int = int.MIN_VALUE;
+		private var _indexOfMinX : int = 0;
+		private var _indexOfMaxX : int = 0;
 		
 		private var _lookingTimeout : Number;
 		private var _lookingStartX : Number = 0;
@@ -49,6 +56,8 @@ package
 		private var _pAnim : String = "";
 		private var _looped : Boolean = false;
 		private var hitbox : Rectangle = new Rectangle(0, 0, 110, 290); 
+		private var _realTarget : Number = 0;
+		private var _collided : Boolean = false;
 		
 		private var _enemyType : int;
 		
@@ -56,17 +65,33 @@ package
 		{
 			setFlag(PATROL);
 			_routePosition = 0;
-			if (_arRoute.length > 0)
-			{
-				if (_arRoute.length > 1) _target = _arRoute[_routePosition + 1]; 
-				this.x = _arRoute[_routePosition];
-			}
+			_arRoute = [0.25, 0.75, 0.50, 0.75, 0.25];
+			_arWait = [1000, 1000, 1000, 1000, 1000];
+			
 			addEventListener(Event.COMPLETE, animationCompleted);
 		}
 		
 		override public function get width():Number 
 		{
 			return hitbox.width;
+		}
+		
+		public function loadData (data : Object) : void
+		{
+			_patrolRoom = Game.ROOM_MAP[data.room];
+			if (data.type == "1")
+			{
+				_body = new Monster1;
+			}
+			else
+			{
+				_body = new Monster2;
+			}
+			
+			addChild(_body);
+			_body.x = hitbox.width / 2;
+			_body.y = hitbox.height / 2;
+			y = 300;
 		}
 		
 		private function animationCompleted(e:Event):void 
@@ -80,282 +105,347 @@ package
 				if (_currentAnim == "attack")
 				{
 					resetFlag(ATTACKING);
+					setFlag(RESTING);
+					setTimeout (function () : void
+					{
+						resetFlag(RESTING);
+					}, 200);
 					_pAnim = "";
 					Game.playSfx(Game.ENEMY_ATTACK);
+					_body.gotoAndPlay(_currentAnim = "idle");
+				}
+				
+				else if (_currentAnim == "fade")
+				{
+					if (parent != _patrolRoom)
+					{
+						parent.removeChild(this);
+						_patrolRoom.addChild(this);
+					}					
+					_status = 0;
+					setFlag(RESTING);
+					visible = false;
+					_pAnim = "fade";
+					_currentAnim = "walking";
 				}
 			}
 		}
 		
-		override protected function init(e:Event):void 
+		public function spawn () : void
 		{
-			super.init(e);
-			
 			Game.playSfx(Game.ENEMY_SPAWN);
 			
-			if (!_patrolRoom) _patrolRoom = (parent as Room);
+			var area : DisplayObject = _patrolRoom.getChildByName("area");
+			var left : Boolean = (Math.random() > 0.5 ? true : false);
 			
-			addChild(_body = new Monster1);
-			_body.x = hitbox.width / 2;
-			_body.y = hitbox.height / 2;
-			
-			if (_arRoute.length == 0)
+			if (_minX == int.MAX_VALUE)
 			{
-				var area : DisplayObject = parent.getChildByName("area");
-				x = area.x + Math.random() * (area.width - width);
-				_target = x;
+				var val : Number;
+				for (var i : int = 0; i < _arRoute.length; i++)
+				{
+					val = area.x + _arRoute[i] * area.width - _patrolRoom.scrollAcc;
+					if (val < _minX)
+					{
+						_minX = val;
+						_indexOfMinX = i;
+					}
+					if (val > _maxX)
+					{
+						_maxX = val;
+						_indexOfMaxX = i;
+					}
+				}
 			}
 			
-			y = 300;
+			if (left)
+			{
+				x = Game.playerInstance.x - 200;
+				_target = _minX;
+				_routePosition = _indexOfMinX;
+				_facing = LEFT;
+				
+				if (x < _minX + _patrolRoom.scrollAcc)
+				{
+					x = Game.playerInstance.x + 200;
+					_target = _maxX;
+					_routePosition = _indexOfMaxX;
+					_facing = RIGHT;
+				}
+			}
+			else
+			{
+				x = Game.playerInstance.x + 200;
+				_target = _maxX;
+				_routePosition = _indexOfMaxX;
+				_facing = RIGHT;
+				
+				if (x > _maxX + _patrolRoom.scrollAcc)
+				{
+					x = Game.playerInstance.x - 200;
+					_target = _minX;
+					_routePosition = _indexOfMinX;
+					_facing = LEFT;
+				}
+			}
+			
+			resetFlag(RESTING);
+			setFlag(PATROL);
+			visible = true;
 		}
 		
 		override public function update():void 
 		{
-			super.update();
-			
-			_room = parent.name;
-			
-			moveToTarget();
-			
-			if (isPatrolling())
+			if (!testFlag(RESTING) && !testFlag(FADING))
 			{
-				if (x == _target)
+				super.update();
+				
+				_room = parent.name;
+				
+				moveToTarget();
+				
+				if (isPatrolling())
 				{
-					if (!_waiting && _arWait.length > 0)
+					if (x == _realTarget)
 					{
-						_waiting = true
-						_waitingTimeout = setTimeout(function () : void
+						if (!_waiting && _arWait.length > 0)
 						{
-							_waiting = false;
-							_routePosition++;
-							if (_routePosition >= _arRoute.length - 1)
-								_routePosition = 0;					
-							
-							_target = _arRoute[_routePosition + 1];
-						}, _arWait[_routePosition]);
-					}
-				}
-			}
-			
-			if (isPursuing())
-			{
-				if (Game.playerInstance.room == room)
-				{
-					if (!isWithinRange())
-					{
-						_target = Game.playerInstance.getMidPoint().x;
-					}
-					else
-					{
-						_currentAnim = "attack";
-						setFlag(ATTACKING);
-					}
-				}
-				else
-				{
-					var door : Door;
-					var targetObject : DisplayObject;
-					var i : int;
-					for (i = 0; i < parent.numChildren; i++)
-					{
-						if ((door = (parent.getChildAt(i) as Door)))
-						{
-							if (door.destiny == Game.playerInstance.room)
-								break;
-						}
-					}
-					
-					if (door)
-					{
-						if (!(targetObject = parent.getChildByName(door.name + "_h") )) targetObject = door;
-						
-						if (!(targetObject.x <= x + width && (targetObject.x + targetObject.width) >= x))
-						{
-							_target = (targetObject as Entity).getMidPoint().x;
-						}
-						else
-						{
-							var prevRoom : String = parent.name;
-							parent.removeChild(this);
-							Game.playerInstance.parent.addChild(this);
-							
-							for (i = 0; i < parent.numChildren; i++)
+							_waiting = true
+							_waitingTimeout = setTimeout(function () : void
 							{
-								if ((door = (parent.getChildAt(i) as Door)))
-								{
-									if (door.destiny == prevRoom)
-										break;
-								}
-							}
-							if (!(targetObject = parent.getChildByName(door.name + "_h") )) targetObject = door;
-							
-							x = targetObject.x + (targetObject.width - width) / 2;
-							
-							if (Game.playerInstance.isHidden())
-							{
-								_status = 0;
-								setFlag(LOOKING);
+								_waiting = false;
+								_routePosition++;
+								if (_routePosition >= _arRoute.length - 1)
+									_routePosition = 0;					
+								var area : MovieClip = _patrolRoom.getChildByName("area");
 								
-								_lookingStartX = x;
-								_facing = ((Math.floor(Math.random() * 2)) ? Entity.LEFT : Entity.RIGHT);
-								if (isFacing(LEFT)) _target = _lookingStartX - 100;
-								if (isFacing(RIGHT)) _target = _lookingStartX + 100;
-								_lookingTimeout = 3;
-							}
+								_target = area.x + _arRoute[_routePosition + 1] * area.width;
+							}, _arWait[_routePosition]);
 						}
-					}
-					else
-					{
-						teleportBack();
-					}
-				}
-			}
-			
-			if (isLooking())
-			{
-				if (!_waiting && x == _target)
-				{
-					if (isFacing(LEFT))
-					{
-						_waiting = true
-						_waitingTimeout = setTimeout(function () : void
-						{
-							_waiting = false;
-							_facing = Entity.RIGHT;
-							_target = _lookingStartX + 100;
-							if (_lookingTimeout <= 0)
-							{
-								teleportBack();
-							}
-						}, 500);
-					}
-					else
-					{
-						_waiting = true
-						_waitingTimeout = setTimeout(function () : void
-						{
-							_waiting = false;
-							_facing = Entity.LEFT;
-							_target = _lookingStartX - 100;
-							if (_lookingTimeout <= 0)
-							{
-								teleportBack();
-							}
-						}, 500);
 					}
 				}
 				
-				_lookingTimeout -= Game.dt;
-			}
-			
-			if (isLookingCrouch())
-			{
-				if (!_waiting && x == _target)
+				if (isPursuing())
 				{
-					if (isFacing(LEFT))
+					if (Game.playerInstance.room == room)
 					{
-						_waiting = true;
-						_waitingTimeout = setTimeout(function () : void
+						if (!isWithinRange())
 						{
-							_waiting = false;
-							_facing = Entity.RIGHT;
-							if (_lookingTimeout >= 0)
-							{
-								_target = _lookingStartX + 150;
-							}
-							else
-							{
-								//Go far
-								if (Math.floor(Math.random() * 2) == 0)
-								{
-									_target = _lookingStartX + 300 + Math.floor(Math.random() * 200);
-								}
-								//Go near
-								else
-								{
-									if (_lookingStartX - x >= 150)
-									{
-										if (Math.floor(Math.random() * 2) == 0)
-										{
-											_target = _lookingStartX + 150 - Math.floor(Math.random() * 75);
-										}
-										else
-										{
-											_target = _lookingStartX - 150 + Math.floor(Math.random() * 75);
-										}
-									}
-									else
-									{
-										_target = _lookingStartX + 150;
-									}
-								}
-							}
-						}, 500);
+							_target = Game.playerInstance.getMidPoint().x - (parent as Room).scrollAcc;
+						}
+						else
+						{
+							_currentAnim = "attack";
+							setFlag(ATTACKING);
+						}
 					}
 					else
 					{
-						_waiting = true;
-						_waitingTimeout = setTimeout(function () : void
+						var door : Door;
+						var targetObject : DisplayObject;
+						var i : int;
+						for (i = 0; i < parent.numChildren; i++)
 						{
-							_waiting = false;
-							_facing = Entity.LEFT;
-							if (_lookingTimeout >= 0)
+							if ((door = (parent.getChildAt(i) as Door)))
 							{
-								_target = _lookingStartX - 150;
+								if (door.destiny == Game.playerInstance.room)
+									break;
+							}
+						}
+						
+						if (door)
+						{
+							if (!(targetObject = parent.getChildByName(door.name + "_h") )) targetObject = door;
+							
+							if (!(targetObject.x <= x + width && (targetObject.x + targetObject.width) >= x))
+							{
+								_target = (targetObject as Entity).getMidPoint().x - (parent as Room).scrollAcc;
 							}
 							else
 							{
-								//Go far
-								if (Math.floor(Math.random() * 2) == 0)
+								var prevRoom : String = parent.name;
+								parent.removeChild(this);
+								Game.playerInstance.parent.addChild(this);
+								
+								for (i = 0; i < parent.numChildren; i++)
 								{
-									_target = _lookingStartX - 300 - Math.floor(Math.random() * 200);
+									if ((door = (parent.getChildAt(i) as Door)))
+									{
+										if (door.destiny == prevRoom)
+											break;
+									}
 								}
-								//Go near
+								if (!(targetObject = parent.getChildByName(door.name + "_h") )) targetObject = door;
+								
+								x = targetObject.x + (targetObject.width - width) / 2;
+								
+								if (Game.playerInstance.isHidden())
+								{
+									_status = 0;
+									setFlag(LOOKING);
+									
+									_lookingStartX = x - (parent as Room).scrollAcc;
+									_facing = ((Math.floor(Math.random() * 2)) ? Entity.LEFT : Entity.RIGHT);
+									if (isFacing(LEFT)) _target = _lookingStartX - 100;
+									if (isFacing(RIGHT)) _target = _lookingStartX + 100;
+									_lookingTimeout = 3;
+								}
+							}
+						}
+						else
+						{
+							teleportBack();
+						}
+					}
+				}
+				
+				if (isLooking())
+				{
+					if (!_waiting && x == _realTarget)
+					{
+						if (isFacing(LEFT))
+						{
+							_waiting = true
+							_waitingTimeout = setTimeout(function () : void
+							{
+								_waiting = false;
+								_facing = Entity.RIGHT;
+								_target = _lookingStartX + 100;
+								if (_lookingTimeout <= 0)
+								{
+									teleportBack();
+								}
+							}, 500);
+						}
+						else
+						{
+							_waiting = true
+							_waitingTimeout = setTimeout(function () : void
+							{
+								_waiting = false;
+								_facing = Entity.LEFT;
+								_target = _lookingStartX - 100;
+								if (_lookingTimeout <= 0)
+								{
+									teleportBack();
+								}
+							}, 500);
+						}
+					}
+					
+					_lookingTimeout -= Game.dt;
+				}
+				
+				if (isLookingCrouch())
+				{
+					if (!_waiting && x == _realTarget)
+					{
+						if (isFacing(LEFT))
+						{
+							_waiting = true;
+							_waitingTimeout = setTimeout(function () : void
+							{
+								_waiting = false;
+								_facing = Entity.RIGHT;
+								if (_lookingTimeout >= 0)
+								{
+									_target = _lookingStartX + 150;
+								}
 								else
 								{
-									if (x - _lookingStartX >= 150)
+									//Go far
+									if (Math.floor(Math.random() * 2) == 0)
 									{
-										if (Math.floor(Math.random() * 2) == 0)
+										_target = _lookingStartX + 300 + Math.floor(Math.random() * 200);
+									}
+									//Go near
+									else
+									{
+										if (_lookingStartX - x >= 150)
 										{
-											_target = _lookingStartX - 150 + Math.floor(Math.random() * 75);
+											if (Math.floor(Math.random() * 2) == 0)
+											{
+												_target = _lookingStartX + 150 - Math.floor(Math.random() * 75);
+											}
+											else
+											{
+												_target = _lookingStartX - 150 + Math.floor(Math.random() * 75);
+											}
 										}
 										else
 										{
-											_target = _lookingStartX + 150 - Math.floor(Math.random() * 75);
+											_target = _lookingStartX + 150;
 										}
 									}
+								}
+							}, 500);
+						}
+						else
+						{
+							_waiting = true;
+							_waitingTimeout = setTimeout(function () : void
+							{
+								_waiting = false;
+								_facing = Entity.LEFT;
+								if (_lookingTimeout >= 0)
+								{
+									_target = _lookingStartX - 150;
+								}
+								else
+								{
+									//Go far
+									if (Math.floor(Math.random() * 2) == 0)
+									{
+										_target = _lookingStartX - 300 - Math.floor(Math.random() * 200);
+									}
+									//Go near
 									else
 									{
-										_target = _lookingStartX - 150;
+										if (x - _lookingStartX >= 150)
+										{
+											if (Math.floor(Math.random() * 2) == 0)
+											{
+												_target = _lookingStartX - 150 + Math.floor(Math.random() * 75);
+											}
+											else
+											{
+												_target = _lookingStartX + 150 - Math.floor(Math.random() * 75);
+											}
+										}
+										else
+										{
+											_target = _lookingStartX - 150;
+										}
 									}
 								}
-							}
-						}, 500);
+							}, 500);
+						}
 					}
+					var dist : Number = x - Game.playerInstance.x;
+					Game.tuneMonsterSfx(Math.abs(dist), (dist < 0));
+					if (_lookingTimeout > 0) _lookingTimeout -= Game.dt;
 				}
-				var dist : Number = x - Game.playerInstance.x;
-				Game.tuneMonsterSfx(Math.abs(dist), (dist < 0));
-				if (_lookingTimeout > 0) _lookingTimeout -= Game.dt;
+				
+				if (_currentAnim != _pAnim)
+				{
+					_looped = _animationData[_currentAnim].looped;
+					_body.gotoAndPlay(_currentAnim);
+					_pAnim = _currentAnim;
+				}
+				if (isFacing(LEFT))
+					_body.scaleX = -1;
+				else
+					_body.scaleX = 1;
+				
+				if (_collided) _collided = false;
 			}
-			
-			if (_currentAnim != _pAnim)
-			{
-				_looped = _animationData[_currentAnim].looped;
-				_body.gotoAndPlay(_currentAnim);
-				_pAnim = _currentAnim;
-			}
-			if (isFacing(LEFT))
-				_body.scaleX = -1;
-			else
-				_body.scaleX = 1;
-			
 		}
 		
 		private function teleportBack () : void
 		{
-			parent.removeChild(this);
-			_patrolRoom.addChild(this);
-			_status = 0;
-			setFlag(PATROL);
+			_currentAnim = "fade";
+			setFlag(FADING);
+			_body.gotoAndPlay(_currentAnim);
+			_looped = _animationData[_currentAnim].looped;
 		}
 		
 		private function isWithinRange():Boolean
@@ -409,10 +499,11 @@ package
 			var dx : Number = 0;
 			
 			_target = Math.round(_target);
+			_realTarget = Math.round(_target + (parent as Room).scrollAcc);
 			
-			if (x != _target && !(isPursuing() && isWithinRange()))
+			if (x != _realTarget && !(isPursuing() && isWithinRange()))
 			{
-				if (x > _target)
+				if (x > _realTarget)
 				{
 					dx -= Math.round(_speed * Game.dt);
 					_facing = Entity.LEFT;
@@ -423,9 +514,9 @@ package
 					_facing = Entity.RIGHT;
 				}
 				
-				if ((isFacing(LEFT) && x + dx < _target) || (isFacing(RIGHT) && x + dx > _target))
+				if ((isFacing(LEFT) && x + dx < _realTarget) || (isFacing(RIGHT) && x + dx > _realTarget))
 				{
-					dx = (_target - x);
+					dx = (_realTarget - x);
 				}
 			}
 			
@@ -455,7 +546,7 @@ package
 			
 			else if (Game.playerInstance.isCrouching() && !isLookingCrouch())
 			{
-				_lookingStartX = Game.playerInstance.getMidPoint().x;
+				_lookingStartX = Game.playerInstance.getMidPoint().x - (parent as Room).scrollAcc;
 				_status = 0;
 				_lookingTimeout = 3;
 				setFlag(LOOKING_CROUCH);
@@ -465,6 +556,23 @@ package
 		public function get room():String 
 		{
 			return _room;
+		}
+		
+		override public function get x():Number 
+		{
+			return super.x;
+		}
+		
+		override public function set x(value:Number):void 
+		{
+			super.x = value;
+		}
+		
+		public function onCollision () : void
+		{
+			_target = x - (parent as Room).scrollAcc;
+			_realTarget = _target + (parent as Room).scrollAcc;
+			_collided = true;
 		}
 	}
 

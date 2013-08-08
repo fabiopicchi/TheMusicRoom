@@ -6,7 +6,7 @@
   },
   {
     "name":"day2",
-    "elementsDestroyed":["telephone1_1"],
+    "elementsDestroyed":"",
     "elementsCreated":["scissors1", "ivyKey", "nancy2_1", "grandma2_1","telephone2_1"]
   },
   {
@@ -21,12 +21,12 @@
   },
   {
     "name":"night3",
-    "elementsDestroyed":["grandma3_1","grandma3_2","nancy3_1","nancy3_2"],
+    "elementsDestroyed":["grandma3_1","grandma3_2","nancy3_1","nancy3_2","leak1"],
     "elementsCreated":["nancy_corpse1","leak2"]
   },
   {
     "name":"day4",
-    "elementsDestroyed":"",
+    "elementsDestroyed":["leak2"],
     "elementsCreated":["leak3"]
   },
   {

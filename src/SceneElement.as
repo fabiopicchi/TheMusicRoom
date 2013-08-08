@@ -1,5 +1,7 @@
 package  
 {
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	/**
 	 * ...
@@ -12,6 +14,8 @@ package
 		private var _textWrongItem : String;
 		private var _textRightItem : String;
 		private var _inventoryItemNeeded : String;
+		private var _sfx : String;
+		private var _sfxType : int;
 		
 		//Triggers
 		private var _elementsCreated : Array;
@@ -19,6 +23,9 @@ package
 		private var _inventoryItemSpawned : String;
 		private var _teleport : String;
 		private var _periodChange : Boolean;
+		
+		private const ON_USE : int = 0;
+		private const CONSTANT : int = 1;
 		
 		public function SceneElement() 
 		{
@@ -35,8 +42,29 @@ package
 			_elementsDestroyed = ((data.elementsDestroyed is Array) ? data.elementsDestroyed : [data.elementsDestroyed]);
 			_inventoryItemSpawned = data.itemSpawned;
 			_teleport = data.teleport;
+			_sfx = data.soundEffect;
+			_sfxType = data.soundEffectType;
 			
 			_periodChange = (data.periodChange == "" ? false : true);
+		}
+		
+		override public function set visible(value:Boolean):void 
+		{
+			super.visible = value;
+			
+			var child : DisplayObject;
+			if (_sfx && this.visible)
+			{
+				for (var i : int = 0; i < numChildren; i++)
+				{
+					child = getChildAt(i);
+					if (child is MovieClip)
+					{
+						(child as MovieClip).gotoAndPlay(1);
+					}
+				}
+				Game.playSfx(_sfx, true);
+			}
 		}
 		
 		override public function interact (item : InventoryItem = null) : void
@@ -45,6 +73,13 @@ package
 			{
 				if (item.id == _inventoryItemNeeded)
 				{
+					if (_sfx != "")
+					{
+						if (_sfxType == ON_USE)
+						{
+							Game.playSfx(_sfx);
+						}
+					}
 					Game.displayText(_textRightItem.split("#pb"), interactionCallback);
 				}
 				else
@@ -57,6 +92,13 @@ package
 			{
 				if (_inventoryItemNeeded == "")
 				{
+					if (_sfx != "")
+					{
+						if (_sfxType == ON_USE)
+						{
+							Game.playSfx(_sfx);
+						}
+					}
 					Game.displayText(_textNoItem.split("#pb"), interactionCallback);
 				}
 				else
@@ -113,6 +155,23 @@ package
 			for (i = 0; i < _elementsDestroyed.length; i++)
 			{
 				Game.changeElement(_elementsDestroyed[i], false);
+			}
+		}
+		
+		public function onEnterRoom () : void
+		{
+			var child : DisplayObject;
+			if (_sfx && this.visible)
+			{
+				for (var i : int = 0; i < numChildren; i++)
+				{
+					child = getChildAt(i);
+					if (child is MovieClip)
+					{
+						(child as MovieClip).gotoAndPlay(1);
+					}
+				}
+				Game.playSfx(_sfx, true);
 			}
 		}
 	}

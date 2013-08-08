@@ -19,9 +19,12 @@ package
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import flash.utils.clearTimeout;
 	import flash.utils.Dictionary;
+	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	import flash.utils.SetIntervalTimer;
 	import flash.utils.setTimeout;
@@ -33,12 +36,15 @@ package
 	public class Game extends Sprite 
 	{
 		// Sound channels
+		private static const NUM_LOOPS : int = int.MAX_VALUE;
 		private static var _musicChannel1 : SoundChannel;
 		private static var _musicChannel2 : SoundChannel;
+		
 		private static var _playerSfxChannel: SoundChannel;
 		private static var _enemySfxChannel : SoundChannel;
 		private static var _enemySfxChannel2 : SoundChannel;
 		private static var _generalSfxChannel : SoundChannel;
+		private static var _loopedSfxChannel : SoundChannel;
 		
 		private static var keyMap : int = 0;
 		private static var keyState : int = 0;
@@ -54,6 +60,7 @@ package
 		public static const CHANGING_ROOM : int = 1 << 4;
 		public static const PERIOD_CHANGE : int = 1 << 5;
 		public static const MAIN_MENU : int = 1 << 6;
+		public static const CHECKING_INVENTORY_ITEM : int = 1 << 7;
 		
 		private static var _dt : Number = 0;
 		private static var _time : Number = 0;
@@ -63,6 +70,7 @@ package
 		
 		private var mainMenu : MainMenuClass = new MainMenuClass();
 		
+		// Dialog text box
 		private static var _text : String;
 		private static var _textBox : TextBox;
 		private static var _textTime : Number = 0;
@@ -73,6 +81,9 @@ package
 		private static var _arText : Array;
 		private static var _textCallback:Function;
 		private const _LETTER_INTERVAL : Number = 0.1;
+		
+		// Room name
+		private static var _roomNameBox : TextField;
 		
 		private static var _nextRoom:String = "";
 		private static var _nextRoomPosition : Number;
@@ -100,7 +111,15 @@ package
 			ivyGuestroom : new IvyGuestroom,
 			guestHallway : new GuestHallway,
 			study : new Study,
-			library : new Library
+			library : new Library,
+			balcony : new Balcony,
+			secretStudy : new SecretStudy,
+			bathroom3 : new Bathroom3,
+			masterSuite : new MasterSuite,
+			wineCellar : new WineCellar,
+			darkPassage : new DarkPassage,
+			basement : new Basement,
+			basementHallway : new BasementHallway
 		};
 		
 		private static var _shade : Shape = new Shape();
@@ -122,15 +141,21 @@ package
 		private static var _currentPeriod : int = 0;
 		
 		private static var _inventory : Inventory = new Inventory ();
+		private static var _inventoryItemScreen : MovieClip;
 		
 		private static var _puzzleScreen : PuzzleScreen = null;
 		private static var _fadeCallback : Function;
 		private static var _periodChangeCallback : Function;
 		
+		public static const DEFAULT_TEXT_NO_SENSE : String = "Edgard: I don't think this would make sense.";
+		public static const DEFAULT_TEXT_NO_ITEMS: String = "Edgard: I don't seem to have everything I need to solve this.";
+		
 		public function Game():void 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 			TweenPlugin.activate([SoundTransformPlugin]);
+			Font.registerFont(BookmanOld);
+			
 			for (var k : String in ROOM_MAP)
 			{
 				ROOM_MAP[k].name = k;
@@ -362,7 +387,20 @@ package
 			_shade.graphics.endFill();
 			
 			ROOM_MAP[_room].addPlayer();
+			//ROOM_MAP[_room].addChild(new Enemy);
 			addChild(ROOM_MAP[_room]);
+			
+			_roomNameBox = new TextField ();
+			var format : TextFormat = new TextFormat ();
+			format.font = (new BookmanOld()).fontName;
+			format.size = 24;
+			format.color = 0xFFFFFF;
+			_roomNameBox.defaultTextFormat = format;
+			_roomNameBox.height = 100;
+			_roomNameBox.width = 200;
+			_roomNameBox.x = -200;
+			_roomNameBox.y = 30;
+			addChild(_roomNameBox);
 			
 			addChild(_inventory);
 			_inventory.x = 0;
@@ -389,7 +427,7 @@ package
 				(ROOM_MAP[k] as Room).updateAssets(_currentPeriod);
 			}
 			
-			_musicChannel1 = (new DayTheme ()).play(0, 999);
+			_musicChannel1 = (new DayTheme ()).play(0, NUM_LOOPS);
 			setFlag(MAIN_MENU);
 			addChild(mainMenu);
 		}
@@ -452,6 +490,7 @@ package
 							{
 								resetFlag(MAIN_MENU);
 								removeChild(mainMenu);
+								Game.displayName(ROOM_MAP[_room].displayName);
 							});
 							break;
 						
@@ -460,6 +499,7 @@ package
 							{
 								resetFlag(MAIN_MENU);
 								removeChild(mainMenu);
+								Game.displayName(ROOM_MAP[_room].displayName);
 							});
 							break;
 						
@@ -492,22 +532,30 @@ package
 				fadeToBlack(function () : void
 				{
 					resetFlag(CHANGING_ROOM);
+					if (_loopedSfxChannel != null)
+					{
+						_loopedSfxChannel.stop();
+						_loopedSfxChannel = null;
+					}
+					
 					ROOM_MAP[_room].removePlayer();
 					(ROOM_MAP[_room] as Room).resetScroll();
 					removeChild(ROOM_MAP[_room]);
-					
 					_playerInstance.x = _nextRoomPosition;
 					_room = _nextRoom;
 					_nextRoom = "";
 					ROOM_MAP[_room].addPlayer();
 					ROOM_MAP[_room].update();
+					ROOM_MAP[_room].onEnter();
 					addChildAt(ROOM_MAP[_room], 0);
+					
 					if (_fadeCallback != null) _fadeCallback();
 					
 					if ((_status & PERIOD_CHANGE) == PERIOD_CHANGE)
 					{
 						onPeriodChange();
 					}
+					Game.displayName(ROOM_MAP[_room].displayName);
 				});
 			}
 			
@@ -567,11 +615,6 @@ package
 						}
 					}
 					
-					if (keyJustPressed(Action.BACK))
-					{
-						periodChange();
-					}
-					
 					for (var k : String in ROOM_MAP)
 					{
 						ROOM_MAP[k].update();
@@ -580,35 +623,94 @@ package
 				
 				if ((_pStatus & INVENTORY_OPEN) == INVENTORY_OPEN)
 				{
-					if (keyJustPressed(Action.LEFT))
+					if ((changedStatus  & CHECKING_INVENTORY_ITEM) == CHECKING_INVENTORY_ITEM && (_status & CHECKING_INVENTORY_ITEM) == CHECKING_INVENTORY_ITEM)
 					{
-						_inventory.nextLeft();
-					}
-					else if (keyJustPressed(Action.RIGHT))
-					{
-						_inventory.nextRight();
+						fadeToBlack(function () : void
+						{
+							addChildAt(_inventoryItemScreen, getChildIndex(_textBox));
+							_inventoryItemScreen.gotoAndStop(0);
+						});
 					}
 					
-					if ((_status & PUZZLESCREEN_OPEN) != PUZZLESCREEN_OPEN)
+					if ((_status & CHECKING_INVENTORY_ITEM) != CHECKING_INVENTORY_ITEM)
 					{
-						if (keyJustPressed(Action.INTERACT))
+						if (keyJustPressed(Action.LEFT))
 						{
-							if (_playerInstance.gameObject as SceneElement)
+							_inventory.nextLeft();
+						}
+						else if (keyJustPressed(Action.RIGHT))
+						{
+							_inventory.nextRight();
+						}
+						
+						if ((_status & PUZZLESCREEN_OPEN) != PUZZLESCREEN_OPEN)
+						{
+							if (keyJustPressed(Action.INTERACT))
 							{
-								_playerInstance.gameObject.interact(removeFromInventory(true));
+								var item : InventoryItem = removeFromInventory(false);
+								if (item.itemType == InventoryItem.USABLE)
+								{
+									hideInventory();
+									if (_playerInstance.gameObject as SceneElement)
+									{
+										_playerInstance.gameObject.interact(item);
+									}
+									else
+									{
+										addToInventory(item.id, false);
+										displayText([DEFAULT_TEXT_NO_SENSE]);
+									}
+								}
+								else
+								{
+									addToInventory(item.id, false);
+									setFlag (CHECKING_INVENTORY_ITEM);
+									_inventoryItemScreen = getItemScreen(item.id);
+								}
 							}
-							else
+						}
+						else
+						{
+							if (keyJustPressed(Action.INTERACT))
 							{
-								hideInventory();
-								displayText(["Edgard: I don't think this would make sense."]);
+								_puzzleScreen.item = removeFromInventory(true);
+								if (!_puzzleScreen.item)
+								{
+									displayText([DEFAULT_TEXT_NO_ITEMS], Game.removePuzzleScreen);
+								}
 							}
 						}
 					}
 					else
 					{
-						if (keyJustPressed(Action.INTERACT))
+						if (keyJustPressed(Action.LEFT))
 						{
-							_puzzleScreen.item = removeFromInventory(true);
+							if (_inventoryItemScreen.currentFrame != 1)
+							{
+								fadeToBlack (function () : void
+								{
+									_inventoryItemScreen.gotoAndStop(_inventoryItemScreen.currentFrame - 1);
+								});
+							}
+						}
+						else if (keyJustPressed(Action.RIGHT))
+						{
+							if (_inventoryItemScreen.currentFrame != _inventoryItemScreen.totalFrames)
+							{
+								fadeToBlack (function () : void
+								{
+									_inventoryItemScreen.gotoAndStop(_inventoryItemScreen.currentFrame + 1);
+								});
+							}
+						}
+						else if (keyJustPressed(Action.BACK))
+						{
+							resetFlag(CHECKING_INVENTORY_ITEM);
+							fadeToBlack(function () : void
+							{
+								removeChild(_inventoryItemScreen);
+								_inventoryItemScreen = null;
+							});
 						}
 					}
 				}
@@ -735,6 +837,31 @@ package
 		
 		
 		
+		//Room name display API
+		private static var _roomNameBoxTimeout : int = -1;
+		public static function displayName (name : String) : void
+		{
+			var delay : Number = 0.5;
+			_roomNameBox.text = name;
+			TweenLite.killTweensOf(_roomNameBox);
+			
+			if (_roomNameBoxTimeout != -1)
+			{
+				delay = 0;
+				clearTimeout (_roomNameBoxTimeout);
+			}
+			TweenLite.to(_roomNameBox, 0.5, { delay : delay, x : 30, onComplete : function () : void
+			{
+				_roomNameBoxTimeout = setTimeout (function () : void
+				{
+					TweenLite.to(_roomNameBox, 0.5, { x : -200 } );
+					_roomNameBoxTimeout = -1;
+				}, 1000);
+			}});
+		}
+		
+		
+		
 		//Game state control
 		public static function setFlag (flag : int) : void
 		{
@@ -745,6 +872,7 @@ package
 		{
 			_status &= ~flag;
 		}
+		
 		
 		
 		//Closing eyes effect
@@ -911,11 +1039,11 @@ package
 			_musicChannel1.stop();
 			if (_currentPeriod % 2 == 1)
 			{
-				_musicChannel1 = (new NightTheme ()).play(0, 999);
+				_musicChannel1 = (new NightTheme ()).play(0, NUM_LOOPS);
 			}
 			else
 			{
-				_musicChannel1 = (new DayTheme ()).play(0, 999);
+				_musicChannel1 = (new DayTheme ()).play(0, NUM_LOOPS);
 			}
 			resetFlag(PERIOD_CHANGE);
 			for (var k : String in ROOM_MAP)
@@ -925,10 +1053,19 @@ package
 		}
 		
 		
+		
+		// Fade to black
 		private function fadeToBlack (callback : Function) : void
 		{
-			_shade.alpha = 0;
-			addChild(_shade);
+			if (!contains(_shade)) 
+			{
+				_shade.alpha = 0;
+				addChild(_shade);
+			}
+			else
+			{
+				TweenLite.killTweensOf(_shade);
+			}
 			TweenLite.to(_shade, 0.5, { alpha : 1, onComplete : function () : void
 			{
 				callback();
@@ -939,6 +1076,7 @@ package
 				}});
 			}});
 		}
+		
 		
 		
 		//go to puzzle screen
@@ -964,6 +1102,7 @@ package
 		}
 		
 		
+		
 		//load config files
 		private function loadConfig () : void
 		{	
@@ -976,6 +1115,28 @@ package
 			addElementsCreated(_arTeleport = (JSONLoader.loadFile("teleports.json") as Array));
 			addElementsCreated(_arPeriod = (JSONLoader.loadFile("periods.json") as Array));
 			addElementsCreated(_arInventoryItems = (JSONLoader.loadFile("inventoryItems.json") as Array));
+			
+			var _arEnemies : Array = (JSONLoader.loadFile("enemies.json") as Array);
+			var _arRooms : Array = (JSONLoader.loadFile("rooms.json") as Array);
+			
+			for (var i : int = 0; i < _arRooms.length; i++)
+			{
+				var room : Room = ROOM_MAP[_arRooms[i].name];
+				if (room)
+				{
+					room.loadData(_arRooms[i]);
+					for (var j : int = 0; j < _arEnemies.length; j++)
+					{
+						if (_arEnemies[j].room == room.name)
+						{
+							var en : Enemy = new Enemy();
+							en.loadData(_arEnemies[j]);
+							room.addEnemy(en);
+							break;
+						}
+					}
+				}
+			}
 		}
 		
 		//load JSON properties
@@ -1034,49 +1195,142 @@ package
 		
 		
 		//Sfx API
-		public static const SWITCH_ON : String = "switch_on";
-		public static const SWITCH_OFF : String = "switch_off";
-		public static const ENEMY_ATTACK : String = "en_att";
-		public static const ENEMY_SPAWN : String = "en_spw";
-		public static const ITEM_GOT : String = "item_got";
-		public static const INSERT_SLOT : String = "insert_slot";
-		public static function playSfx (code : String) : void
+		public static const SWITCH_ON : String = "switchOn";
+		public static const SWITCH_OFF : String = "switchOff";
+		public static const ITEM_GOT : String = "itemGot";
+		public static const FIT_SLOT : String = "fitSlot";
+		public static const PROJECTOR : String = "projector";
+		public static const ANALOG_BUTTON : String = "analogButton";
+		public static const BASEMENT_DOOR : String = "basementDoor";
+		public static const DAY_NIGHT : String = "dayNight";
+		public static const NIGHT_DAY : String = "nightDay";
+		public static const PAPERWEIGHT : String = "paperweight";
+		public static const STAIRS : String = "stairs";
+		public static const DOOR : String = "door";
+		public static const VIOLIN : String = "violin";
+		
+		public static const ENEMY_ATTACK : String = "enemyAttack";
+		public static const ENEMY_SPAWN : String = "enemySpawn";
+		
+		public static const UNEASY_SOUND : String = "uneasySound";
+		public static const UNEASY_SOUND_2 : String = "uneasySound2";
+		
+		public static function playSfx (code : String, looped : Boolean = false) : void
 		{
+			var sound : Sound;
+			var channel : SoundChannel;
 			switch (code)
 			{
 				case SWITCH_ON:
-					setChannelSfx (_generalSfxChannel, new SwitchOnSfx);
+					sound = new SwitchOnSfx;
 					break;
 				case SWITCH_OFF:
-					setChannelSfx (_generalSfxChannel, new SwitchOffSfx);
-					break;
-				case ENEMY_ATTACK:
-					setChannelSfx (_enemySfxChannel, new MonsterAttackSfx);
-					break;
-				case ENEMY_SPAWN:
-					setChannelSfx (_enemySfxChannel, new MonsterSpawnSfx);
+					sound = new SwitchOffSfx;
 					break;
 				case ITEM_GOT:
-					setChannelSfx (_generalSfxChannel, new ItemGotSfx);
+					sound = new ItemGotSfx;
 					break;
-				case INSERT_SLOT:
-					setChannelSfx (_generalSfxChannel, new InsertSlotSfx);
+				case FIT_SLOT:
+					sound = new FitSlotSfx;
+					break;
+				case PROJECTOR:
+					sound = new ProjectorSfx;
+					break;
+				case ANALOG_BUTTON:
+					sound = new AnalgoButtonSfx;
+					break;
+				case BASEMENT_DOOR:
+					sound = new BasementDoorSfx;
+					break;
+				case DAY_NIGHT:
+					sound = new DayNightSfx;
+					break;
+				case NIGHT_DAY:
+					sound = new NightDaySfx;
+					break;
+				case PAPERWEIGHT:
+					sound = new PaperweightSfx;
+					break;
+				case STAIRS:
+					sound = new StairsSfx;
+					break;
+				case DOOR:
+					sound = new DoorSfx;
+					break;
+				case VIOLIN:
+					sound = new ViolinSfx;
+					break;
+					
+				case UNEASY_SOUND:
+					sound = new UneasySfx;
+					break;
+				case UNEASY_SOUND_2:
+					sound = new Uneasy2Sfx;
+					channel = _musicChannel2;
+					break;
+				
+				case ENEMY_ATTACK:
+					sound = new EnemyAttackSfx;
+					break;
+				case ENEMY_SPAWN:
+					sound = new EnemySpawnSfx;
+					channel = _enemySfxChannel;
 					break;
 			}
-		}
-		
-		private static function setChannelSfx (channel : SoundChannel, sound : Sound, loop : Boolean = false) : void
-		{
-			if (channel) channel.stop();
-			channel = sound.play();
+			
+			switch (code)
+			{
+				case SWITCH_ON:
+				case SWITCH_OFF:
+				case ITEM_GOT:
+				case FIT_SLOT:
+				case PROJECTOR:
+				case ANALOG_BUTTON:
+				case BASEMENT_DOOR:
+				case DAY_NIGHT:
+				case NIGHT_DAY:
+				case PAPERWEIGHT:
+				case STAIRS:
+				case DOOR:
+				case VIOLIN:
+					if (!looped)
+					{
+						if (_generalSfxChannel) _generalSfxChannel.stop();
+						_generalSfxChannel = sound.play();
+					}
+					else
+					{
+						if (_loopedSfxChannel) _loopedSfxChannel.stop();
+						_loopedSfxChannel = sound.play(0, NUM_LOOPS);
+					}
+					break;
+					
+				case UNEASY_SOUND:
+				case UNEASY_SOUND_2:
+					if (_musicChannel2) _musicChannel2.stop();
+					_musicChannel2 = sound.play();
+					break;
+				
+				case ENEMY_ATTACK:
+				case ENEMY_SPAWN:
+					if (_enemySfxChannel) _enemySfxChannel.stop();
+					_enemySfxChannel = sound.play();
+					break;
+			}
+			
 		}
 		
 		public static function playMonsterSfx () : void
 		{
-			var sound : Sound = new MonsterFollowingSfx();
-			_enemySfxChannel2 = sound.play(0, 999);
+			var sound : Sound = new EnemyChasingSfx;
+			_enemySfxChannel2 = sound.play(0, NUM_LOOPS);
 			_enemySfxChannel2.soundTransform = new SoundTransform(0.5, 0);
 			TweenLite.from(_enemySfxChannel2 , 1, { soundTransform: { volume:0 }} );
+		}
+		
+		public static function muteMonsterSfx () : void
+		{
+			TweenLite.to(_enemySfxChannel2 , 1, { soundTransform: { volume:0 }} );
 		}
 		
 		private static const MIN_DIST : Number = 150;
@@ -1121,6 +1375,15 @@ package
 		{
 			if (_musicChannel1) TweenLite.to(_musicChannel1, 1, { soundTransform: { volume:1 }} );
 			if (_musicChannel2) TweenLite.to(_musicChannel2, 1, { soundTransform: { volume:1 }} );
+		}
+		
+		
+		
+		// Show item screen
+		public function getItemScreen (id : String) : MovieClip
+		{
+			var cl:Class = Class(getDefinitionByName(id + "Screen"));
+			return (new cl() as MovieClip);
 		}
 	}
 }
