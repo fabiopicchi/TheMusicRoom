@@ -27,7 +27,7 @@
     "name":"kitchen",
     "displayname":"Kitchen",
     "hasDay":"1",
-    "enemySpawnChance":0.5
+    "enemySpawnChance":0.6
   },
   {
     "name":"nancyRoom",
@@ -45,7 +45,7 @@
     "name":"mainHallway",
     "displayname":"Main Hallway",
     "hasDay":"1",
-    "enemySpawnChance":0
+    "enemySpawnChance":0.8
   },
   {
     "name":"garden",
@@ -57,7 +57,7 @@
     "name":"hallway",
     "displayname":"Hallway",
     "hasDay":"1",
-    "enemySpawnChance":0.25
+    "enemySpawnChance":0
   },
   {
     "name":"musicHallway",
@@ -111,7 +111,7 @@
     "name":"library",
     "displayname":"Library",
     "hasDay":"1",
-    "enemySpawnChance":0
+    "enemySpawnChance":0.4
   },
   {
     "name":"study",
@@ -135,7 +135,7 @@
     "name":"masterSuite",
     "displayname":"Master Suite",
     "hasDay":"1",
-    "enemySpawnChance":0
+    "enemySpawnChance":0.3
   },
   {
     "name":"bathroom3",
@@ -183,7 +183,7 @@
     "name":"basementHallway",
     "displayname":"Basement Hallway",
     "hasDay":"0",
-    "enemySpawnChance":0
+    "enemySpawnChance":0.8
   },
   {
     "name":"boilerRoom",

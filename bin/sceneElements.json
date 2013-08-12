@@ -218,7 +218,7 @@
     "itemNeeded":"itoyShovel",
     "elementsDestroyed":["vase"],
     "elementsCreated":["tinBox"],
-    "itemSpawned":"imarble",
+    "itemSpawned":"",
     "teleport":"",
     "periodChange":"",
     "soundEffect":"",

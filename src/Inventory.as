@@ -109,6 +109,15 @@ package
 			testArrows();
 		}
 		
+		public function getItem () : InventoryItem
+		{
+			if (menu.length)
+			{
+				return menu[_currentItem];
+			}
+			return null;
+		}
+		
 		public function reset () : void
 		{
 			_currentItem = 0;

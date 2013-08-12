@@ -90,36 +90,40 @@ package
 		
 		private static var _room : String = "porch";
 		public static const ROOM_MAP : Object = {
+			balcony : new Balcony,
+			basement : new Basement,
+			basementHallway : new BasementHallway,
 			bathroom1 : new Bathroom1,
 			bathroom2 : new Bathroom2,
+			bathroom3 : new Bathroom3,
+			bollierRoom : new BoilerRoom,
 			centralHallway : new CentralHallway,
 			daddyRoom : new DaddyRoom,
+			darkPassage : new DarkPassage,
 			dinnerRoom : new DinnerRoom,
 			foyer : new Foyer,
 			garden : new Garden,
 			grandmaRoom : new GrandmaRoom,
+			guestHallway : new GuestHallway,
 			hallway : new Hallway,
+			ivyGuestroom : new IvyGuestroom,
 			kitchen : new Kitchen,
+			lavenderGuestroom : new LavenderGuestroom,
+			library : new Library,
 			livingRoom : new LivingRoom,
 			mainHallway : new MainHallway,
+			masterSuite : new MasterSuite,
 			musicHallway : new MusicHallway,
 			nancyRoom : new NancyRoom,
+			orchidGuestroom : new OrchidGuestroom,
 			porch : new Porch,
 			projectorRoom : new ProjectorRoom,
-			upperHallway : new UpperHallway,
-			lavenderGuestroom : new LavenderGuestroom,
-			ivyGuestroom : new IvyGuestroom,
-			guestHallway : new GuestHallway,
-			study : new Study,
-			library : new Library,
-			balcony : new Balcony,
+			secretStorage : new SecretStorage,
 			secretStudy : new SecretStudy,
-			bathroom3 : new Bathroom3,
-			masterSuite : new MasterSuite,
-			wineCellar : new WineCellar,
-			darkPassage : new DarkPassage,
-			basement : new Basement,
-			basementHallway : new BasementHallway
+			storage : new Storage,
+			study : new Study,
+			upperHallway : new UpperHallway,
+			wineCellar : new WineCellar
 		};
 		
 		private static var _shade : Shape = new Shape();
@@ -142,6 +146,7 @@ package
 		
 		private static var _inventory : Inventory = new Inventory ();
 		private static var _inventoryItemScreen : MovieClip;
+		private static var _nextPage : int = 0;
 		
 		private static var _puzzleScreen : PuzzleScreen = null;
 		private static var _fadeCallback : Function;
@@ -380,7 +385,7 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyReleased);
 			
 			loadConfig();
-			debugDump();
+			//debugDump();
 			
 			_shade.graphics.beginFill(0x000000);
 			_shade.graphics.drawRect(0, 0, 1024, 768);
@@ -430,6 +435,7 @@ package
 			_musicChannel1 = (new DayTheme ()).play(0, NUM_LOOPS);
 			setFlag(MAIN_MENU);
 			addChild(mainMenu);
+			mainMenu.gotoAndStop(1);
 		}
 		
 		public function addElementsCreated (jsonArray : Array) : void
@@ -473,43 +479,61 @@ package
 			
 			if ((_status & MAIN_MENU) == MAIN_MENU)
 			{
-				if (keyJustPressed(Action.DOWN))
+				if (mainMenu.currentFrame == 1)
 				{
-					mainMenu.nextItem();
-				}
-				else if (keyJustPressed(Action.UP))
-				{
-					mainMenu.previousItem();
-				}
-				else if (keyJustPressed(Action.INTERACT))
-				{
-					switch (mainMenu.select())
+					if (keyJustPressed(Action.DOWN))
 					{
-						case MainMenu.ENTER:
-							fadeToBlack(function () : void
-							{
-								resetFlag(MAIN_MENU);
-								removeChild(mainMenu);
-								Game.displayName(ROOM_MAP[_room].displayName);
-							});
-							break;
-						
-						case MainMenu.LOAD:
-							fadeToBlack(function () : void
-							{
-								resetFlag(MAIN_MENU);
-								removeChild(mainMenu);
-								Game.displayName(ROOM_MAP[_room].displayName);
-							});
-							break;
-						
-						case MainMenu.CREDITS:
+						mainMenu.nextItem();
+					}
+					else if (keyJustPressed(Action.UP))
+					{
+						mainMenu.previousItem();
+					}
+				}
+				if (keyJustPressed(Action.INTERACT))
+				{
+					if (mainMenu.currentFrame == 1)
+					{
+						switch (mainMenu.select())
+						{
+							case MainMenu.ENTER:
+								fadeToBlack(function () : void
+								{
+									resetFlag(MAIN_MENU);
+									removeChild(mainMenu);
+									Game.displayName(ROOM_MAP[_room].displayName);
+								});
+								break;
 							
-							break;
-						
-						case MainMenu.RUN_AWAY:
-							NativeApplication.nativeApplication.exit();
-							break;
+							case MainMenu.LOAD:
+								fadeToBlack(function () : void
+								{
+									resetFlag(MAIN_MENU);
+									removeChild(mainMenu);
+									Game.displayName(ROOM_MAP[_room].displayName);
+								});
+								break;
+							
+							case MainMenu.CREDITS:
+								fadeToBlack(function () : void
+								{
+									mainMenu.gotoAndStop(2);
+								});
+								break;
+							
+							case MainMenu.RUN_AWAY:
+								NativeApplication.nativeApplication.exit();
+								break;
+						}
+					}
+					else
+					{
+						fadeToBlack(function () : void
+						{
+							mainMenu.gotoAndStop(1);
+							mainMenu.previousItem();
+							mainMenu.nextItem();
+						});
 					}
 				}
 				
@@ -531,19 +555,29 @@ package
 			{
 				fadeToBlack(function () : void
 				{
+					if ((_status & PERIOD_CHANGE) == PERIOD_CHANGE)
+					{
+						onPeriodChange();
+					}
+					
+					_playerInstance.x = _nextRoomPosition;
+					
 					resetFlag(CHANGING_ROOM);
+					
 					if (_loopedSfxChannel != null)
 					{
 						_loopedSfxChannel.stop();
 						_loopedSfxChannel = null;
 					}
 					
+					//removes old room
 					ROOM_MAP[_room].removePlayer();
 					(ROOM_MAP[_room] as Room).resetScroll();
 					removeChild(ROOM_MAP[_room]);
-					_playerInstance.x = _nextRoomPosition;
 					_room = _nextRoom;
 					_nextRoom = "";
+					
+					//adds new room
 					ROOM_MAP[_room].addPlayer();
 					ROOM_MAP[_room].update();
 					ROOM_MAP[_room].onEnter();
@@ -551,10 +585,6 @@ package
 					
 					if (_fadeCallback != null) _fadeCallback();
 					
-					if ((_status & PERIOD_CHANGE) == PERIOD_CHANGE)
-					{
-						onPeriodChange();
-					}
 					Game.displayName(ROOM_MAP[_room].displayName);
 				});
 			}
@@ -579,27 +609,22 @@ package
 					{
 						fadeToBlack(function () : void
 						{
-							addChildAt (_puzzleScreen, getChildIndex(_inventory));
-							if (_puzzleScreen.type == PuzzleScreen.INSERT_SLOT)
+							if (_puzzleScreen.type == PuzzleElement.INSERT_SLOT)
 							{
 								showInventory();
+								addChildAt (_puzzleScreen, getChildIndex(_inventory));
+							}
+							else
+							{
+								addChildAt (_puzzleScreen, getChildIndex(_textBox));
 							}
 						});
 					}
 					
 					if (contains(_puzzleScreen))
 					{
-						if ((_status & INVENTORY_OPEN) != INVENTORY_OPEN)
-						{
-							_puzzleScreen.update();
-						}
-					}
-					
-					if (Game.keyJustPressed(Action.BACK))
-					{
-						Game.hideInventory();
-						Game.removePuzzleScreen();
-					}
+						_puzzleScreen.update();
+					}					
 				}
 				else
 				{
@@ -628,7 +653,7 @@ package
 						fadeToBlack(function () : void
 						{
 							addChildAt(_inventoryItemScreen, getChildIndex(_textBox));
-							_inventoryItemScreen.gotoAndStop(0);
+							_inventoryItemScreen.gotoAndStop(_nextPage = 1);
 						});
 					}
 					
@@ -647,7 +672,7 @@ package
 						{
 							if (keyJustPressed(Action.INTERACT))
 							{
-								var item : InventoryItem = removeFromInventory(false);
+								var item : InventoryItem = getInventoryItem(false);
 								if (item.itemType == InventoryItem.USABLE)
 								{
 									hideInventory();
@@ -657,36 +682,24 @@ package
 									}
 									else
 									{
-										addToInventory(item.id, false);
 										displayText([DEFAULT_TEXT_NO_SENSE]);
 									}
 								}
 								else
 								{
-									addToInventory(item.id, false);
 									setFlag (CHECKING_INVENTORY_ITEM);
 									_inventoryItemScreen = getItemScreen(item.id);
 								}
 							}
 						}
-						else
-						{
-							if (keyJustPressed(Action.INTERACT))
-							{
-								_puzzleScreen.item = removeFromInventory(true);
-								if (!_puzzleScreen.item)
-								{
-									displayText([DEFAULT_TEXT_NO_ITEMS], Game.removePuzzleScreen);
-								}
-							}
-						}
 					}
-					else
+					else if (contains(_inventoryItemScreen))
 					{
 						if (keyJustPressed(Action.LEFT))
 						{
-							if (_inventoryItemScreen.currentFrame != 1)
+							if (_inventoryItemScreen.currentFrame != 1 && _inventoryItemScreen.currentFrame == _nextPage)
 							{
+								_nextPage = _inventoryItemScreen.currentFrame - 1;
 								fadeToBlack (function () : void
 								{
 									_inventoryItemScreen.gotoAndStop(_inventoryItemScreen.currentFrame - 1);
@@ -695,8 +708,9 @@ package
 						}
 						else if (keyJustPressed(Action.RIGHT))
 						{
-							if (_inventoryItemScreen.currentFrame != _inventoryItemScreen.totalFrames)
+							if (_inventoryItemScreen.currentFrame != _inventoryItemScreen.totalFrames && _inventoryItemScreen.currentFrame == _nextPage)
 							{
+								_nextPage = _inventoryItemScreen.currentFrame + 1;
 								fadeToBlack (function () : void
 								{
 									_inventoryItemScreen.gotoAndStop(_inventoryItemScreen.currentFrame + 1);
@@ -766,6 +780,13 @@ package
 			return _inventory.removeItem();
 		}
 		
+		public static function getInventoryItem (hide : Boolean) : InventoryItem
+		{
+			if (hide)
+				hideInventory();
+			return _inventory.getItem();
+		}
+		
 		
 		
 		//Text typing methods
@@ -779,9 +800,22 @@ package
 			_waitingInput = false;
 			_arText = arText;
 			_textCallback = callback;
-			_text = _arText[_pageCounter].split("#lb").join('\n');
 			_playerInstance.setFlag(Player.INACTIVE);
 			setFlag(TYPING_TEXT);
+			nextText();
+		}
+		
+		private static function nextText () : void
+		{
+			_waitingInput = false;
+			if (_pageCounter < _arText.length)
+			{
+				_text = _arText[_pageCounter++].split("#lb").join('\n');
+			}
+			else
+			{
+				closeText();
+			}
 		}
 		
 		private function typeText() : void
@@ -813,16 +847,7 @@ package
 			}
 			else if (keyJustPressed(Action.INTERACT))
 			{
-				_waitingInput = false;
-				_pageCounter++;
-				if (_pageCounter < _arText.length)
-				{
-					_text = _arText[_pageCounter];
-				}
-				else
-				{
-					Game.closeText();
-				}
+				nextText();
 			}
 		}
 		
@@ -923,6 +948,23 @@ package
 					{
 						Game.displayText((teleport.text as String).split("#pb"));
 					}
+				}, 500);
+			});
+		}
+		
+		public static function teleportHit (callback : Function = null) : void
+		{
+			setNextRoom ("daddyRoom", 300, function () : void
+			{
+				setFlag(CHANGING_ROOM);
+				if (callback != null)
+				{
+					callback();
+				}
+				setTimeout(function () : void
+				{					
+					resetFlag(CHANGING_ROOM);
+					Game.displayText(["Edgar: I'd better be more careful next time."]);
 				}, 500);
 			});
 		}
@@ -1082,21 +1124,23 @@ package
 		//go to puzzle screen
 		public static function puzzleScreen (element : PuzzleElement) : void
 		{
-			_puzzleScreen = new ToyBoxScreen();
+			switch (element.name)
+			{
+				case "toyBoxPuzzle":
+					_puzzleScreen = new ToyBoxScreen();
+					break;
+				case "teaChestPuzzle":
+					_puzzleScreen = new TeaChestScreen();
+					break;
+				default:
+					return;
+			}
 			_puzzleScreen.initPuzzleScreen(element);
 			setFlag(PUZZLESCREEN_OPEN);
 		}
 		
 		public static function removePuzzleScreen (fadeCallback : Function = null) : void
 		{
-			for (var i : int = 0; i < _puzzleScreen.arItems.length; i++)
-			{
-				addToInventory(_puzzleScreen.arItems[i], false);
-			}
-			if (_puzzleScreen.item)
-			{
-				addToInventory(_puzzleScreen.item.id, false);
-			}
 			resetFlag(PUZZLESCREEN_OPEN);
 			_fadeCallback = fadeCallback;
 		}

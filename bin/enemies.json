@@ -14,5 +14,9 @@
   {
     "room":"basementHallway",
     "type":1
+  },
+  {
+    "room":"library",
+    "type":1
   }
 ]

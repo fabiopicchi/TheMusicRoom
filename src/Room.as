@@ -12,6 +12,8 @@ package
 	
 	public class Room extends Entity 
 	{
+		private const SCROLL_LIMIT : Number = 300;
+		
 		private var _player:Player;
 		private var _frontScrollFactor : Number;
 		private var _time : String = "day";
@@ -227,9 +229,9 @@ package
 				
 				//scrollX
 				var scrollX : Number = 0;
-				if (_player.x >= 724 && _scrollAcc > -(getChildByName("back").width - 1024))
+				if (_player.x + _player.width >= (1024 - SCROLL_LIMIT) && _scrollAcc > -(getChildByName("back").width - 1024))
 				{
-					scrollX = -(_player.x - 724);
+					scrollX = -(_player.x + _player.width - (1024 - SCROLL_LIMIT));
 					if (_scrollAcc + scrollX < -(getChildByName("back").width - 1024))
 					{
 						scrollX = -Math.round((_scrollAcc + (getChildByName("back").width - 1024)));
@@ -248,9 +250,9 @@ package
 					}
 				}
 				
-				if (_player.x <= 300 && _scrollAcc < 0)
+				if (_player.x <= SCROLL_LIMIT && _scrollAcc < 0)
 				{
-					scrollX = 300 - _player.x;
+					scrollX = SCROLL_LIMIT - _player.x;
 					if ((_scrollAcc + scrollX) > 0)
 					{
 						scrollX = -Math.round(_scrollAcc);

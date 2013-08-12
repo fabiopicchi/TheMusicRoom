@@ -81,11 +81,11 @@ package
 						}
 					}
 					Game.displayText(_textRightItem.split("#pb"), interactionCallback);
+					Game.removeFromInventory(false);
 				}
 				else
 				{
 					Game.displayText(_textWrongItem.split("#pb"));
-					Game.addToInventory(item.id, false);
 				}
 			}
 			else

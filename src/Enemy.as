@@ -104,15 +104,29 @@ package
 			{
 				if (_currentAnim == "attack")
 				{
-					resetFlag(ATTACKING);
-					setFlag(RESTING);
-					setTimeout (function () : void
+					var hitbox : Rectangle = new Rectangle(x, y, width, height);
+					if (isFacing(LEFT))
 					{
-						resetFlag(RESTING);
-					}, 200);
-					_pAnim = "";
-					Game.playSfx(Game.ENEMY_ATTACK);
-					_body.gotoAndPlay(_currentAnim = "idle");
+						hitbox.x = x - width;
+					}
+					
+					if (Game.playerInstance.x < hitbox.x + hitbox.width && Game.playerInstance.x + Game.playerInstance.width > hitbox.x)
+					{
+						Game.playerInstance.hit();
+						teleportBack();
+					}
+					else
+					{
+						resetFlag(ATTACKING);
+						setFlag(RESTING);
+						setTimeout (function () : void
+						{
+							resetFlag(RESTING);
+						}, 500);
+						_pAnim = "";
+						Game.playSfx(Game.ENEMY_ATTACK);
+						_body.gotoAndPlay(_currentAnim = "idle");
+					}
 				}
 				
 				else if (_currentAnim == "fade")
@@ -446,6 +460,8 @@ package
 			setFlag(FADING);
 			_body.gotoAndPlay(_currentAnim);
 			_looped = _animationData[_currentAnim].looped;
+			Game.muteMonsterSfx();
+			Game.unmuteMusic();
 		}
 		
 		private function isWithinRange():Boolean

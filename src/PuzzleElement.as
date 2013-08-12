@@ -6,13 +6,17 @@ package
 	 */
 	public class PuzzleElement extends InteractiveElement 
 	{
+		public static const INSERT_SLOT : int = 0;
+		public static const CODE : int = 1;
+		
 		private var _inventoryItemReward : String;
-		private var _itemsNeeded : Array;
+		private var _answer : Array;
 		private var _elementsCreated : Array;
 		private var _elementsDestroyed : Array;
 		private var _textRight : String;
 		private var _textWrong : String;
-		private var _nItemsNeeded : int;
+		private var _type : int;
+		private var _itemsNeeded : Array = [];
 		
 		public function PuzzleElement() 
 		{
@@ -22,11 +26,21 @@ package
 		public function loadData (data : Object) : void
 		{
 			_inventoryItemReward = data.inventoryItemReward;
-			_itemsNeeded = ((data.itemsNeeded is Array) ? data.itemsNeeded : [data.itemsNeeded]);
+			_answer = ((data.answer is Array) ? data.answer : []);
 			_elementsCreated = ((data.elementsCreated is Array) ? data.elementsCreated : []);
 			_elementsDestroyed = ((data.elementsDestroyed is Array) ? data.elementsDestroyed : []);
-			_textRight = "YES";
-			_textWrong = "Unknown voice: Show me your moves!";
+			_textRight = "Edgar: There seems to be something inside.";
+			_textWrong = "Edgar: It is no use.";
+			_type = Number(data.type);
+			
+			if (_type == INSERT_SLOT)
+			{
+				for (var i : int = 0; i < _answer.length; i++)
+				{
+					if (_answer[i] != "")
+						_itemsNeeded.push(_answer[i]);
+				}
+			}
 		}
 		
 		override public function interact(item:InventoryItem = null):void 
@@ -46,25 +60,6 @@ package
 			return (_itemsNeeded.indexOf(id) != -1);
 		}
 		
-		public function get nItemsNeeded () : int
-		{
-			if (_itemsNeeded.length > 0)
-			{
-				if (_nItemsNeeded == 0)
-				{
-					for (var i : int = 0; i < _itemsNeeded.length; i++)
-					{
-						if (_itemsNeeded[i] != "")
-						{
-							_nItemsNeeded++;
-						}
-					}
-				}
-				return _nItemsNeeded;
-			}
-			return 0;
-		}
-		
 		public function get inventoryItemReward():String 
 		{
 			return _inventoryItemReward;
@@ -72,7 +67,7 @@ package
 		
 		public function get itemsNeeded():Array 
 		{
-			return _itemsNeeded;
+			return _answer;
 		}
 		
 		public function get elementsCreated():Array 
@@ -95,11 +90,16 @@ package
 			return _textWrong;
 		}
 		
+		public function get type():int 
+		{
+			return _type;
+		}
+		
 		public function testResult (arAnswer : Array) : Boolean
 		{
-			for (var i : int = 0; i < arAnswer.length; i++)
+			for (var i : int = 0; i < _answer.length; i++)
 			{
-				if (arAnswer[i] != _itemsNeeded[i])
+				if (arAnswer[i] != _answer[i])
 				{
 					return false;
 				}

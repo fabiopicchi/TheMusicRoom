@@ -20,11 +20,13 @@ package
 		public static const INACTIVE : int = 1 << 1;
 		public static const CROUCH : int = 1 << 2;
 		public static const INVINCIBLE : int = 1 << 3;
+		public static const HIT : int = 1 << 4;
 		private var _speed : Number = 330;
 		
 		private var _animationData : Object = {
 			idle : {looped : false},
-			walking : {looped : true}
+			walking : { looped : true },
+			hit : { looped : false }
 		};
 		
 		private var _room : String;
@@ -91,51 +93,69 @@ package
 			
 			_room = parent.name;
 			
-			var dx : Number = 0;
-			
-			if (!isInactive())
+			if (!testFlag(HIT))
 			{
-				if (!isCrouching())
+				var dx : Number = 0;
+				
+				if (!isInactive())
 				{
-					if (Game.keyPressed(Action.LEFT))
+					if (!isCrouching())
 					{
-						b.scaleX = -1;
-						dx -= Math.round((_speed) * Game.dt);
-					}
-					
-					if (Game.keyPressed(Action.RIGHT))
-					{
-						b.scaleX = 1;
-						dx += Math.round((_speed) * Game.dt);
-					}
-					
-					if (Game.keyJustPressed(Action.INTERACT))
-					{
-						if (_gameObject)
+						if (Game.keyPressed(Action.LEFT))
 						{
-							_gameObject.interact();
+							b.scaleX = -1;
+							dx -= Math.round((_speed) * Game.dt);
 						}
+						
+						if (Game.keyPressed(Action.RIGHT))
+						{
+							b.scaleX = 1;
+							dx += Math.round((_speed) * Game.dt);
+						}
+						
+						if (Game.keyJustPressed(Action.INTERACT))
+						{
+							if (_gameObject)
+							{
+								_gameObject.interact();
+							}
+						}
+					}
+					
+					if (Game.keyJustPressed(Action.DOWN))
+					{
+						setFlag(CROUCH);
+						Game.closeEyes();
+					}
+					else if (Game.keyJustReleased(Action.DOWN))
+					{
+						resetFlag(CROUCH);
+						Game.openEyes();
 					}
 				}
 				
-				if (Game.keyJustPressed(Action.DOWN))
+				if (dx == 0)
+					_currentAnim = "idle_" + (parent as Room).time;
+				else
 				{
-					setFlag(CROUCH);
-					Game.closeEyes();
-				}
-				else if (Game.keyJustReleased(Action.DOWN))
-				{
-					resetFlag(CROUCH);
-					Game.openEyes();
+					this.x += dx;
+					_currentAnim = "walking_" + (parent as Room).time;
 				}
 			}
-			
-			if (dx == 0)
-				_currentAnim = "idle_" + (parent as Room).time;
 			else
 			{
-				this.x += dx;
-				_currentAnim = "walking_" + (parent as Room).time;
+				if (_currentAnim != ("hit_" + (parent as Room).time))
+				{
+					Game.teleportHit(function () : void
+					{						
+						resetFlag(HIT);
+						_currentAnim = "idle_" + (parent as Room).time;
+						_pAnim = "idle_" + (parent as Room).time;
+						_looped = _animationData[_currentAnim.split("_")[0]].looped;
+						b.gotoAndPlay(_currentAnim);
+					});
+				}
+				_currentAnim = "hit_" + (parent as Room).time;
 			}
 			
 			if (_currentAnim != _pAnim)
@@ -145,6 +165,11 @@ package
 				_pAnim = _currentAnim;
 			}
 			
+		}
+		
+		public function hit () : void
+		{
+			setFlag(HIT);
 		}
 		
 		public function isOverlappedBy (s : Light) : Boolean

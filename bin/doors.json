@@ -266,7 +266,7 @@
   {
     "name":"dguestHallway3",
     "room":"guestHallway",
-    "destiny":"orchidRoom",
+    "destiny":"orchidGuestroom",
     "sound":"1"
   },
   {
@@ -282,8 +282,8 @@
     "sound":"1"
   },
   {
-    "name":"dorchidRoom1",
-    "room":"orchidRoom",
+    "name":"dorchidGuestroom1",
+    "room":"orchidGuestroom",
     "destiny":"guestHallway",
     "sound":"1"
   },

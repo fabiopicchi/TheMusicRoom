@@ -79,6 +79,17 @@ package
 			_text = objData.text;
 			_arElementsCreated = (objData.elementsCreated == "" ? [] : objData.elementsCreated);
 			_arElementsDestroyed = (objData.elementsDestroyed == "" ? [] : objData.elementsDestroyed);
+			
+			var i : int;
+			for (i = 0; i < _arElementsCreated.length; i++)
+			{
+				Game.changeElement(_arElementsCreated[i], true);
+			}
+			for (i = 0; i < _arElementsDestroyed.length; i++)
+			{
+				Game.changeElement(_arElementsDestroyed[i], false);
+			}
+			
 			_itemType = objData.type;
 			
 			addChild(getAsset());
